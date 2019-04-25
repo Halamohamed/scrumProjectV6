@@ -33,6 +33,7 @@ public class Sprint {
     private LocalTime daily_meeting;
     private Set<Task> tasks;
     private Integer plannedPeriod; // how many days will project take
+    private LocalDate startSprint;
 
     //total eststimate
     public Integer Calculate_total_estimate() {

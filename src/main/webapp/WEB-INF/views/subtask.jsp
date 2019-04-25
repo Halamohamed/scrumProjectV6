@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>Sprint</title>
+    <title>Sub Tasks</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -29,42 +29,39 @@
     <h2 id="article_header" class="text-warning" align="center">All sprints</h2>
     <div>&nbsp;</div>
 
-    <!-- Div to add a new sprint to the mongo database -->
+    <!-- Div to add a new sub task to the mongo database -->
 
     <div>&nbsp;</div>
-    <!-- Table to display the sprint list from the mongo database -->
-    <table id="sprint_table" class="table">
+    <!-- Table to display the sub task list from the mongo database -->
+    <table id="subtask_table" class="table">
         <thead>
         <tr align="center">
 
             <th>Name</th>
-            <th>Goal</th>
-            <th>Start Time</th>
-            <th>Delivery</th>
-            <th>Retrospective</th>
-            <th>Demo</th>
-            <th>Review</th>
-            <th>Daily meeting</th>
+            <th>Status</th>
+            <th>OEstimate</th>
+            <th>Actual Hours</th>
+
             <th colspan="2"></th>
 
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${sprints}" var="sprint">
+        <c:forEach items="${subtasks}" var="subtask">
             <tr align="left">
-                <td><c:out value="${sprint.name}" /></td>
-                <td><c:out value="${sprint.goal}" /></td>
-                <td><c:out value="${sprint.startSprint}" /></td>
-                <td><c:out value="${sprint.delivery}" /></td>
-                <td><c:out value="${sprint.retrospective}" /></td>
-                <td><c:out value="${sprint.demo}" /></td>
-                <td><c:out value="${sprint.review}" /></td>
-                <td><c:out value="${sprint.daily_meeting}" /></td>
+                <td><c:out value="${subtask.name}" /></td>
+                <td><c:out value="${subtask.status}" /></td>
+                <td><c:out value="${subtask.oEstimate}" /></td>
+                <td><c:out value="${subtask.actualHours[0]}" /></td>
+                <td><c:out value="${subtask.actualHours[1]}" /></td>
+                <td><c:out value="${subtask.actualHours[2]}" /></td>
+                <td><c:out value="${subtask.actualHours[3]}" /></td>
+                <td><c:out value="${subtask.actualHours[4]}" /></td>
                 <td>
-                    <c:url var="editUrl" value="/api/sprint/edit?id=${sprint.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
+                    <c:url var="editUrl" value="/api/subtask/edit?id=${subtask.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
                 </td>
                 <td>
-                    <c:url var="deleteUrl" value="/api/sprint/delete?id=${sprint.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
+                    <c:url var="deleteUrl" value="/api/subtask/delete?id=${subtask.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
                 </td>
 
             </tr>

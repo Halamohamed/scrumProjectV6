@@ -28,6 +28,8 @@
 	            <div>&nbsp;</div>
 
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
+	            <button id="cancelBtn"  type="submit" class=" btn cancelBtn">Back</button>
+
 	        </form:form>
 	    </div>
 	</body>

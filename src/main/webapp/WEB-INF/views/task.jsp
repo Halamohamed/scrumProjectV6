@@ -44,6 +44,9 @@
 	                    	<td>
 	                        	<c:url var="deleteUrl" value="/api/task/delete?id=${task.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
 	                    	</td>
+	                    	<td>
+                             <c:url var="detailUrl" value="/api/task/detail?id=${task.id}" /><a id="detail" href="${detailUrl}" class="btn btn-warning">Sub Tasks</a>
+                           </td>
 	                	</tr>
 	            	</c:forEach>
 	        	</tbody>

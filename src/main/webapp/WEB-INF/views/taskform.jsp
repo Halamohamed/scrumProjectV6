@@ -25,6 +25,8 @@
                 <form:input id="task_name" cssClass="form-control" path="storyPoints" />
 	            <div>&nbsp;</div>
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
+	        <button id="cancelBtn" type="submit" class="cancelBtn">Back</button>
+
 	        </form:form>
 	    </div>
 	</body>

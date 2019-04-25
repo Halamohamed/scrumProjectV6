@@ -70,10 +70,10 @@ public class SprintController {
     // Adding a new sprint or updating an existing sprint.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
-        if (sprint.getId()!="")
+        if (!(sprint.getId().equals("")))
             repository.save(sprint);
         else {
-            Sprint sprint1=Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
+            Sprint sprint1=Sprint.builder().name(sprint.getName()).startSprint(sprint.getStartSprint()).daily_meeting(sprint.getDaily_meeting()).
                     delivery(sprint.getDelivery()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
                     .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
             repository.save(sprint1);
@@ -87,14 +87,14 @@ public class SprintController {
     public String selectTeamToAdd(Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
         model.addAttribute("team",teamRepository.findAll());
-        return "springform";
+        return "sprintform";
     }
     @RequestMapping(value = "/detail/select", method = RequestMethod.POST)
     public String addTeamToSprint(@ModelAttribute("sprintAttr") Team  team,String id) {
         Sprint sprint=repository.findById(id).get();
         sprint.setTeam(team);
         repository.save(sprint);
-        return "redirect:spritform";
+        return "redirect:sprintform";
     }
 
 

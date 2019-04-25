@@ -67,7 +67,7 @@ public class SubTaskController {
     // Adding a new subtask or updating an existing subtask.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("subtaskAttr") SubTask subtask) {
-        if (subtask.getId()!="")
+        if (!(subtask.getId().equals("")))
             repository.save(subtask);
         else {
             SubTask subtask1=SubTask.builder().name(subtask.getName()).actualHours(subtask.getActualHours()).OEstimate(subtask.getOEstimate())
