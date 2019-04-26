@@ -14,27 +14,27 @@
 <style>#sprintT{
 font-family:Arial;
 background-color: red;
-color:black;
+color:white;
 font-size: 20px;
 font-weight: bold;
 }
 </style>
 <div class="container">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <ul class="nav navbar-nav">
-                                <li><a class="navbar-brand" href="/" th:href="@{/}">Home</a></li>
-                                <li><a href="/api/user/users"style="color:red;" th:href="@{/api/user/users}">USERS</a></li>
-                                <li><a href="/api/team/teams"style="color:red;" th:href="@{/api/team/teams}">Teams</a></li>
-                                <li><a href="/api/team/add" style="color:red;"th:href="@{/api/team/add}">Create TEAM</a></li>
-                                <li><a href="/api/sprint/sprints" style="color:red;"th:href="@{api/sprint/sprints}">SPRINTS</a></li>
-                            </ul>
+     <nav class="navbar navbar-default">
+        <div class="container-fluid">
+           <div class="navbar-header">
+              <ul class="nav navbar-nav">
+                 <li><a class="navbar-brand" href="/" th:href="@{/}">Home</a></li>
+                 <li><a href="/api/user/users"style="color:red;" th:href="@{/api/user/users}">USERS</a></li>
+                 <li><a href="/api/team/teams"style="color:red;" th:href="@{/api/team/teams}">Teams</a></li>
+                 <li><a href="/api/team/add" style="color:red;"th:href="@{/api/team/add}">Create TEAM</a></li>
+                 <li><a href="/api/sprint/sprints" style="color:red;"th:href="@{api/sprint/sprints}">SPRINTS</a></li>
+              </ul>
 
-                        </div>
-                    </div>
-                </nav>
-         </div>
+           </div>
+        </div>
+     </nav>
+  </div>
 <div class="container">
    <div id="sprintT"> <h3 id="form_header" class="text-warning" align="center">New Sprint</h3></div>
     <div>&nbsp;</div>
@@ -60,15 +60,16 @@ font-weight: bold;
         <form:input id="sprint_name" cssClass="form-control" path="daily_meeting" />
         <div>&nbsp;</div>
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-        <c:url var="selectUrl" value="/api/sprint/detail/list" />
+        <c:url var="selectUrl" value="/api/sprint" />
 
-            <button id="selectBtn" type="submit" class="btn btn-primary">select team</button>
-        <select var="selectUrl" value="/api/sprint/detail" >
-            <c:forEach items="${teams}" var="team"/>
+            <a type=button href="/api/team/teams" target="_blank" class="btn btn-primary">select team</a>
+        <select var="selectUrl" value="/api/teams" >
+            <c:forEach items="${teams}" var="team">
             <option id="${teams}" value="">select team</option>
             <option value="${team.name}">${team.name}</option>
 
             <option value="${team.name}">${team.name}</option>
+           </c:forEach>
         </select>
         <a type=button href="/api/task/tasks" target="_blank"><h4>Tasks</h4></a>
 

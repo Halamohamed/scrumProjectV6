@@ -70,7 +70,7 @@ public class SprintController {
     // Adding a new sprint or updating an existing sprint.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
-        if (!(sprint.getId().equals("")))
+        if (sprint.getId().equals(""))
             repository.save(sprint);
         else {
             Sprint sprint1=Sprint.builder().name(sprint.getName()).startSprint(sprint.getStartSprint()).daily_meeting(sprint.getDaily_meeting()).
@@ -83,7 +83,7 @@ public class SprintController {
 
 
     //Select one team from teams
-    @RequestMapping(value = "/detail/", method = RequestMethod.GET)
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String selectTeamToAdd(Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
         model.addAttribute("team",teamRepository.findAll());

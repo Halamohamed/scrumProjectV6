@@ -115,7 +115,7 @@ public class TeamController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("teamAttr") Team team) {                  // ,@RequestBody List<User> member_list
        List<User> users= new ArrayList<>();
-        if (team.getId().equals("")) {
+        if (!(team.getId().equals(""))) {
             Team team1 = Team.builder().name(team.getName()).active(true).users(users).build();
             repository.save(team1);
         } else {

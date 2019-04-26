@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import se.BTH.ITProjectManagement.models.SubTask;
-import se.BTH.ITProjectManagement.models.Task;
-import se.BTH.ITProjectManagement.models.TaskStatus;
+import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.SubTaskRepository;
 import se.BTH.ITProjectManagement.repositories.TaskRepository;
 
@@ -51,7 +49,7 @@ public class SubTaskController {
 
     // Opening the edit subtask form page.
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editSubTask(@RequestParam(value="id", required=true) String id, Model model) {
+    public String editSubTask(@RequestParam(value = "id", required = true) String id, Model model) {
         log.debug("Request to open the edit subtask form page");
         model.addAttribute("subtaskAttr", repository.findById(id));
         return "subtaskform";
@@ -59,7 +57,7 @@ public class SubTaskController {
 
     // Deleting the specified subtask.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value="id", required=true) String id, Model model) {
+    public String delete(@RequestParam(value = "id", required = true) String id, Model model) {
         repository.deleteById(id);
         return "redirect:subtasks";
     }
@@ -70,7 +68,7 @@ public class SubTaskController {
         if (!(subtask.getId().equals("")))
             repository.save(subtask);
         else {
-            SubTask subtask1=SubTask.builder().name(subtask.getName()).actualHours(subtask.getActualHours()).Estimate(subtask.getEstimate())
+            SubTask subtask1 = SubTask.builder().name(subtask.getName()).actualHours(subtask.getActualHours()).Estimate(subtask.getEstimate())
                     .status(TaskStatus.PLANNED).users(subtask.getUsers()).build();
             repository.save(subtask1);
         }
@@ -78,6 +76,17 @@ public class SubTaskController {
         return "redirect:subtasks";
     }
 }
+    /*@RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
+    public String actualHours(@RequestParam("id") String id, Model model) {
+        log.debug("Request to fetch all actual hours from the mongo database");
+        SubTask subTask=repository.findAllById(id).getActualHours();
+        User user = repository.findById(id).get().getName();
+        List<Integer> actualhour_list = repository.findByName(user);
+        model.addAttribute("members", actualhour_list);
+        model.addAttribute("team", subTask);
+        return "teammember";
+    }
+}*/
 
 /*
 @RestController
