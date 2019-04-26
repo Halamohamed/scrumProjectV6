@@ -60,7 +60,7 @@ public class TaskController {
     // Adding a new task or updating an existing task.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("taskAttr") Task task) {                  // needs test for edit or create
-        if (!(task.getId().equals("")))
+        if (task.getId().equals(""))
             repository.save(task);
         else {
             Task task1=Task.builder().name(task.getName()).storyPoints(task.getStoryPoints()).priority(task.getPriority())
@@ -70,7 +70,7 @@ public class TaskController {
 
         return "redirect:tasks";
     }
-    @RequestMapping(value = "/detail/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String getSubtasks(Model model) {
         log.debug("Request to fetch all sub tasks from the db for task to add");
         model.addAttribute("taskAttr",subTaskRepository.findAll());

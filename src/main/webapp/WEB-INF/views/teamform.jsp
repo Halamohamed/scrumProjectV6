@@ -9,6 +9,14 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
+	<style>#teamT{
+    font-family:Arial;
+    background-color: red;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    }
+    </style>
 	<div class="container">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
@@ -26,7 +34,7 @@
                 </nav>
          </div>
 	    <div class="container">
-	        <h3 id="form_header" class="text-warning" align="center"> Team</h3>
+	        <div id="teamT"><h3 id="form_header" class="text-warning" align="center"> Team</h3></div>
 	        <div>&nbsp;</div>
 
 			<!-- Team input form to add a new team or update the existing team-->
@@ -34,11 +42,12 @@
 	        <form:form id="team_form" modelAttribute="teamAttr"   method="POST" action="${saveUrl}">
 	        	<form:hidden path="id" />
 	            <label for="team_name">Enter Name: </label>
-	            <form:input id="team_name" cssClass="form-control" path="name" />
+	            <form:input id="team_name" cssClass="form-control" name="id" var="xx" path="name" />
 	            <label for="team_name">Team Activity: </label>
                 <form:input id="team_name" cssClass="form-control" path="Active" />
+                <label for="team_name" >Team members</label>
 	            <div>&nbsp;</div>
-	            <table id="members_table" class="table">
+	            <table id="users_table" class="table">
             	        	<thead>
             	            	<tr align="center">
             	            		<th>Id</th>
@@ -52,9 +61,15 @@
             	                	<tr align="left">
             	                    	<td><c:out value="${user.id}" /></td>
             	                    	<td><c:out value="${user.name}" /></td>
-            	                    	<td>
-            	                        	<c:url var="deleteUrl" value="/api/team/deletemember?id=${user.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Remove</a>
-            	                    	</td>
+            	                    	 <td><form:input path="users[${us.index}].name" value="${user.name}"/></td>
+                                          <td><form:checkbox path="users[${us.index}].active"  value="${user.active}"/></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].id" value="${user.id}" /></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].password" value="${user.password}" /></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].username" value="${user.username}" /></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].roles" value="${user.roles}" /></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].email" value="${user.email}" /></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].phone" value="${user.phone}" /></td>
+                                          <td><form:input type="hidden" path="users[${us.index}].city" value="${user.city}" /></td>
             	                	</tr>
             	            	</c:forEach>
             	        	</tbody>

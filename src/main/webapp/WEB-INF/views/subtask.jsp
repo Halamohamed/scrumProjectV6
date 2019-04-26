@@ -26,12 +26,14 @@
             </nav>
      </div>
 <div class="container">
-    <h2 id="article_header" class="text-warning" align="center">All sprints</h2>
+    <h2 id="article_header" class="text-warning" align="center">All Sub Tasks</h2>
     <div>&nbsp;</div>
 
-    <!-- Div to add a new sub task to the mongo database -->
-
-    <div>&nbsp;</div>
+   <!-- Div to add a new sub task to the mongo database -->
+   	    	<div id="add_new_subtask">
+   	    			<c:url var="addUrl" value="/api/subtask/add" /><a id="add" href="${addUrl}" class="btn btn-success">Add sub task</a>
+   	    	</div>
+   	    	<div>&nbsp;</div>
     <!-- Table to display the sub task list from the mongo database -->
     <table id="subtask_table" class="table">
         <thead>
@@ -39,8 +41,12 @@
 
             <th>Name</th>
             <th>Status</th>
-            <th>OEstimate</th>
-            <th>Actual Hours</th>
+            <th>Estimate</th>
+            <th>Actual Hours day1</th>
+            <th> day2</th>
+            <th> day3</th>
+            <th> day4</th>
+            <th> day5</th>
 
             <th colspan="2"></th>
 
@@ -51,7 +57,7 @@
             <tr align="left">
                 <td><c:out value="${subtask.name}" /></td>
                 <td><c:out value="${subtask.status}" /></td>
-                <td><c:out value="${subtask.oEstimate}" /></td>
+                <td><c:out value="${subtask.Estimate}" /></td>
                 <td><c:out value="${subtask.actualHours[0]}" /></td>
                 <td><c:out value="${subtask.actualHours[1]}" /></td>
                 <td><c:out value="${subtask.actualHours[2]}" /></td>

@@ -12,6 +12,7 @@ import se.BTH.ITProjectManagement.models.User;
 import se.BTH.ITProjectManagement.repositories.TeamRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +33,16 @@ public class TeamController {
         List<Team> team_list = repository.findAll();
         model.addAttribute("teams", team_list);
         return "team";
+    }
+    // add member to team and redirect to team page.
+    @RequestMapping(value = "/addmember", method = RequestMethod.GET)
+    public String addmember(@RequestParam(value = "id", required = true) String id,@RequestParam(value = "teamid", required = true) String teamid,Model model) {
+        Team team=repository.findById(teamid).get();
+        List<User> members=team.getUsers();
+        members.add(userRepository.findById(id).get());
+        team.setUsers(members);
+        repository.save(team);
+        return "redirect:/api/team/edit?id="+team.getId();
     }
 
     //    @RequestMapping(value = "/detail/list", method = RequestMethod.GET)
@@ -63,9 +74,10 @@ public class TeamController {
     public String editTeam(@RequestParam(value = "id", required = true) String id, Model model) {
         log.debug("Request to open the edit team form page");
         Team team = repository.findById(id).get();
-        List<User> member_list = repository.findById(id).get().getUsers();
-        model.addAttribute("members", member_list);
-        model.addAttribute("teamAttr", repository.findById(id));
+        List<User> member_list = team.getUsers();
+//        member_list.removeIf(u -> !u.isActive());
+        team.setUsers(member_list);
+        model.addAttribute("teamAttr", team);
         return "teamform";
     }
 
@@ -80,6 +92,15 @@ public class TeamController {
         team.setUsers(member_list);
         return "redirect/edit?id="+team.getId();
     }
+    @RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
+    public String members(@RequestParam("id") String id, Model model) {
+        log.debug("Request to fetch all users from the mongo database");
+        Team team=repository.findById(id).get();
+        List<User> user_list = userRepository.findAll();
+        model.addAttribute("members", user_list);
+        model.addAttribute("team", team);
+        return "teammember";
+    }
 
     // Deleting the specified team.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -93,8 +114,9 @@ public class TeamController {
     // Adding a new team or updating an existing team.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("teamAttr") Team team) {                  // ,@RequestBody List<User> member_list
+       List<User> users= new ArrayList<>();
         if (team.getId().equals("")) {
-            Team team1 = Team.builder().name(team.getName()).active(true).build();
+            Team team1 = Team.builder().name(team.getName()).active(true).users(users).build();
             repository.save(team1);
         } else {
 

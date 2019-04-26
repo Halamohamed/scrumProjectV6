@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.Role;
 import se.BTH.ITProjectManagement.models.RoleName;
 import se.BTH.ITProjectManagement.models.User;
+import se.BTH.ITProjectManagement.repositories.RoleRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
 import se.BTH.ITProjectManagement.security.SecurityService;
 import se.BTH.ITProjectManagement.security.UserService;
@@ -39,6 +40,9 @@ public class UserController {
     private UserValidator userValidator;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleRepository roleRepository;
+
     // Displaying the initial users list.
 
     @RequestMapping(value = "/api/user/users", method = RequestMethod.GET)
@@ -65,9 +69,9 @@ public class UserController {
 
     // Opening the edit user form page.
     @RequestMapping(value = "/api/user/edit", method = RequestMethod.GET)
-    public String editUser(@RequestParam(value="id", required=true) String id, Model model) {
+    public String editUser(Principal user, Model model) {
         log.debug("Request to open the edit user form page");
-        model.addAttribute("userAttr", repository.findById(id));
+        model.addAttribute("userAttr", repository.findByUsername(user.getName()));
         return "userform";
     }
     @RequestMapping(value = "/api/user/profile", method = RequestMethod.GET)
@@ -85,11 +89,21 @@ public class UserController {
         return "redirect:users";
     }
 
+    @RequestMapping(value = "/api/user/admin", method = RequestMethod.GET)
+    public String admin(@RequestParam(value="id", required=true) String id, Model model) {
+        User user=repository.findById(id).get();
+        List<Role> roles= user.getRoles();
+        roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN));
+        user.setRoles(roles);
+        repository.save(user);
+        return "redirect:users";
+    }
+
     // Adding a new user or updating an existing user.
     @RequestMapping(value = "/api/user/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("userAttr") User user) {                  // needs test for edit or create
             repository.save(user);
-        return "redirect:users";
+        return "redirect:/";
     }
 
     @GetMapping("/registration")

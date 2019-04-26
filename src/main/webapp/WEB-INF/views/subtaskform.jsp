@@ -11,6 +11,14 @@
 
 </head>
 <body>
+<style>#subtaskT{
+font-family:Arial;
+background-color: red;
+color:black;
+font-size: 20px;
+font-weight: bold;
+}
+</style>
 <div class="container">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
@@ -28,7 +36,7 @@
                 </nav>
          </div>
 <div class="container">
-    <h3 id="form_header" class="text-warning" align="center">New Sprint</h3>
+   <div id="subtaskT"> <h3 id="form_header" class="text-warning" align="center">New Sub Task</h3></div>
     <div>&nbsp;</div>
     <!-- Sprint input form to add a new sprint or update the existing sprint-->
     <c:url var="saveUrl" value="/api/subtask/save" />
@@ -42,21 +50,22 @@
                     <option id="${subtasks}" value="">select Status</option>
                     <option value="${subtask.taskStatus}">${subtask.taskStatus}</option>
                 </select>
+                <div>&nbsp; </div>
         <label for="subtask_name">Enter Start OEstimate:</label>
-        <form:input id="subtask_name" cssClass="form-control" path="oEstimate"/>
+        <form:input id="subtask_name" cssClass="form-control" path="Estimate"/>
         <label for="subtask_name">Enter actualHours day1: </label>
-        <form:input id="subtask_name"  cssClass="form-control"  path="actualHours[0]" />
+        <form:input id="subtask_name"  cssClass="form-control"  path="${actualHours[0]}" />
         <label for="subtask_name">Enter actualHours day2: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="actualHours[1]" />
+        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[1]}" />
         <label for="subtask_name">Enter actualHours day3: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="actualHours[2]" />
+        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[2]}" />
         <label for="subtask_name">Enter actualHours day4: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="actualHours[3]" />
+        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[3]}" />
         <label for="subtask_name">Enter actualHours day5: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="actualHours[4]" />
+        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[4]}" />
         <div>&nbsp;</div>
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-
+        <button id="cancelBtn" style="color:blue;" type="submit" class="btn cancelBtn">Back</button>
     </form:form>
 </div>
 

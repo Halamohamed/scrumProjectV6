@@ -83,7 +83,7 @@ public class SprintController {
 
 
     //Select one team from teams
-    @RequestMapping(value = "/detail/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/detail/", method = RequestMethod.GET)
     public String selectTeamToAdd(Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
         model.addAttribute("team",teamRepository.findAll());

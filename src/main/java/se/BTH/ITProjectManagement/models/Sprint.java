@@ -32,10 +32,12 @@ public class Sprint {
     private DayOfWeek review;
     private LocalTime daily_meeting;
     private Set<Task> tasks;
-    private Integer plannedPeriod; // how many days will project take
+    private Integer plannedPeriod; // how many days will sprint take
     private LocalDate startSprint;
 
-    //total eststimate
+    int count=0;
+
+    //total estimate
     public Integer Calculate_total_estimate() {
         int total = tasks.stream().mapToInt(o -> o.getStoryPoints()).sum();
         return total;

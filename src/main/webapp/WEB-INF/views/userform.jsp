@@ -9,14 +9,26 @@
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	</head>
 	<body>
+	<style>#userT{
+    font-family:Arial;
+    background-color: red;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    }
+    </style>
 	    <div class="container">
-	        <h3 id="form_header" class="text-warning" align="center">User Form</h3>
+	     <div id="userT"> <h3 id="form_header" class="text-warning" align="center">User Form</h3></div>
 	        <div>&nbsp;</div>
 	
 			<!-- User input form to add a new user or update the existing user-->
 	        <c:url var="saveUrl" value="/api/user/save" />
 	        <form:form id="user_form" modelAttribute="userAttr" method="POST" action="${saveUrl}">
 	        	<form:hidden path="id" />
+	        		<form:hidden path="password" />
+                	          	<form:hidden path="username" />
+                	            <form:hidden path="roles" />
+                	            <form:hidden path="active" />
 	            <label for="user_name">Enter Name: </label>
 	            <form:input id="user_name" cssClass="form-control" path="name" />
 	            <label for="user_name">Enter Email: </label>
@@ -28,6 +40,7 @@
 	            <div>&nbsp;</div>
 
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
+
 	            <button id="cancelBtn" type="submit" class="btn cancelBtn">Back</button>
 	        </form:form>
 	    </div>

@@ -11,6 +11,14 @@
 
 </head>
 <body>
+<style>#sprintT{
+font-family:Arial;
+background-color: red;
+color:black;
+font-size: 20px;
+font-weight: bold;
+}
+</style>
 <div class="container">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
@@ -28,7 +36,7 @@
                 </nav>
          </div>
 <div class="container">
-    <h3 id="form_header" class="text-warning" align="center">New Sprint</h3>
+   <div id="sprintT"> <h3 id="form_header" class="text-warning" align="center">New Sprint</h3></div>
     <div>&nbsp;</div>
     <!-- Sprint input form to add a new sprint or update the existing sprint-->
     <c:url var="saveUrl" value="/api/sprint/save" />
@@ -55,7 +63,7 @@
         <c:url var="selectUrl" value="/api/sprint/detail/list" />
 
             <button id="selectBtn" type="submit" class="btn btn-primary">select team</button>
-        <select>
+        <select var="selectUrl" value="/api/sprint/detail" >
             <c:forEach items="${teams}" var="team"/>
             <option id="${teams}" value="">select team</option>
             <option value="${team.name}">${team.name}</option>

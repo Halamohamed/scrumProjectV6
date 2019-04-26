@@ -44,6 +44,7 @@
             <th>Retrospective</th>
             <th>Demo</th>
             <th>Review</th>
+            <th>Team</th>
             <th>Daily meeting</th>
             <th colspan="2"></th>
 
@@ -59,6 +60,7 @@
                 <td><c:out value="${sprint.retrospective}" /></td>
                 <td><c:out value="${sprint.demo}" /></td>
                 <td><c:out value="${sprint.review}" /></td>
+                 <td><c:out value="${sprint.team.name}" /></td>
                 <td><c:out value="${sprint.daily_meeting}" /></td>
                 <td>
                     <c:url var="editUrl" value="/api/sprint/edit?id=${sprint.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>

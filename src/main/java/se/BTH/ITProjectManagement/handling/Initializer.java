@@ -46,6 +46,7 @@ public class Initializer implements CommandLineRunner {
 //        sprintRepo.deleteAll();
 //        addPersons();
 //        addBacklog();
+ //       System.out.println(sprintRepo.findById("5cbeb0a1995e1d25a8531169").get());
     }
 
     private void addBacklog() {
@@ -61,7 +62,7 @@ public class Initializer implements CommandLineRunner {
         User user = userrepo.findByUsername("Arti");
         users.add(user);
         SubTask subtask = SubTask.builder().name("Schema Registration").status(TaskStatus.DONE).users(users)
-                .OEstimate(8).actualHours(actualHours).build();
+                .Estimate(8).actualHours(actualHours).build();
         subTasks.add(subtask);
 
         users = new ArrayList<>();
@@ -74,7 +75,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Kevin");
         users.add(user);
         subtask = SubTask.builder().name("implement notification contxt and data").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(40).actualHours(actualHours).build();
+                .Estimate(40).actualHours(actualHours).build();
         subTasks.add(subtask);
 
         users = new ArrayList<>();
@@ -85,7 +86,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Hossein");
         users.add(user);
         subtask = SubTask.builder().name("New notification category").status(TaskStatus.REVIEW).users(users)
-                .OEstimate(2).actualHours(actualHours).build();
+                .Estimate(2).actualHours(actualHours).build();
         subTasks.add(subtask);
         subTaskRepo.saveAll(subTasks);
         Task task = Task.builder().name("Implement of new OTC notification").priority(1).storyPoints(50).subTasks(subTasks)
@@ -102,7 +103,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Emil");
         users.add(user);
         subtask = SubTask.builder().name("Test Analysis").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(24).actualHours(actualHours).build();
+                .Estimate(24).actualHours(actualHours).build();
         subTasks.add(subtask);
 
         users = new ArrayList<>();
@@ -114,7 +115,7 @@ public class Initializer implements CommandLineRunner {
         users.add(user);
 
         subtask = SubTask.builder().name("test data( RMCA & CPM)").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(40).actualHours(actualHours).build();
+                .Estimate(40).actualHours(actualHours).build();
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours.set(0, 0);
@@ -125,7 +126,7 @@ public class Initializer implements CommandLineRunner {
         users.add(user);
 
         subtask = SubTask.builder().name("integration Test").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(40).actualHours(actualHours).build();
+                .Estimate(40).actualHours(actualHours).build();
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours.set(0, 4);
@@ -135,7 +136,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Forhan");
         users.add(user);
         subtask = SubTask.builder().name("Jive Test").status(TaskStatus.PLANNED).users(users)
-                .OEstimate(64).actualHours(actualHours).build();
+                .Estimate(64).actualHours(actualHours).build();
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours.set(0, 0);
@@ -145,7 +146,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Forhan");
         users.add(user);
         subtask = SubTask.builder().name("Jive Protocol").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(8).actualHours(actualHours).build();
+                .Estimate(8).actualHours(actualHours).build();
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours.set(0, 2);
@@ -157,7 +158,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Forhan");
         users.add(user);
         subtask = SubTask.builder().name("XML schemas").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(10).actualHours(actualHours).build();
+                .Estimate(10).actualHours(actualHours).build();
         subTasks.add(subtask);
         subTaskRepo.saveAll(subTasks);
         task = Task.builder().name("Verification").priority(2).storyPoints(178).subTasks(subTasks)
@@ -174,7 +175,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Arti");
         users.add(user);
         subtask = SubTask.builder().name("BSUCstudy doc update").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(16).actualHours(actualHours).build();
+                .Estimate(16).actualHours(actualHours).build();
         subTasks.add(subtask);
 
         users = new ArrayList<>();
@@ -186,7 +187,7 @@ public class Initializer implements CommandLineRunner {
         users.add(user);
 
         subtask = SubTask.builder().name("Maven site update").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(16).actualHours(actualHours).build();
+                .Estimate(16).actualHours(actualHours).build();
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours.set(0, 0);
@@ -197,7 +198,7 @@ public class Initializer implements CommandLineRunner {
         users.add(user);
 
         subtask = SubTask.builder().name("PI documentation update").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(16).actualHours(actualHours).build();
+                .Estimate(16).actualHours(actualHours).build();
 
         subTasks.add(subtask);
         subTaskRepo.saveAll(subTasks);
@@ -216,7 +217,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Emil");
         users.add(user);
         subtask = SubTask.builder().name("New feature Control").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(80).actualHours(actualHours).build();
+                .Estimate(80).actualHours(actualHours).build();
         subTasks.add(subtask);
         subTaskRepo.saveAll(subTasks);
 
@@ -244,7 +245,7 @@ public class Initializer implements CommandLineRunner {
         user = userrepo.findByUsername("Simon");
         users.add(user);
         subtask = SubTask.builder().name("Analyis").status(TaskStatus.ONGOING).users(users)
-                .OEstimate(80).actualHours(actualHours).build();
+                .Estimate(80).actualHours(actualHours).build();
         subTasks.add(subtask);
         subTaskRepo.saveAll(subTasks);
         task = Task.builder().name("Analysis").priority(5).storyPoints(80).subTasks(subTasks)

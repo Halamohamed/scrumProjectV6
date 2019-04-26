@@ -9,8 +9,16 @@
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	</head>
 	<body>
+	<style>#taskT{
+    font-family:Arial;
+    background-color: red;
+    color:black;
+    font-size: 20px;
+    font-weight: bold;
+    }
+    </style>
 	    <div class="container">
-	        <h3 id="form_header" class="text-warning" align="center">Task Form</h3>
+	        <div id="taskT"><h3 id="form_header" class="text-warning" align="center">Task Form</h3></div>
 	        <div>&nbsp;</div>
 
 			<!-- Task input form to add a new task or update the existing task-->
@@ -26,7 +34,9 @@
 	            <div>&nbsp;</div>
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
 	        <button id="cancelBtn" type="submit" class="cancelBtn">Back</button>
-
+             <td>
+              <c:url var="detailUrl" value="/api/task/detail?id=${task.id}" /><a id="detail" href="${detailUrl}" class="btn btn-info">Sub Tasks</a>
+              </td>
 	        </form:form>
 	    </div>
 	</body>
