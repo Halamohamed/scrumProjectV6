@@ -11,14 +11,7 @@
 
 </head>
 <body>
-<style>#sprintT{
-font-family:Arial;
-background-color: red;
-color:white;
-font-size: 20px;
-font-weight: bold;
-}
-</style>
+
 <div class="container">
      <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -36,7 +29,7 @@ font-weight: bold;
      </nav>
   </div>
 <div class="container">
-   <div id="sprintT"> <h3 id="form_header" class="text-warning" align="center">New Sprint</h3></div>
+   <div > <h3 id="form_header" class="text-warning" align="center">New Sprint</h3></div>
     <div>&nbsp;</div>
     <!-- Sprint input form to add a new sprint or update the existing sprint-->
     <c:url var="saveUrl" value="/api/sprint/save" />
@@ -46,31 +39,33 @@ font-weight: bold;
         <form:input id="sprint_name" cssClass="form-control" path="name" />
         <label for="sprint_name">Enter Goal: </label>
         <form:input id="sprint_name" cssClass="form-control" path="goal" />
-        <label for="sprint_name">Enter Start Time:</label>
-        <form:input id="sprint_name" cssClass="form-control" path="startSprint"/>
+        <label for="sprint_name">Enter Start day:</label>
+        <form:input id="sprint_name" type="date" cssClass="form-control" path="startSprint"/>
         <label for="sprint_name">Enter Delivery: </label>
         <form:input id="sprint_name"  cssClass="form-control"  path="delivery" />
         <label for="sprint_name">Enter Retrospective: </label>
-        <form:input id="sprint_name" cssClass="form-control" path="retrospective" />
+        <form:input id="sprint_name" type="date" cssClass="form-control" path="retrospective" />
         <label for="sprint_name">Enter Demo: </label>
-        <form:input id="sprint_name" cssClass="form-control" path="demo" />
+        <form:input id="sprint_name" type="date" cssClass="form-control" path="demo" />
         <label for="sprint_name">Enter Review: </label>
-        <form:input id="sprint_name" cssClass="form-control" path="review" />
+         <form:select id="sprint_name" cssClass="form-control" path="review" >
+                        <form:option value="MONDAY" label="MONDAY"/>
+                        <form:option value="TUESDAY" label="TUESDAY"/>
+                        <form:option value="WEDNESDAY" label="WEDNESDAY"/>
+                        <form:option value="THURSDAY" label="THURSDAY"/>
+                        <form:option value="FRIDAY" label="FRIDAY"/>
+                        </form:select>
         <label for="sprint_name">Enter Daily meeting: </label>
         <form:input id="sprint_name" cssClass="form-control" path="daily_meeting" />
+         <label for="sprint_name">Enter team </label>
+         <form:input id="sprint_name" cssClass="form-control" path="team" />
         <div>&nbsp;</div>
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
         <c:url var="selectUrl" value="/api/sprint" />
-
-            <a type=button href="/api/team/teams" target="_blank" class="btn btn-primary">select team</a>
-        <select var="selectUrl" value="/api/teams" >
-            <c:forEach items="${teams}" var="team">
-            <option id="${teams}" value="">select team</option>
-            <option value="${team.name}">${team.name}</option>
-
-            <option value="${team.name}">${team.name}</option>
-           </c:forEach>
-        </select>
+          <a type=button href="/api/team/teams" target="_blank" class="btn btn-primary">select team</a>
+               <c:url var="sprintteamUrl" value="/api/sprint/teams?id=${sprintAttr.id}" /><a id="view" href="${sprintteamUrl}" class="btn btn-info">Sprint team</a>
+                <c:url var="sprinttaskUrl" value="/api/task/tasks?id=${sprintAttr.id}" /><a id="view" href="${sprinttaskUrl}" class="btn btn-info">Sprint tasks</a>
+                <c:url var="CancelUrl" value="/api/sprint/sprints" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
         <a type=button href="/api/task/tasks" target="_blank"><h4>Tasks</h4></a>
 
 

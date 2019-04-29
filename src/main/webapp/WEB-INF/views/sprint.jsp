@@ -39,7 +39,7 @@
 
             <th>Name</th>
             <th>Goal</th>
-            <th>Start Time</th>
+            <th>Start</th>
             <th>Delivery</th>
             <th>Retrospective</th>
             <th>Demo</th>

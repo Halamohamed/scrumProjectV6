@@ -44,7 +44,7 @@ public class Initializer implements CommandLineRunner {
 //        taskRepo.deleteAll();
 //        subTaskRepo.deleteAll();
 //        sprintRepo.deleteAll();
-//        addPersons();
+//       addPersons();
 //        addBacklog();
  //       System.out.println(sprintRepo.findById("5cbeb0a1995e1d25a8531169").get());
     }
@@ -255,11 +255,14 @@ public class Initializer implements CommandLineRunner {
 
         Sprint sprint = Sprint.builder().plannedPeriod(14).tasks(tasks).team(teamrepo.findByName("Team1").get())
                 .name("CFT55 sprint 1910-1912").daily_meeting(LocalTime.of(13, 00))
-                .delivery(LocalDate.of(2019, 3, 22)).demo(LocalDate.of(2019, 3, 21))
+                .delivery(LocalDate.of(2019, 3, 22)).demo(LocalDate.of(2019, 3, 21)).startSprint(LocalDate.of(2019, 3, 5)).demo(LocalDate.of(2019, 3, 21))
                 .goal("Finish TR HX33029").retrospective(LocalDate.of(2019, 3, 21)).review(DayOfWeek.FRIDAY).build();
+        sprint.calcDelivery();
         sprintRepo.save(sprint);
         Sprint sprint1=sprintRepo.findByName("CFT55 sprint 1910-1912").get();
-       System.out.println(sprint);
+       //System.out.println(sprint);
+        System.out.println(sprint1.getDelivery().toString());
+        System.out.println(sprint1.getStartSprint().toString());
     }
 
 

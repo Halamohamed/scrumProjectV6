@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -26,16 +27,32 @@ public class Sprint {
     private Team team;
     private String name;
     private String goal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate delivery;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate retrospective;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate demo;
     private DayOfWeek review;
     private LocalTime daily_meeting;
     private Set<Task> tasks;
     private Integer plannedPeriod; // how many days will sprint take
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startSprint;
 
-    int count=0;
+    public LocalDate calcDelivery(){
+        int count=0;
+        this.delivery= startSprint.minusDays(1);
+        // System.out.println("delivery="+this.delivery+"start="+this.start+"count ="+count);
+        while (!(this.plannedPeriod.equals(count))){
+            if (!(this.delivery.getDayOfWeek().equals(DayOfWeek.SATURDAY)) && !(this.delivery.getDayOfWeek().equals(DayOfWeek.SUNDAY)))
+                count++;
+            this.delivery = this.delivery.plusDays(1);
+            //   System.out.println("delivery="+this.delivery+"start="+this.start+"count ="+count);
+        }
+        return this.delivery;
+    }
+
 
     //total estimate
     public Integer Calculate_total_estimate() {

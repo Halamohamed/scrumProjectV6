@@ -11,14 +11,6 @@
 
 </head>
 <body>
-<style>#subtaskT{
-font-family:Arial;
-background-color: red;
-color:white;
-font-size: 20px;
-font-weight: bold;
-}
-</style>
 <div class="container">
       <nav class="navbar navbar-default">
          <div class="container-fluid">
@@ -36,7 +28,7 @@ font-weight: bold;
       </nav>
          </div>
 <div class="container">
-   <div id="subtaskT"> <h3 id="form_header" class="text-warning" align="center">New Sub Task</h3></div>
+   <div > <h3 id="form_header" class="text-warning" align="center">New Sub Task</h3></div>
     <div>&nbsp;</div>
     <!-- Sprint input form to add a new sprint or update the existing sprint-->
     <c:url var="saveUrl" value="/api/subtask/save" />
@@ -45,14 +37,12 @@ font-weight: bold;
         <label for="subtask_name">Enter Name: </label>
         <form:input id="subtask_name" cssClass="form-control" path="name" />
         <label for="subtask_name">Enter Status: </label>
-         <select id="subtask_name" cssClass="form-control" path="status" >
-           <c:forEach items="${subtasks}" var="subtask"/>
-                    <option id="${subtasks}" value="">select Status</option>
-                    <option value="${subtask.taskStatus}">${subtask.taskStatus}</option>
-                    <option value="1">Planned</option>
-                    <option value="2">Ongoing</option>
-                    <option value="3">Review</option>
-                   <option value="4">Done</option>
+         <form:select id="subtask_name" cssClass="form-control" path="status" >
+                    <form:option value="${subtask.taskStatus}" label="${subtask.taskStatus}" />
+                    <form:option value="1" label="Planned"/>
+                    <form:option value="2" label="Ongoing"/>
+                    <form:option value="3" label="Review" />
+                   <form:option value="4" label="Done" />
 
 
          </select>

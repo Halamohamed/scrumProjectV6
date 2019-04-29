@@ -9,14 +9,6 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
-	<style>#teamT{
-    font-family:Arial;
-    background-color: red;
-    color:white;
-    font-size: 20px;
-    font-weight: bold;
-    }
-    </style>
 	<div class="container">
                 <nav class="navbar navbar-default">
                     <div class="container-fluid">
@@ -34,7 +26,7 @@
                 </nav>
          </div>
 	    <div class="container">
-	        <div id="teamT"><h3 id="form_header" class="text-warning" align="center"> Team</h3></div>
+	        <div ><h3 id="form_header" class="text-warning" align="center"> Team</h3></div>
 	        <div>&nbsp;</div>
 
 			<!-- Team input form to add a new team or update the existing team-->
@@ -46,6 +38,10 @@
 	            <label for="team_name">Team Activity: </label>
                 <form:input id="team_name" cssClass="form-control" path="Active" />
                 <label for="team_name" >Team members</label>
+                  <form:select id="team_name" cssClass="form-control" path="Active">
+                                        <form:option value="true" label="true"/>
+                                        <form:option value="false" label="false"/>
+                                        </form:select>
 	            <div>&nbsp;</div>
 	            <table id="users_table" class="table">
             	        	<thead>

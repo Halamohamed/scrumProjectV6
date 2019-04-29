@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import se.BTH.ITProjectManagement.models.Sprint;
 import se.BTH.ITProjectManagement.models.Team;
 
 
 import se.BTH.ITProjectManagement.models.User;
+import se.BTH.ITProjectManagement.repositories.SprintRepository;
 import se.BTH.ITProjectManagement.repositories.TeamRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
 
@@ -26,6 +28,9 @@ public class TeamController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SprintRepository sprintRepository;
+
     // Displaying the initial teams list.
     @RequestMapping(value = "/teams", method = RequestMethod.GET)
     public String getTeams(Model model) {
@@ -33,6 +38,24 @@ public class TeamController {
         List<Team> team_list = repository.findAll();
         model.addAttribute("teams", team_list);
         return "team";
+    }
+
+    // Opening the edit team form page.
+    @RequestMapping(value = "/sprintteam", method = RequestMethod.GET)
+    public String sprintteam(@RequestParam(value = "id", required = true) String id, Model model) {
+        log.debug("Request to open the edit team form page");
+        Team team;
+        Sprint sprint = sprintRepository.findById(id).get();
+        if (sprint.getTeam() != null) {
+            team = sprint.getTeam();
+            List<User> member_list = team.getUsers();
+            member_list.removeIf(u -> !u.isActive());
+            team.setUsers(member_list);
+        }
+        else team =Team.builder().active(true).users(new ArrayList<>()).build();
+        model.addAttribute("teamAttr", team);
+        model.addAttribute("sprintid", sprint.getId());
+        return "sprintteamform";
     }
     // add member to team and redirect to team page.
     @RequestMapping(value = "/addmember", method = RequestMethod.GET)
@@ -44,6 +67,7 @@ public class TeamController {
         repository.save(team);
         return "redirect:/api/team/edit?id="+team.getId();
     }
+
 
     //    @RequestMapping(value = "/detail/list", method = RequestMethod.GET)
 //    public String selectMemberToAdd(Model model) {
@@ -124,6 +148,7 @@ public class TeamController {
         }
         return "redirect:teams";
     }
+
 }
 /*
 @RestController

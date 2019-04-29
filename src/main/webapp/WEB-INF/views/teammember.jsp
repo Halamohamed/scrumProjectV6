@@ -47,7 +47,7 @@
 	                    	<td><c:out value="${user.name}" /></td>
 	                    	<td>
 	<c:url var="addUrl" value="/api/team/addmember?id=${user.id}&teamid=${team.id}" />
-	<a id="add" href="${addUrl}" class="btn btn-success">Add</a>
+	<a id="add" href="${addUrl}" class="btn btn-success">Select</a>
 	                    	</td>
 	                	</tr>
 	            	</c:forEach>

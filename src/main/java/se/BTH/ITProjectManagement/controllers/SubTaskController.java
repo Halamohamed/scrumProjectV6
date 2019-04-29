@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.SubTaskRepository;
 import se.BTH.ITProjectManagement.repositories.TaskRepository;
+import se.BTH.ITProjectManagement.repositories.UserRepository;
 
 
 import javax.validation.Valid;
@@ -29,6 +30,8 @@ public class SubTaskController {
 
     @Autowired
     private SubTaskRepository repository;
+    @Autowired
+    private UserRepository userRepository;
 
     // Displaying the initial subtasks list.
     @RequestMapping(value = "/subtasks", method = RequestMethod.GET)
@@ -75,31 +78,29 @@ public class SubTaskController {
 
         return "redirect:subtasks";
     }
-}
-    /*@RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
-    public String actualHours(@RequestParam("id") String id, Model model) {
-        log.debug("Request to fetch all actual hours from the mongo database");
-        SubTask subTask=repository.findAllById(id).getActualHours();
-        User user = repository.findById(id).get().getName();
-        List<Integer> actualhour_list = repository.findByName(user);
-        model.addAttribute("members", actualhour_list);
-        model.addAttribute("team", subTask);
+    @RequestMapping(value = "/member", method = RequestMethod.GET) //must be put and add search
+    public String members(@RequestParam("id") String id, Model model) {
+        log.debug("Request to fetch all users from the mongo database");
+        SubTask subTask=repository.findById(id).get();
+        String user = userRepository.findById(id).get().getName();
+        model.addAttribute("members", user);
+        model.addAttribute("subtask", subTask);
         return "teammember";
     }
-}*/
+
+    @RequestMapping(value = "/member/actualhours", method = RequestMethod.GET) //must be put and add search
+    public String actualHours(@RequestParam("id") String id, Model model) {
+        log.debug("Request to fetch all actual hours from the mongo database");
+        List<Integer> subTaskH=repository.findById(id).get().getActualHours();
+        String user = repository.findById(id).get().getName();
+        List<Integer> actualhour_list = repository.findByName(user).get().getActualHours();
+        model.addAttribute("members", actualhour_list);
+        model.addAttribute("subtask", subTaskH);
+        return "teammember";
+    }
+}
 
 /*
-@RestController
-@RequestMapping("/api")
-public class SubTaskController {
-    private final Logger log = LoggerFactory.getLogger(TaskController.class);
-
-    @Autowired
-    private SubTaskRepository repository;
-
-    public SubTaskController(SubTaskRepository repository) {
-        this.repository = repository;
-    }
 
     @GetMapping("/subtasks")
     Collection<SubTask> subtasks() {

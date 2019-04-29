@@ -17,6 +17,7 @@ import se.BTH.ITProjectManagement.repositories.TeamRepository;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.AttributedString;
 import java.util.*;
 
 @Controller
@@ -70,35 +71,45 @@ public class SprintController {
     // Adding a new sprint or updating an existing sprint.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
+       Sprint sprint1;
         if (sprint.getId().equals(""))
             repository.save(sprint);
-        else {
-            Sprint sprint1=Sprint.builder().name(sprint.getName()).startSprint(sprint.getStartSprint()).daily_meeting(sprint.getDaily_meeting()).
-                    delivery(sprint.getDelivery()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
-                    .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
-            repository.save(sprint1);
-        }
+            if (sprint.getTeam() == null) {
+                sprint1 = Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
+                        startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
+                        .retrospective(sprint.getRetrospective()).review(sprint.getReview()).tasks(sprint.getTasks()).build();
+            } else {
+                sprint1 = Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
+                        startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
+                        .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
+                sprint1.calcDelivery();
+                repository.save(sprint1);
+            }
+
         return "redirect:sprints";
     }
 
 
     //Select one team from teams
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public String selectTeamToAdd(Model model) {
+    @RequestMapping(value = "/teams", method = RequestMethod.GET)
+    public String viewTeamselect(@RequestParam(value = "id", required = true)String id ,Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
         model.addAttribute("team",teamRepository.findAll());
+        model.addAttribute("sprintid", id );
         return "sprintform";
     }
-    @RequestMapping(value = "/detail/select", method = RequestMethod.POST)
-    public String addTeamToSprint(@ModelAttribute("sprintAttr") Team  team,String id) {
-        Sprint sprint=repository.findById(id).get();
-        sprint.setTeam(team);
+    @RequestMapping(value = "/addteam", method = RequestMethod.POST)
+    public String addTeamToSprint(@RequestParam(value = "id",required = true) String  sprintid,@RequestParam(value = "teamid", required = true) String teamid, Model model) {
+        Sprint sprint=repository.findById(sprintid).get();
+        sprint.setTeam(teamRepository.findById(teamid).get());
         repository.save(sprint);
-        return "redirect:sprintform";
+            return "redirect:/api/sprint/edit?id=" + sprint.getId();
+
     }
 
 
 }
+
 /*
 @RestController
 @RequestMapping("/api")

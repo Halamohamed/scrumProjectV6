@@ -9,16 +9,8 @@
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	</head>
 	<body>
-	<style>#userT{
-    font-family:Arial;
-    background-color: red;
-    color:white;
-    font-size: 20px;
-    font-weight: bold;
-    }
-    </style>
 	    <div class="container">
-	     <div id="userT"> <h3 id="form_header" class="text-warning" align="center">User Form</h3></div>
+	     <div > <h3 id="form_header" class="text-warning" align="center">User Form</h3></div>
 	        <div>&nbsp;</div>
 	
 			<!-- User input form to add a new user or update the existing user-->
