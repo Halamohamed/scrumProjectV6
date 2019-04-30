@@ -55,15 +55,15 @@ public class SprintController {
 
     // Opening the edit sprint form page.
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editSprint(@RequestParam(value="id", required=true) String id, Model model) {
+    public String editSprint(@RequestParam(value="id") String id, Model model) {
         log.debug("Request to open the edit Sprint form page");
-        model.addAttribute("sprintAttr", repository.findById(id));
+        model.addAttribute("sprintAttr", repository.findById(id).get());
         return "sprintform";
     }
 
     // Deleting the specified sprint.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value="id", required=true) String id, Model model) {
+    public String delete(@RequestParam(value="id") String id, Model model) {
         repository.deleteById(id);
         return "redirect:sprints";
     }
@@ -92,18 +92,19 @@ public class SprintController {
 
     //Select one team from teams
     @RequestMapping(value = "/teams", method = RequestMethod.GET)
-    public String viewTeamselect(@RequestParam(value = "id", required = true)String id ,Model model) {
+    public String viewTeamToSelect(@RequestParam(value = "id")String id ,Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
         model.addAttribute("team",teamRepository.findAll());
         model.addAttribute("sprintid", id );
         return "sprintform";
     }
     @RequestMapping(value = "/addteam", method = RequestMethod.POST)
-    public String addTeamToSprint(@RequestParam(value = "id",required = true) String  sprintid,@RequestParam(value = "teamid", required = true) String teamid, Model model) {
+    public String addTeamToSprint(@RequestParam(value = "sprintid") String  sprintid,@RequestParam(value = "teamid") String teamid, Model model) {
         Sprint sprint=repository.findById(sprintid).get();
         sprint.setTeam(teamRepository.findById(teamid).get());
         repository.save(sprint);
-            return "redirect:/api/sprint/edit?id=" + sprint.getId();
+        model.addAttribute("sprintAttr", sprint);
+            return "redirect:/api/sprint/edit?sprintid=" + sprint.getId();
 
     }
 

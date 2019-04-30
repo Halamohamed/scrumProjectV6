@@ -36,19 +36,28 @@
         <form:hidden path="id" />
         <label for="subtask_name">Enter Name: </label>
         <form:input id="subtask_name" cssClass="form-control" path="name" />
+        <label for="subtask_name" >select user:</label>
+        <form:input id="subtask_name" cssClass="form-control" path="users" />
+        <c:forEach items="${subtask.users}" var="user">
+                    <tr onMouseOver="this.bgColor='#EEEEEE';" onMouseOut="this.bgColor='';">
+                     <td><c:out default="&nbsp;" escapeXml="false" value="${subtask.users[users]}"/></td>
+                 </c:forEach>
         <label for="subtask_name">Enter Status: </label>
          <form:select id="subtask_name" cssClass="form-control" path="status" >
+         <c:forEach items="${subtask.taskStatus}" var="status">
+            <tr onMouseOver="this.bgColor='#EEEEEE';" onMouseOut="this.bgColor='';">
+             <td><c:out default="&nbsp;" escapeXml="false" value="${subtask.status[taskStatus]}"/></td>
+         </c:forEach>
                     <form:option value="${subtask.taskStatus}" label="${subtask.taskStatus}" />
-                    <form:option value="1" label="Planned"/>
-                    <form:option value="2" label="Ongoing"/>
-                    <form:option value="3" label="Review" />
-                   <form:option value="4" label="Done" />
-
-
-         </select>
+                    <form:option value="PLANNED" label="PLANNED"/>
+                    <form:option value="ONGOING" label="ONGOING"/>
+                    <form:option value="REVIEW" label="REVIEW" />
+                   <form:option value="DONE" label="DONE" />
+                    <form:option value="DISCARDED" label="DISCARDED" />
+         </form:select>
                 <div>&nbsp; </div>
         <label for="subtask_name">Enter Start OEstimate:</label>
-        <form:input id="subtask_name" cssClass="form-control" path="Estimate"/>
+        <form:input id="subtask_name" cssClass="form-control" path="OEstimate"/>
         <label for="subtask_name">Enter actualHours day1: </label>
         <form:input id="subtask_name"  cssClass="form-control"  path="${actualHours[0]}" />
         <label for="subtask_name">Enter actualHours day2: </label>
@@ -60,6 +69,7 @@
         <label for="subtask_name">Enter actualHours day5: </label>
         <form:input id="subtask_name" cssClass="form-control" path="${actualHours[4]}" />
         <div>&nbsp;</div>
+
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
         <button id="cancelBtn" color="blue" type="submit" class="btn cancelBtn">Back</button>
     </form:form>

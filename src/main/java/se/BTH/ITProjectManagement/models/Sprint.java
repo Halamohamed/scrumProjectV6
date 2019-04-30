@@ -3,6 +3,7 @@ package se.BTH.ITProjectManagement.models;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -33,7 +34,9 @@ public class Sprint {
     private LocalDate retrospective;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate demo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private DayOfWeek review;
+
     private LocalTime daily_meeting;
     private Set<Task> tasks;
     private Integer plannedPeriod; // how many days will sprint take

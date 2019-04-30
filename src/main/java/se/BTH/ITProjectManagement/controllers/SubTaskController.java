@@ -46,7 +46,7 @@ public class SubTaskController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addSubTask(Model model) {
         log.debug("Request to open the new subtask form page");
-        model.addAttribute("subtaskAttr", SubTask.builder().Estimate(0).build());
+        model.addAttribute("subtaskAttr", SubTask.builder().OEstimate(0).build());
         return "subtaskform";
     }
 
@@ -71,7 +71,7 @@ public class SubTaskController {
         if (!(subtask.getId().equals("")))
             repository.save(subtask);
         else {
-            SubTask subtask1 = SubTask.builder().name(subtask.getName()).actualHours(subtask.getActualHours()).Estimate(subtask.getEstimate())
+            SubTask subtask1 = SubTask.builder().name(subtask.getName()).actualHours(subtask.getActualHours()).OEstimate(subtask.getOEstimate())
                     .status(TaskStatus.PLANNED).users(subtask.getUsers()).build();
             repository.save(subtask1);
         }

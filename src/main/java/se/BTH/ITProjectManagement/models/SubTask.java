@@ -20,7 +20,7 @@ public class SubTask {
     private String id;
     private String name;
     private TaskStatus status;
-    private Integer Estimate; //planned hours
+    private Integer OEstimate; //planned hours
     private List<Integer> actualHours;
     private List<User> users;
 

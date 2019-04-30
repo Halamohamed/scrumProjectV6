@@ -40,13 +40,16 @@
         <tr align="center">
 
             <th>Name</th>
+            <th>User</th>
             <th>Status</th>
-            <th>Estimate</th>
+            <th>Original Estimate</th>
             <th>Actual Hours day1</th>
             <th> day2</th>
             <th> day3</th>
             <th> day4</th>
             <th> day5</th>
+            <th> day6</th>
+            <th> day7</th>
 
             <th colspan="2"></th>
 
@@ -56,13 +59,16 @@
         <c:forEach items="${subtasks}" var="subtask">
             <tr align="left">
                 <td><c:out value="${subtask.name}" /></td>
+                <td><c:out value="${subtask.users[users]}" /></td>
                 <td><c:out value="${subtask.status}" /></td>
-                <td><c:out value="${subtask.Estimate}" /></td>
+                <td><c:out value="${subtask.OEstimate}" /></td>
                 <td><c:out value="${subtask.actualHours[0]}" /></td>
                 <td><c:out value="${subtask.actualHours[1]}" /></td>
                 <td><c:out value="${subtask.actualHours[2]}" /></td>
                 <td><c:out value="${subtask.actualHours[3]}" /></td>
                 <td><c:out value="${subtask.actualHours[4]}" /></td>
+                 <td><c:out value="${subtask.actualHours[5]}" /></td>
+                 <td><c:out value="${subtask.actualHours[6]}" /></td>
                 <td>
                     <c:url var="editUrl" value="/api/subtask/edit?id=${subtask.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
                 </td>
