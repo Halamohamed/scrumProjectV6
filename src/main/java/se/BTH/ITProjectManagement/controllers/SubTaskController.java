@@ -18,6 +18,7 @@ import se.BTH.ITProjectManagement.repositories.UserRepository;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +47,7 @@ public class SubTaskController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addSubTask(Model model) {
         log.debug("Request to open the new subtask form page");
-        model.addAttribute("subtaskAttr", SubTask.builder().OEstimate(0).build());
+        model.addAttribute("subtaskAttr", SubTask.builder().OEstimate(0).actualHours(new ArrayList<>()).build());
         return "subtaskform";
     }
 
@@ -98,6 +99,7 @@ public class SubTaskController {
         model.addAttribute("subtask", subTaskH);
         return "teammember";
     }
+
 }
 
 /*

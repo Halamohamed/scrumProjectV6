@@ -65,6 +65,7 @@
           <a type=button href="/api/team/teams" target="_blank" class="btn btn-primary">select team</a>
           <c:url var="addteamUrl" value="/api/sprint/teams?id=${sprintAttr.id}" /><a id="view" href="${addteamUrl}" class="btn btn-info">Sprint teams</a>
                 <c:url var="sprinttaskUrl" value="/api/task/tasks?id=${sprintAttr.id}" /><a id="view" href="${sprinttaskUrl}" class="btn btn-info">Sprint tasks</a>
+                    <c:url var="sprintteamUrl" value="/api/team/sprintteam?id=${sprintAttr.id}" /><a id="view" href="${sprintteamUrl}" class="btn btn-info">Sprint team</a>
                 <c:url var="CancelUrl" value="/api/sprint/sprints" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
         <a type=button href="/api/task/tasks" target="_blank"><h4>Tasks</h4></a>
 

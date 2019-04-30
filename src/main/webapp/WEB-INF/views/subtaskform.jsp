@@ -39,8 +39,18 @@
         <label for="subtask_name" >select user:</label>
         <form:input id="subtask_name" cssClass="form-control" path="users" />
         <c:forEach items="${subtask.users}" var="user">
-                    <tr onMouseOver="this.bgColor='#EEEEEE';" onMouseOut="this.bgColor='';">
-                     <td><c:out default="&nbsp;" escapeXml="false" value="${subtask.users[users]}"/></td>
+                    <form action="/action_page.php" method="get">
+                      <input list="browsers" name="browser">
+                      <datalist id="browsers">
+                        <option value="Internet Explorer">
+                        <option value="Firefox">
+                        <option value="Chrome">
+                        <option value="Opera">
+                        <option value="Safari">
+                      </datalist>
+                      <input type="submit">
+                    </form>
+                     <td><c:out default="&nbsp;" escapeXml="false" value="${subtask.users[users.name]}"/></td>
                  </c:forEach>
         <label for="subtask_name">Enter Status: </label>
          <form:select id="subtask_name" cssClass="form-control" path="status" >
@@ -68,6 +78,11 @@
         <form:input id="subtask_name" cssClass="form-control" path="${actualHours[3]}" />
         <label for="subtask_name">Enter actualHours day5: </label>
         <form:input id="subtask_name" cssClass="form-control" path="${actualHours[4]}" />
+         <label for="subtask_name">Enter actualHours day6: </label>
+                <form:input id="subtask_name" cssClass="form-control" path="${actualHours[5]}" />
+                <label for="subtask_name">Enter actualHours day7: </label>
+                <form:input id="subtask_name" cssClass="form-control" path="${actualHours[6]}" />
+
         <div>&nbsp;</div>
 
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>

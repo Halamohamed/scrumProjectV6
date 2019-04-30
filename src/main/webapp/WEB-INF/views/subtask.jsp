@@ -59,7 +59,7 @@
         <c:forEach items="${subtasks}" var="subtask">
             <tr align="left">
                 <td><c:out value="${subtask.name}" /></td>
-                <td><c:out value="${subtask.users[users]}" /></td>
+                <td><c:out value="${subtask.users[users.name]}" /></td>
                 <td><c:out value="${subtask.status}" /></td>
                 <td><c:out value="${subtask.OEstimate}" /></td>
                 <td><c:out value="${subtask.actualHours[0]}" /></td>
