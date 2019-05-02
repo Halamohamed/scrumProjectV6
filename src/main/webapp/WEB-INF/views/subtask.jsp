@@ -36,50 +36,39 @@
    	    	<div>&nbsp;</div>
     <!-- Table to display the sub task list from the mongo database -->
     <table id="subtask_table" class="table">
-        <thead>
-        <tr align="center">
+       <thead>
+       	            	<tr align="center">
+       	            		<th>priority</th>
+       	            		<th>Name</th>
+       	            		<th>StoryPoints</th>
+       	            		<th colspan="2"></th>
 
-            <th>Name</th>
-            <th>User</th>
-            <th>Status</th>
-            <th>Original Estimate</th>
-            <th>Actual Hours day1</th>
-            <th> day2</th>
-            <th> day3</th>
-            <th> day4</th>
-            <th> day5</th>
-            <th> day6</th>
-            <th> day7</th>
+       	            	</tr>
+       	        	</thead>
+       	        	<tbody>
+       	            	<c:forEach items="${subtasks}" var="subtask">
+       	                	<tr align="left">
+       	                	     <form:hidden path="id" />
+       	                    	<td><c:out value="${subtask.priority}" /></td>
+       	                    	<td><c:out value="${subtask.name}" /></td>
+       	                    	<td><c:out value="${subtask.storyPoints}" /></td>
 
-            <th colspan="2"></th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${subtasks}" var="subtask">
-            <tr align="left">
-                <td><c:out value="${subtask.name}" /></td>
-                <td><c:out value="${subtask.users[users.name]}" /></td>
-                <td><c:out value="${subtask.status}" /></td>
-                <td><c:out value="${subtask.OEstimate}" /></td>
-                <td><c:out value="${subtask.actualHours[0]}" /></td>
-                <td><c:out value="${subtask.actualHours[1]}" /></td>
-                <td><c:out value="${subtask.actualHours[2]}" /></td>
-                <td><c:out value="${subtask.actualHours[3]}" /></td>
-                <td><c:out value="${subtask.actualHours[4]}" /></td>
-                 <td><c:out value="${subtask.actualHours[5]}" /></td>
-                 <td><c:out value="${subtask.actualHours[6]}" /></td>
-                <td>
-                    <c:url var="editUrl" value="/api/subtask/edit?id=${subtask.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
-                </td>
-                <td>
-                    <c:url var="deleteUrl" value="/api/subtask/delete?id=${subtask.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
-                </td>
+       	                    	<td>
+       	                        	<c:url var="editUrl" value="/api/subtask/edit?id=${subtask.id}&sprintid=${sprintid}" />
+       	                        	<a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
+       	                    	</td>
+       	                    	<td>
+       	                        	<c:url var="deleteUrl" value="/api/subtask/delete?id=${subtask.id}&sprintid=${sprintid}" />
+       	                        	<a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
+       	                    	</td>
 
-            </tr>
-        </c:forEach>
-        </tbody>
+       	                	</tr>
+       	            	</c:forEach>
+       	        	</tbody>
     </table>
+     <c:url var="CancelUrl" value="/api/sprint/edit?sprintid=${sprintid}" />
+     <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
 </div>
 
 </body>

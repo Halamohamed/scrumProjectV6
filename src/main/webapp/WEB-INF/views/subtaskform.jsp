@@ -19,7 +19,7 @@
                  <li><a class="navbar-brand" href="/" th:href="@{/}">Home</a></li>
                  <li><a href="/api/user/users"style="color:red;" th:href="@{/api/user/users}">USERS</a></li>
                  <li><a href="/api/team/teams"style="color:red;" th:href="@{/api/team/teams}">Teams</a></li>
-                 <li><a href="/api/team/add" style="color:red;"th:href="@{/api/team/add}">Create TEAM</a></li>
+                  <li><a href="/api/sprint/add"style="color:red;" th:href="@{/api/sprint/add}">Create Sprint</a></li>
                  <li><a href="/api/sprint/sprints" style="color:red;"th:href="@{api/sprint/sprints}">SPRINTS</a></li>
                </ul>
 
@@ -36,23 +36,7 @@
         <form:hidden path="id" />
         <label for="subtask_name">Enter Name: </label>
         <form:input id="subtask_name" cssClass="form-control" path="name" />
-        <label for="subtask_name" >select user:</label>
-        <form:input id="subtask_name" cssClass="form-control" path="users" />
-        <c:forEach items="${subtask.users}" var="user">
-                    <form action="/action_page.php" method="get">
-                      <input list="browsers" name="browser">
-                      <datalist id="browsers">
-                        <option value="Internet Explorer">
-                        <option value="Firefox">
-                        <option value="Chrome">
-                        <option value="Opera">
-                        <option value="Safari">
-                      </datalist>
-                      <input type="submit">
-                    </form>
-                     <td><c:out default="&nbsp;" escapeXml="false" value="${subtask.users[users.name]}"/></td>
-                 </c:forEach>
-        <label for="subtask_name">Enter Status: </label>
+       <label for="subtask_name">Enter Status: </label>
          <form:select id="subtask_name" cssClass="form-control" path="status" >
          <c:forEach items="${subtask.taskStatus}" var="status">
             <tr onMouseOver="this.bgColor='#EEEEEE';" onMouseOut="this.bgColor='';">
@@ -68,25 +52,56 @@
                 <div>&nbsp; </div>
         <label for="subtask_name">Enter Start OEstimate:</label>
         <form:input id="subtask_name" cssClass="form-control" path="OEstimate"/>
-        <label for="subtask_name">Enter actualHours day1: </label>
-        <form:input id="subtask_name"  cssClass="form-control"  path="${actualHours[0]}" />
-        <label for="subtask_name">Enter actualHours day2: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[1]}" />
-        <label for="subtask_name">Enter actualHours day3: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[2]}" />
-        <label for="subtask_name">Enter actualHours day4: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[3]}" />
-        <label for="subtask_name">Enter actualHours day5: </label>
-        <form:input id="subtask_name" cssClass="form-control" path="${actualHours[4]}" />
-         <label for="subtask_name">Enter actualHours day6: </label>
-                <form:input id="subtask_name" cssClass="form-control" path="${actualHours[5]}" />
-                <label for="subtask_name">Enter actualHours day7: </label>
-                <form:input id="subtask_name" cssClass="form-control" path="${actualHours[6]}" />
+        <div>&nbsp; </div>
+         <label for="subtask_name">Assigned to: </label>
+                        	            <table id="users_table" class="table">
+                                    	        	<thead>
+                                    	            	<tr align="center">
+                                    	            	  <th>Name</th>
+                                    	            		<th colspan="2"></th>
+                                    	            	</tr>
+                                    	        	</thead>
+                                    	        	<tbody>
+                                    	            	<c:forEach items="${subtaskAttr.users}" varStatus="st" var="user"   >
+                                    	                	<tr align="left">
+                                    	                	    <td><form:input path="users[${st.index}].name" cssClass="form-control" value="${user.name}"/></td>
+                                    	                	    <td><form:input type="hidden" path="users[${st.index}].email"  value="${user.email}"/></td>
+                                                                <td><form:input type="hidden" path="users[${st.index}].phone"  value="${user.phone}"/></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].city"  value="${user.city}"/></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].roles"  value="${user.roles}"/></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].active"  value="${user.active}"/></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].id" value="${user.id}" /></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].username"  value="${user.username}"/></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].password"  value="${user.password}"/></td>
+                                    	                    	<td><form:input type="hidden" path="users[${st.index}].passwordConfirm"  value="${user.passwordConfirm}"/></td>
 
+                                    	                   	</tr>
+                                    	            	</c:forEach>
+                                    	        	</tbody>
+                                    	 </table>
+                         <div>&nbsp;</div>
+                         <label for="subtask_name">Actual Hours: </label>
+                              <table id="actualHours_table" class="table">
+                                    <thead>
+                                        <tr align="center">
+                                        <th>Day</th>
+                                         <th>actualHours</th>
+                                         <th colspan="2"></th>
+                                        </tr>
+                                      </thead>
+                                    <tbody>
+                                       <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
+                                          <tr align="left">
+                                             <td>Day ${st.index+1}</td>
+                                             <td><form:input path="actualHours[${st.index}]" cssClass="form-control" value="${actualHour}"/></td>
+                                            </tr>
+                                       </c:forEach>
+                                    </tbody>
         <div>&nbsp;</div>
 
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-        <button id="cancelBtn" color="blue" type="submit" class="btn cancelBtn">Back</button>
+          <c:url var="CancelUrl" value="/api/task/edit?id=${taskid}&sprintid=${sprintid}" />
+          <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
     </form:form>
 </div>
 

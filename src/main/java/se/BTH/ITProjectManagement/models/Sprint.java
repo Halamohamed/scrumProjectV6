@@ -36,18 +36,27 @@ public class Sprint {
     private LocalDate demo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private DayOfWeek review;
-
+    //@DateTimeFormat(pattern = "hh:mm")
     private LocalTime daily_meeting;
-    private Set<Task> tasks;
+    private List<Task> tasks;
     private Integer plannedPeriod; // how many days will sprint take
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startSprint;
+
+    public int findTaskIndex(Task task){
+        int index=-1;
+        for (Task temp:this.tasks) {
+            index++;
+            if (temp.getId().equals(task.getId()))
+                return index;
+        }return index;
+    }
 
     public LocalDate calcDelivery(){
         int count=0;
         this.delivery= startSprint.minusDays(1);
         // System.out.println("delivery="+this.delivery+"start="+this.start+"count ="+count);
-        while (!(this.plannedPeriod.equals(count))){
+        while (!this.plannedPeriod.equals(count)){
             if (!(this.delivery.getDayOfWeek().equals(DayOfWeek.SATURDAY)) && !(this.delivery.getDayOfWeek().equals(DayOfWeek.SUNDAY)))
                 count++;
             this.delivery = this.delivery.plusDays(1);

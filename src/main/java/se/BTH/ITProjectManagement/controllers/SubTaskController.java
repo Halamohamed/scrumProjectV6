@@ -53,9 +53,13 @@ public class SubTaskController {
 
     // Opening the edit subtask form page.
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editSubTask(@RequestParam(value = "id", required = true) String id, Model model) {
+    public String editSubTask(@RequestParam(value = "id", required = true) String id, Model model,
+                              @RequestParam(value = "sprintid", required = true) String sprintid ,
+                              @RequestParam(value = "taskid", required = true) String taskid) {
         log.debug("Request to open the edit subtask form page");
-        model.addAttribute("subtaskAttr", repository.findById(id));
+        model.addAttribute("subtaskAttr", repository.findById(id).get());
+        model.addAttribute("taskid", taskid);
+        model.addAttribute("sprintid", sprintid);
         return "subtaskform";
     }
 
@@ -69,7 +73,7 @@ public class SubTaskController {
     // Adding a new subtask or updating an existing subtask.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("subtaskAttr") SubTask subtask) {
-        if (!(subtask.getId().equals("")))
+        if (!subtask.getId().equals(""))
             repository.save(subtask);
         else {
             SubTask subtask1 = SubTask.builder().name(subtask.getName()).actualHours(subtask.getActualHours()).OEstimate(subtask.getOEstimate())

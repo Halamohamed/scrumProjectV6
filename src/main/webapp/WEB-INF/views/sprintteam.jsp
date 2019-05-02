@@ -45,13 +45,15 @@
 	                    	<td><c:out value="${team.name}" /></td>
 	                    	<td><c:out value="${team.active}" /></td>
 	                        <td>
-	                        	<c:url var="addUrl" value="/api/sprint/teams?id=${sprintid}&teamid=${team.id}" /><a id="add" href="${addUrl}" class="btn btn-success">Add</a>
+	                        	<c:url var="addUrl" value="/api/sprint/addteam?id=${sprintid}&teamid=${team.id}" />
+	                        	<a id="add" href="${addUrl}" class="btn btn-success">Add to sprint</a>
 	                    	</td>
-
 	                	</tr>
 	            	</c:forEach>
 	        	</tbody>
 	    	</table>
+	    	    <c:url var="CancelUrl" value="/api/team/sprintteam?sprintid=${sprintid}" />
+	    	    <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
 	 </div>
 	</body>
 </html>

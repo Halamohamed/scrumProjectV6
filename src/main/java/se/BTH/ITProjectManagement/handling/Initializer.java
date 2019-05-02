@@ -51,11 +51,11 @@ public class Initializer implements CommandLineRunner {
 
     private void addBacklog() {
         List<Sprint> sprints= new ArrayList<>();
-        Set<Task> tasks = new HashSet<>();
+        List<Task> tasks = new ArrayList<>();
         //add first task
         List<User> users = new ArrayList<>();
         List<Integer> actualHours = new ArrayList<>();
-        Set<SubTask> subTasks = new HashSet<>();
+        List<SubTask> subTasks = new ArrayList<>();
         actualHours.add(0, 1);
         actualHours.add(1, 0);
         actualHours.add(2, 4);
@@ -96,7 +96,7 @@ public class Initializer implements CommandLineRunner {
         // add  task 2
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        subTasks = new HashSet<>();
+        subTasks = new ArrayList<>();
         actualHours.add(0, 1);
         actualHours.add(1, 1);
         actualHours.add(2, 0);
@@ -168,7 +168,7 @@ public class Initializer implements CommandLineRunner {
 //add task 3
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        subTasks = new HashSet<>();
+        subTasks = new ArrayList<>();
         actualHours.add(0, 0);
         actualHours.add(1, 0);
         actualHours.add(2, 0);
@@ -210,7 +210,7 @@ public class Initializer implements CommandLineRunner {
         //add task 4
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        subTasks = new HashSet<>();
+        subTasks = new ArrayList<>();
         actualHours.add(0, 0);
         actualHours.add(1, 0);
         actualHours.add(2, 0);
@@ -228,7 +228,7 @@ public class Initializer implements CommandLineRunner {
 //add task 5
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        subTasks = new HashSet<>();
+        subTasks = new ArrayList<>();
         actualHours.add(0, 6);
         actualHours.add(1, 0);
         actualHours.add(2, 6);

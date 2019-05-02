@@ -5,16 +5,33 @@
 	<head>
 		<title>Task</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	</head>
+	     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+	     </head>
 	<body>
+	<div class="container">
+                        <nav class="navbar navbar-default">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <ul class="nav navbar-nav">
+                                        <li><a class="navbar-brand" href="/" th:href="@{/}">Home</a></li>
+                                        <li><a href="/api/user/users"style="color:red;" th:href="@{/api/user/users}">USERS</a></li>
+                                        <li><a href="/api/team/teams"style="color:red;" th:href="@{/api/team/teams}">Teams</a></li>
+                                        <li><a href="/api/team/add" style="color:red;"th:href="@{/api/team/add}">Create TEAM</a></li>
+                                        <li><a href="/api/sprint/sprints" style="color:red;"th:href="@{api/sprint/sprints}">SPRINTS</a></li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </nav>
+                 </div>
 		<div class="container">
-			<h2 id="article_header" class="text-warning" align="center">All tasks</h2>
+			<h2 id="article_header" class="text-warning" align="center">sprint tasks</h2>
 	    	<div>&nbsp;</div>
 
 	    	<!-- Div to add a new task to the mongo database -->
 	    	<div id="add_new_task">
-	    			<c:url var="addUrl" value="/api/task/add" /><a id="add" href="${addUrl}" class="btn btn-success">Add task</a>
+	    			<c:url var="addUrl" value="/api/task/add?sprintid=${sprintid}" />
+	    			<a id="add" href="${addUrl}" class="btn btn-success">Add task</a>
 	    	</div>
 	    	<div>&nbsp;</div>
 
@@ -32,23 +49,24 @@
 	        	</thead>
 	        	<tbody>
 	            	<c:forEach items="${tasks}" var="task">
-	                	<tr align="center">
-	                    	<td><c:out value="${task.id}" /></td>
-	                    	<td><c:out value="${task.priority}" /></td>
-	                    	<td><c:out value="${task.name}" /></td>
-	                    	<td><c:out value="${task.storyPoints}" /></td>
+	                	<tr align="left">
+	                    	<form:hidden path="id" />
+	                    	<td><c:out value="${task.priority}" />${task.priority}</td>
+	                    	<td><c:out value="${task.name}" />${task.name}</td>
+	                    	<td><c:out value="${task.storyPoints}" />${task.storyPoints}</td>
 
 	                    	<td>
-	                        	<c:url var="editUrl" value="/api/task/edit?id=${task.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
+	                        	<c:url var="editUrl" value="/api/task/edit?id=${task.id}&sprintid=${sprintid}" />
+	                        	<a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
 	                    	</td>
-	                    	<td>
-	                        	<c:url var="deleteUrl" value="/api/task/delete?id=${task.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
-	                    	</td>
+
 
 	                	</tr>
 	            	</c:forEach>
 	        	</tbody>
 	    	</table>
+	    	 	  <c:url var="CancelUrl" value="/api/sprint/edit?sprintid=${sprintid}" />
+	    	 	  <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
 		</div>
 	</body>
 </html>

@@ -71,8 +71,7 @@
             	        	</tbody>
             	 </table>
             	<button  id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-            	<button id="cancelBtn" style="color:blue;" type="submit" class="btn cancelBtn">Back</button>
-
+<c:url var="CancelUrl" value="/api/team/teams" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
             	</form:form>
 	    </div>
 	</body>

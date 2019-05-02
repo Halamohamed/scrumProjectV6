@@ -28,6 +28,15 @@ public class Team {
         return active = !active;
     }
 
+    public boolean isMemberExist(User user){
+        for(User u : this.getUsers()){
+            if(user.getId().equals(u.getId())) {
+                return true;
+            }
+        }
+         return false;
+    }
+
     @Override
     public String toString() {
         ObjectMapper mapper = new ObjectMapper();

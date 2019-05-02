@@ -55,7 +55,7 @@ public class SprintController {
 
     // Opening the edit sprint form page.
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editSprint(@RequestParam(value="id") String id, Model model) {
+    public String editSprint(@RequestParam(value="sprintid") String id, Model model) {
         log.debug("Request to open the edit Sprint form page");
         model.addAttribute("sprintAttr", repository.findById(id).get());
         return "sprintform";
@@ -71,20 +71,21 @@ public class SprintController {
     // Adding a new sprint or updating an existing sprint.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
-       Sprint sprint1;
-        if (sprint.getId().equals(""))
+       Sprint sprint1=sprint;
+        if(!sprint.getId().equals("")) {
+            sprint.calcDelivery();
             repository.save(sprint);
+        }
+            else {
             if (sprint.getTeam() == null) {
                 sprint1 = Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
                         startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
                         .retrospective(sprint.getRetrospective()).review(sprint.getReview()).tasks(sprint.getTasks()).build();
-            } else {
-                sprint1 = Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
-                        startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
-                        .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
-                sprint1.calcDelivery();
-                repository.save(sprint1);
-            }
+
+                            }
+           // sprint1.calcDelivery();
+            repository.save(sprint1);
+        }
 
         return "redirect:sprints";
     }
@@ -104,7 +105,7 @@ public class SprintController {
         sprint.setTeam(teamRepository.findById(teamid).get());
         repository.save(sprint);
         model.addAttribute("sprintAttr", sprint);
-            return "redirect:/api/sprint/edit?sprintid=" + sprint.getId();
+            return "redirect:/api/sprint/edit?sprintid=" + sprintid;
 
     }
 

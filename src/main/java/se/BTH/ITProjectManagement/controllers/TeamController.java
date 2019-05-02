@@ -41,50 +41,38 @@ public class TeamController {
     }
 
     // Opening the edit team form page.
+    // Opening the edit team form page.
     @RequestMapping(value = "/sprintteam", method = RequestMethod.GET)
-    public String sprintteam(@RequestParam(value = "id", required = true) String id, Model model) {
+    public String sprintteam(@RequestParam(value = "sprintid", required = true) String id, Model model) {
         log.debug("Request to open the edit team form page");
         Team team;
         Sprint sprint = sprintRepository.findById(id).get();
         if (sprint.getTeam() != null) {
             team = sprint.getTeam();
             List<User> member_list = team.getUsers();
-            member_list.removeIf(u -> !u.isActive());
+            member_list.removeIf(u -> u.isActive() == false);
             team.setUsers(member_list);
-        }
-        else team =Team.builder().active(true).users(new ArrayList<>()).build();
+        } else team = Team.builder().active(true).users(new ArrayList<>()).build();
         model.addAttribute("teamAttr", team);
-        model.addAttribute("sprintid", sprint.getId());
+        model.addAttribute("sprintid", id);
         return "sprintteamform";
     }
+
     // add member to team and redirect to team page.
     @RequestMapping(value = "/addmember", method = RequestMethod.GET)
     public String addmember(@RequestParam(value = "id", required = true) String id,@RequestParam(value = "teamid", required = true) String teamid,Model model) {
         Team team=repository.findById(teamid).get();
         List<User> members=team.getUsers();
-        members.add(userRepository.findById(id).get());
-        team.setUsers(members);
+        User user = userRepository.findById(id).get();
+        if(!team.isMemberExist(user)){
+            team.getUsers().add(user);
+            team.setUsers(members);
+        }
         repository.save(team);
-        return "redirect:/api/team/edit?id="+team.getId();
+        return "redirect:/api/team/edit?id=" + team.getId();
     }
 
-
-    //    @RequestMapping(value = "/detail/list", method = RequestMethod.GET)
-//    public String selectMemberToAdd(Model model) {
-//        log.debug("Request to fetch all users from the db for custom team and select member");
-//        model.addAttribute("members",userRepository.findAll());
-//        return "teammemberform";
-//    }
-//    @RequestMapping(value = "/detail/select", method = RequestMethod.POST)
-//    public String save(@ModelAttribute("userAttr") User user,String id) {
-//        Team team=repository.findById(id).get();
-//        List<User> members=team.getUsers();
-//        members.add(user);
-//        team.setUsers(members);
-//        repository.save(team);
-//        return "redirect:teammember";
-//    }
-    // Opening the add new team form page.
+// Opening the add new team form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addTeam(Model model) {
         log.debug("Request to open the new team form page");
@@ -98,9 +86,7 @@ public class TeamController {
     public String editTeam(@RequestParam(value = "id", required = true) String id, Model model) {
         log.debug("Request to open the edit team form page");
         Team team = repository.findById(id).get();
-        List<User> member_list = team.getUsers();
-//        member_list.removeIf(u -> !u.isActive());
-        team.setUsers(member_list);
+
         model.addAttribute("teamAttr", team);
         return "teamform";
     }
@@ -130,8 +116,8 @@ public class TeamController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(@RequestParam(value = "id", required = true) String id, Model model) {
         Team team = repository.findById(id).get();
-        team.changeActive();
-        repository.save(team);
+            team.changeActive();
+            repository.save(team);
         return "redirect:teams";
     }
 
@@ -139,11 +125,13 @@ public class TeamController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("teamAttr") Team team) {                  // ,@RequestBody List<User> member_list
        List<User> users= new ArrayList<>();
-        if (!(team.getId().equals(""))) {
+        if (team.getId().equals("")) {
             Team team1 = Team.builder().name(team.getName()).active(true).users(users).build();
             repository.save(team1);
         } else {
-
+            List<User> member_list = team.getUsers();
+            member_list.removeIf(u -> !u.isActive());
+            team.setUsers(member_list);
             repository.save(team);
         }
         return "redirect:teams";
