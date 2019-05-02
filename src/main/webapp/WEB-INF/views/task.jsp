@@ -51,16 +51,18 @@
 	            	<c:forEach items="${tasks}" var="task">
 	                	<tr align="left">
 	                    	<form:hidden path="id" />
-	                    	<td><c:out value="${task.priority}" />${task.priority}</td>
-	                    	<td><c:out value="${task.name}" />${task.name}</td>
-	                    	<td><c:out value="${task.storyPoints}" />${task.storyPoints}</td>
+	                    	<td><c:out value="${task.priority}" /></td>
+	                    	<td><c:out value="${task.name}" /></td>
+	                    	<td><c:out value="${task.storyPoints}" /></td>
 
 	                    	<td>
 	                        	<c:url var="editUrl" value="/api/task/edit?id=${task.id}&sprintid=${sprintid}" />
 	                        	<a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
 	                    	</td>
-
-
+	                    	<td>
+                                <c:url var="deleteUrl" value="/api/task/delete?id=${task.id}&sprintid=${sprintid}" />
+                                <a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
+                            </td>
 	                	</tr>
 	            	</c:forEach>
 	        	</tbody>

@@ -73,7 +73,7 @@ public class SprintController {
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
        Sprint sprint1=sprint;
         if(!sprint.getId().equals("")) {
-            sprint.calcDelivery();
+            //sprint.calcDelivery();
             repository.save(sprint);
         }
             else {
@@ -81,9 +81,11 @@ public class SprintController {
                 sprint1 = Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
                         startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
                         .retrospective(sprint.getRetrospective()).review(sprint.getReview()).tasks(sprint.getTasks()).build();
-
-                            }
-           // sprint1.calcDelivery();
+            } else{ sprint1 = Sprint.builder().name(sprint.getName()).daily_meeting(sprint.getDaily_meeting()).
+                    startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
+                    .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
+            }
+            sprint1.calcDelivery();
             repository.save(sprint1);
         }
 

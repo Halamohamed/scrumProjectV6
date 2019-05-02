@@ -43,20 +43,20 @@
                                         <form:option value="false" label="false"/>
                                         </form:select>
 	            <div>&nbsp;</div>
+	            <label for="team_name">Team members: </label>
+                                <div>&nbsp;</div>
 	            <table id="users_table" class="table">
             	        	<thead>
             	            	<tr align="center">
-            	            		<th>Id</th>
             	            		<th>Name</th>
+            	            		<th>Member in team</th>
             	            		<th colspan="2"></th>
 
             	            	</tr>
             	        	</thead>
             	        	<tbody>
-            	            	<c:forEach items="${members}" var="user">
+            	            	<c:forEach items="${teamAttr.users}" varStatus="us" var="user">
             	                	<tr align="left">
-            	                    	<td><c:out value="${user.id}" /></td>
-            	                    	<td><c:out value="${user.name}" /></td>
             	                    	 <td><form:input path="users[${us.index}].name" value="${user.name}"/></td>
                                           <td><form:checkbox path="users[${us.index}].active"  value="${user.active}"/></td>
                                           <td><form:input type="hidden" path="users[${us.index}].id" value="${user.id}" /></td>
@@ -71,7 +71,9 @@
             	        	</tbody>
             	 </table>
             	<button  id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-<c:url var="CancelUrl" value="/api/team/teams" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
+            	<c:url var="addUrl" value="/api/team/members?id=${teamAttr.id}" />
+            	<a id="add" href="${addUrl}" class="btn btn-info">Add member</a>
+                <c:url var="CancelUrl" value="/api/team/teams" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
             	</form:form>
 	    </div>
 	</body>

@@ -35,10 +35,13 @@ public class TaskController {
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     public String getTasks(@RequestParam(value="sprintid", required=true) String sprintid,Model model) {
         log.debug("Request to fetch all tasks for custom sprint from the mongo database");
+
         Sprint sprint=sprintRepository.findById(sprintid).get();
-        List<Task> task_list = sprint.getTasks();
-        model.addAttribute("tasks", task_list);
-        model.addAttribute("sprintid",sprintid);
+        if(!sprint.equals("")) {
+            List<Task> task_list = sprint.getTasks();
+            model.addAttribute("tasks", task_list);
+            model.addAttribute("sprintid", sprintid);
+        }
         return "task";
     }
     // Opening the add new task form page.

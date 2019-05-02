@@ -2,13 +2,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
 <head>
     <title>Sub Task form</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 <body>
 <div class="container">
@@ -22,7 +20,6 @@
                   <li><a href="/api/sprint/add"style="color:red;" th:href="@{/api/sprint/add}">Create Sprint</a></li>
                  <li><a href="/api/sprint/sprints" style="color:red;"th:href="@{api/sprint/sprints}">SPRINTS</a></li>
                </ul>
-
             </div>
          </div>
       </nav>
@@ -98,13 +95,10 @@
                                        </c:forEach>
                                     </tbody>
         <div>&nbsp;</div>
-
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
           <c:url var="CancelUrl" value="/api/task/edit?id=${taskid}&sprintid=${sprintid}" />
           <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
     </form:form>
 </div>
-
-
 </body>
 </html>
