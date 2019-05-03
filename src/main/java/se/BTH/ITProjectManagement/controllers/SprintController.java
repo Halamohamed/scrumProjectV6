@@ -71,9 +71,10 @@ public class SprintController {
     // Adding a new sprint or updating an existing sprint.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
-       Sprint sprint1=sprint;
+       Sprint sprint1;
         if(!sprint.getId().equals("")) {
             //sprint.calcDelivery();
+            sprint.setTeam( repository.findById(sprint.getId()).get().getTeam());
             repository.save(sprint);
         }
             else {
@@ -95,11 +96,12 @@ public class SprintController {
 
     //Select one team from teams
     @RequestMapping(value = "/teams", method = RequestMethod.GET)
-    public String viewTeamToSelect(@RequestParam(value = "id")String id ,Model model) {
+    public String viewTeamToSelect(@RequestParam(value = "sprintid")String id ,Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
-        model.addAttribute("team",teamRepository.findAll());
+        Team team = repository.findById(id).get().getTeam();
+        model.addAttribute("teams",teamRepository.findAll());
         model.addAttribute("sprintid", id );
-        return "sprintform";
+        return "sprintteam";
     }
     @RequestMapping(value = "/addteam", method = RequestMethod.POST)
     public String addTeamToSprint(@RequestParam(value = "sprintid") String  sprintid,@RequestParam(value = "teamid") String teamid, Model model) {

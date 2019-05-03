@@ -1,11 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-	    <title>Select Team</title>
+	    <title>Subtask Team</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 	</head>
@@ -27,7 +26,7 @@
                 </nav>
          </div>
 	    <div class="container">
-	        <h3 id="form_header" class="text-warning" align="center"> Team</h3>
+	        <h3 id="form_header" class="text-warning" align="center">Sprint Team</h3>
 	        <div>&nbsp;</div>
 
 			<!-- Team input form to add a new team or update the existing team-->
@@ -57,14 +56,14 @@
             	                	    <td><c:out value="${user.name}"/></td>
             	                	    <td><c:out value="${user.email}"/></td>
             	                	    <td><c:out value="${user.phone}"/></td>
+            	                	    <td>
+                                          <c:url var="addUrl" value="/api/subtask/addmember?userid=${user.id}&id=${id}&taskid=${taskid}&sprintid=${sprintid}" /><a id="add" href="${addUrl}" class="btn btn-success">Select</a>
+            	                	    </td>
             	                	</tr>
             	            	</c:forEach>
             	        	</tbody>
             	 </table>
-            	<c:url var="AddteamUrl" value="/api/sprint/teams?id=${sprintid}" />
-            	<a id="addteam" href="${AddteamUrl}" class="btn btn-success">Select team</a>
-            	<c:url var="CancelUrl" value="/api/sprint/edit?sprintid=${sprintid}" />
-            	<a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
+            	<c:url var="CancelUrl" value="/api/subtask/edit?&id=${id}&taskid=${taskid}&sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
             	</form:form>
 	    </div>
 

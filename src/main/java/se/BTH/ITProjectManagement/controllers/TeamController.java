@@ -41,7 +41,6 @@ public class TeamController {
     }
 
     // Opening the edit team form page.
-    // Opening the edit team form page.
     @RequestMapping(value = "/sprintteam", method = RequestMethod.GET)
     public String sprintteam(@RequestParam(value = "sprintid", required = true) String id, Model model) {
         log.debug("Request to open the edit team form page");
@@ -50,7 +49,7 @@ public class TeamController {
         if (sprint.getTeam() != null) {
             team = sprint.getTeam();
             List<User> member_list = team.getUsers();
-            member_list.removeIf(u -> u.isActive() == false);
+            member_list.removeIf(u -> !u.isActive());
             team.setUsers(member_list);
         } else team = Team.builder().active(true).users(new ArrayList<>()).build();
         model.addAttribute("teamAttr", team);
@@ -60,7 +59,8 @@ public class TeamController {
 
     // add member to team and redirect to team page.
     @RequestMapping(value = "/addmember", method = RequestMethod.GET)
-    public String addmember(@RequestParam(value = "id", required = true) String id,@RequestParam(value = "teamid", required = true) String teamid,Model model) {
+    public String addmember(@RequestParam(value = "id", required = true) String id,
+                            @RequestParam(value = "teamid", required = true) String teamid,Model model) {
         Team team=repository.findById(teamid).get();
         List<User> members=team.getUsers();
         User user = userRepository.findById(id).get();

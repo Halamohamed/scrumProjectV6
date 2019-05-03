@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,6 +24,14 @@ public class SubTask {
     private Integer OEstimate; //planned hours
     private List<Integer> actualHours;
     private List<User> users;
+
+    public static List<Integer> intiActualHoursList(int dayes){
+        List<Integer> temp=new ArrayList<>();
+        for (int i = 0; i <dayes ; i++) {
+            temp.add(0);
+        }
+        return temp;
+    }
 
     @Override
     public String toString() {

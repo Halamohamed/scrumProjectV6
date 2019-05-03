@@ -38,10 +38,13 @@
     <table id="subtask_table" class="table">
        <thead>
        	            	<tr align="center">
-       	            		<th>priority</th>
-       	            		<th>Name</th>
-       	            		<th>StoryPoints</th>
-       	            		<th colspan="2"></th>
+
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Estimate</th>
+                                        <th>Actual hours</th>
+                                        <th>Users</th>
+                                        <th colspan="2"></th>
 
        	            	</tr>
        	        	</thead>
@@ -49,9 +52,12 @@
        	            	<c:forEach items="${subtasks}" var="subtask">
        	                	<tr align="left">
        	                	     <form:hidden path="id" />
-       	                    	<td><c:out value="${subtask.priority}" /></td>
        	                    	<td><c:out value="${subtask.name}" /></td>
-       	                    	<td><c:out value="${subtask.storyPoints}" /></td>
+       	                    	<td><c:out value="${subtask.status}" /></td>
+       	                    	<td><c:out value="${subtask.OEstimate}" /></td>
+       	                    	<td><c:out value="${subtask.actualHours}" /></td>
+                                <td><c:out value="${subtask.users}" /></td>
+
 
 
        	                    	<td>

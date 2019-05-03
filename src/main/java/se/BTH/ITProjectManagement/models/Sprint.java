@@ -43,14 +43,16 @@ public class Sprint {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startSprint;
 
-    public int findTaskIndex(Task task){
-        int index=-1;
-        for (Task temp:this.tasks) {
+    public int findTaskIndex(String taskid) {
+        int index = -1;
+        for (Task temp : this.tasks) {
             index++;
-            if (temp.getId().equals(task.getId()))
+            if (temp.getId().equals(taskid))
                 return index;
-        }return index;
+        }
+        return index;
     }
+
 
     public LocalDate calcDelivery(){
         int count=0;

@@ -63,8 +63,10 @@
                                                	</tbody>
                                          </table>
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-	               <c:url var="addUrl" value="/api/task/subtasks?id=${taskAttr.id}&sprintid=${sprintid}" /><a id="add" href="${addUrl}" class="btn btn-info">Add subTask</a>
-                   <c:url var="CancelUrl" value="/api/task/tasks?sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
+	               <c:url var="addUrl" value="/api/task/subtasks?id=${taskAttr.id}&sprintid=${sprintid}" />
+	               <a id="add" href="${addUrl}" class="btn btn-info">Add subTask</a>
+                   <c:url var="CancelUrl" value="/api/task/tasks?sprintid=${sprintid}" />
+                   <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
    <td>
               </td>
 	        </form:form>

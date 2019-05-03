@@ -37,11 +37,10 @@ public class TaskController {
         log.debug("Request to fetch all tasks for custom sprint from the mongo database");
 
         Sprint sprint=sprintRepository.findById(sprintid).get();
-        if(!sprint.equals("")) {
             List<Task> task_list = sprint.getTasks();
             model.addAttribute("tasks", task_list);
             model.addAttribute("sprintid", sprintid);
-        }
+
         return "task";
     }
     // Opening the add new task form page.
@@ -65,12 +64,12 @@ public class TaskController {
 
     // Deleting the specified task.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value="id", required=true) String id,
+    public String delete(@RequestParam(value="taskid", required=true) String id,
                          @RequestParam(value = "sprintid",required = true)String sprintid, Model model) {
         Sprint sprint= sprintRepository.findById(sprintid).get();
         List<Task> tasks= sprint.getTasks();
         Task task= repository.findById(id).get();
-        tasks.remove(sprint.findTaskIndex(task));
+        tasks.remove(sprint.findTaskIndex(id));
         sprint.setTasks(tasks);
         sprintRepository.save(sprint);
         for(SubTask temp: task.getSubTasks()){
@@ -87,7 +86,8 @@ public class TaskController {
             repository.save(task);
             Sprint sprint= sprintRepository.findById(sprintid).get();
             List<Task> tasks=sprint.getTasks();
-            tasks.set(sprint.findTaskIndex(task),task);
+            tasks.remove(sprint.findTaskIndex(task.getId()));
+            tasks.set(sprint.findTaskIndex(task.getId()),task);
             sprint.setTasks(tasks);
             sprintRepository.save(sprint);
         }
