@@ -153,7 +153,12 @@ public class SubTaskController {
                             @RequestParam(value = "sprintid", required = true) String sprintid, Model model) {
         Sprint sprint = sprintRepository.findById(sprintid).get();
         Task task = taskRepository.findById(taskid).get();
+        if(task.equals("")) {
+            sprint.setTasks(new ArrayList<>());
+
+        }
         SubTask subTask = repository.findById(subtaskid).get();
+
         List<User>users=subTask.getUsers();
         if (users==null)
             users=new ArrayList<>();

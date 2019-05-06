@@ -44,9 +44,9 @@ public class Initializer implements CommandLineRunner {
 //        taskRepo.deleteAll();
 //        subTaskRepo.deleteAll();
 //        sprintRepo.deleteAll();
-//       addPersons();
+//        addPersons();
 //        addBacklog();
- //       System.out.println(sprintRepo.findById("5cbeb0a1995e1d25a8531169").get());
+      // System.out.println(sprintRepo.findById("5cbeb0a1995e1d25a8531169").get());
     }
 
     private void addBacklog() {
@@ -88,10 +88,10 @@ public class Initializer implements CommandLineRunner {
 
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        actualHours.set(0, 8);
-        actualHours.set(1, 4);
-        actualHours.set(2, 6);
-        actualHours.set(1, 6);
+        actualHours.add(0, 8);
+        actualHours.add(1, 4);
+        actualHours.add(2, 6);
+        actualHours.add(1, 6);
         for (int i= 4; i<14; i++){
             actualHours.add(0);
         }
@@ -138,10 +138,10 @@ public class Initializer implements CommandLineRunner {
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        actualHours.set(0, 0);
-        actualHours.set(1, 0);
-        actualHours.set(2, 0);
-        actualHours.set(3, 2);
+        actualHours.add(0, 0);
+        actualHours.add(1, 0);
+        actualHours.add(2, 0);
+        actualHours.add(3, 2);
         for (int i= 4; i<14; i++){
             actualHours.add(0);
         }
@@ -153,10 +153,10 @@ public class Initializer implements CommandLineRunner {
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        actualHours.set(0, 4);
-        actualHours.set(1, 0);
-        actualHours.set(2, 0);
-        actualHours.set(3, 0);
+        actualHours.add(0, 4);
+        actualHours.add(1, 0);
+        actualHours.add(2, 0);
+        actualHours.add(3, 0);
         for (int i= 4; i<14; i++){
             actualHours.add(0);
         }
@@ -167,10 +167,10 @@ public class Initializer implements CommandLineRunner {
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        actualHours.set(0, 0);
-        actualHours.set(1, 0);
-        actualHours.set(2, 0);
-        actualHours.set(3, 1);
+        actualHours.add(0, 0);
+        actualHours.add(1, 0);
+        actualHours.add(2, 0);
+        actualHours.add(3, 1);
         for (int i= 4; i<14; i++){
             actualHours.add(0);
         }
@@ -181,10 +181,10 @@ public class Initializer implements CommandLineRunner {
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        actualHours.set(0, 2);
-        actualHours.set(1, 0);
-        actualHours.set(2, 12);
-        actualHours.set(3, 11);
+        actualHours.add(0, 2);
+        actualHours.add(1, 0);
+        actualHours.add(2, 12);
+        actualHours.add(3, 11);
         for (int i= 4; i<14; i++){
             actualHours.add(0);
         }
@@ -233,10 +233,10 @@ public class Initializer implements CommandLineRunner {
         subTasks.add(subtask);
         users = new ArrayList<>();
         actualHours = new ArrayList<>();
-        actualHours.set(0, 0);
-        actualHours.set(1, 0);
-        actualHours.set(2, 0);
-        actualHours.set(3, 2);
+        actualHours.add(0, 0);
+        actualHours.add(1, 0);
+        actualHours.add(2, 0);
+        actualHours.add(3, 2);
         for (int i= 4; i<14; i++){
             actualHours.add(0);
         }
@@ -305,8 +305,7 @@ public class Initializer implements CommandLineRunner {
         tasks.add(task);
         taskRepo.saveAll(tasks);
 
-        Sprint sprint = Sprint.builder().plannedPeriod(14).tasks(tasks).team(teamrepo.findByName("Team1").get())
-                .name("CFT55 sprint 1910-1912").daily_meeting(LocalTime.of(13, 00))
+        Sprint sprint = Sprint.builder().plannedPeriod(14).tasks(tasks).team(teamrepo.findByName("Team1").get()).name("CFT55 sprint 1910-1912").daily_meeting(LocalTime.of(13, 00))
                 .delivery(LocalDate.of(2019, 3, 22)).demo(LocalDate.of(2019, 3, 21)).startSprint(LocalDate.of(2019, 3, 5)).demo(LocalDate.of(2019, 3, 21))
                 .goal("Finish TR HX33029").retrospective(LocalDate.of(2019, 3, 21)).review(DayOfWeek.FRIDAY).build();
         sprint.calcDelivery();

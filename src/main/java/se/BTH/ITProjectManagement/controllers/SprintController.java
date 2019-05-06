@@ -87,7 +87,7 @@ public class SprintController {
                     startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
                     .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
             }
-            sprint1.calcDelivery();
+            //sprint1.calcDelivery();
             repository.save(sprint1);
         }
 
@@ -104,8 +104,9 @@ public class SprintController {
         model.addAttribute("sprintid", id );
         return "sprintteam";
     }
-    @RequestMapping(value = "/addteam", method = RequestMethod.POST)
-    public String addTeamToSprint(@RequestParam(value = "sprintid") String  sprintid,@RequestParam(value = "teamid") String teamid, Model model) {
+    @RequestMapping(value = "/addteam", method = RequestMethod.GET)
+    public String addTeamToSprint(@RequestParam(value = "sprintid") String  sprintid,
+                                  @RequestParam(value = "teamid") String teamid, Model model) {
         Sprint sprint=repository.findById(sprintid).get();
         sprint.setTeam(teamRepository.findById(teamid).get());
         repository.save(sprint);
