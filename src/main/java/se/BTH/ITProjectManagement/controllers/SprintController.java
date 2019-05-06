@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.SprintRepository;
@@ -73,7 +74,7 @@ public class SprintController {
     public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
        Sprint sprint1;
         if(!sprint.getId().equals("")) {
-            //sprint.calcDelivery();
+            sprint.calcDelivery();
             sprint.setTeam( repository.findById(sprint.getId()).get().getTeam());
             repository.save(sprint);
         }
@@ -96,7 +97,7 @@ public class SprintController {
 
     //Select one team from teams
     @RequestMapping(value = "/teams", method = RequestMethod.GET)
-    public String viewTeamToSelect(@RequestParam(value = "sprintid")String id ,Model model) {
+    public String viewTeamToSelect(@RequestParam(value = "id")String id ,Model model) {
         log.debug("Request to fetch all teams from the db for custom team and select team");
         Team team = repository.findById(id).get().getTeam();
         model.addAttribute("teams",teamRepository.findAll());
@@ -112,54 +113,12 @@ public class SprintController {
             return "redirect:/api/sprint/edit?sprintid=" + sprintid;
 
     }
+    @RequestMapping(value = "/canvasjschart", method = RequestMethod.GET)
+    public String canvasjschart(ModelMap modelMap) {
+        List<List<Map<Object, Object>>> canvasjsDataList =null;
+        modelMap.addAttribute("dataPointsList", canvasjsDataList);
+        return "chart";
+    }
 
 
 }
-
-/*
-@RestController
-@RequestMapping("/api")
-public class SprintController {
-    private final Logger log = LoggerFactory.getLogger(SprintController.class);
-
-    @Autowired
-    private SprintRepository repository;
-
-    public SprintController(SprintRepository repository) {
-        this.repository = repository;
-    }
-
-    @GetMapping("/sprint")
-    Collection<Sprint> sprints() {
-        return repository.findAll();
-    }
-
-    @GetMapping("/sprint/{id}")
-    ResponseEntity<?> getSprint(@PathVariable String id) {
-        Optional<Sprint> sprint = repository.findById(id);
-        return sprint.map(response -> ResponseEntity.ok().body(response))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping(value = "/sprint", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Sprint> createSprint(@Valid @RequestBody Sprint sprint) throws URISyntaxException {
-        log.info("Request to create sprint: {}", sprint);
-        Sprint result = repository.save(sprint);
-        return ResponseEntity.created(new URI("/api/sprint/" + result.getId())).body(result);
-    }
-
-    @PutMapping("/sprint")
-    ResponseEntity<Sprint> updateTask(@Valid @RequestBody Sprint sprint) {
-        log.info("Request to update sprint: {}", sprint);
-        Sprint result = repository.save(sprint);
-        return ResponseEntity.ok().body(result);
-    }
-
-    @DeleteMapping("/sprint/{id}")
-    public ResponseEntity<?> deletesprint(@PathVariable String id) {
-        log.info("Request to delete sprint: {}", id);
-        repository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
-}
-*/

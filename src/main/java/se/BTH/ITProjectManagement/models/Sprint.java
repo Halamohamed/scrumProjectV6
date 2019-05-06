@@ -36,7 +36,7 @@ public class Sprint {
     private LocalDate demo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private DayOfWeek review;
-    //@DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime daily_meeting;
     private List<Task> tasks;
     private Integer plannedPeriod; // how many days will sprint take

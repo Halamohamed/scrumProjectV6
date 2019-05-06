@@ -39,6 +39,8 @@
         <form:input id="sprint_name" cssClass="form-control" path="goal" />
         <label for="sprint_name">Enter Start day:</label>
         <form:input id="sprint_name" type="date" cssClass="form-control" path="startSprint"/>
+        <label for="sprint_name" >Enter Planned period</label>
+         <form:input id="sprint_name" type="number" cssClass="form-control"  path="plannedPeriod" />
         <label for="sprint_name">Enter Delivery: </label>
         <form:input id="sprint_name"  cssClass="form-control"  path="delivery" />
         <label for="sprint_name">Enter Retrospective: </label>

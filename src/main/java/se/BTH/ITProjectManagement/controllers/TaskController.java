@@ -54,7 +54,7 @@ public class TaskController {
 
     // Opening the edit task form page.
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editTask(@RequestParam(value="id", required=true) String id,
+    public String editTask(@RequestParam(value="taskid", required=true) String id,
                            @RequestParam(value = "sprintid",required = true)String sprintid, Model model) {
         log.debug("Request to open the edit task for custom sprint form page");
         model.addAttribute("taskAttr", repository.findById(id).get());
@@ -72,7 +72,7 @@ public class TaskController {
         tasks.remove(sprint.findTaskIndex(id));
         sprint.setTasks(tasks);
         sprintRepository.save(sprint);
-        for(SubTask temp: task.getSubTasks()){
+        for(SubTask temp : task.getSubTasks()){
             subTaskRepository.delete(temp);
         }
         repository.deleteById(id);
@@ -83,11 +83,12 @@ public class TaskController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("taskAttr") Task task,@RequestParam(value = "sprintid",required = true)String sprintid) {                  // needs test for edit or create
         if (!task.getId().equals("")) {
+            task.setSubTasks(repository.findById(task.getId()).get().getSubTasks());
             repository.save(task);
             Sprint sprint= sprintRepository.findById(sprintid).get();
             List<Task> tasks=sprint.getTasks();
             tasks.remove(sprint.findTaskIndex(task.getId()));
-            tasks.set(sprint.findTaskIndex(task.getId()),task);
+            tasks.add(sprint.findTaskIndex(task.getId()),task);
             sprint.setTasks(tasks);
             sprintRepository.save(sprint);
         }

@@ -63,6 +63,7 @@
             	 </table>
             	<c:url var="AddteamUrl" value="/api/sprint/teams?id=${sprintid}" />
             	<a id="addteam" href="${AddteamUrl}" class="btn btn-success">Select team</a>
+
             	<c:url var="CancelUrl" value="/api/sprint/edit?sprintid=${sprintid}" />
             	<a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
             	</form:form>

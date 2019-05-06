@@ -67,13 +67,15 @@
                             	      <td><form:input type="hidden" path="users[${st.index}].password"  value="${user.password}"/></td>
                             	      <td><form:input type="hidden" path="users[${st.index}].passwordConfirm"  value="${user.passwordConfirm}"/></td>
                                       <td>
-                                          <c:url var="deleteUrl" value="/api/subtask/deletemember?userid=${user.id}&id=${subtaskAttr.id}&taskid=${taskid}&sprintid=${sprintid}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Remove</a>
+                                          <c:url var="deleteUrl" value="/api/subtask/deletemember?userid=${user.id}&id=${subtask.id}&taskid=${taskAttr.id}&sprintid=${sprintid}" />
+                                          <a id="delete" href="${deleteUrl}" class="btn btn-danger">Remove</a>
                                       </td>
                             	    </tr>
                             	</c:forEach>
                            </tbody>
                       </table>
-                    <c:url var="AdduserUrl" value="/api/subtask/selectmember?id=${subtaskAttr.id}&taskid=${taskid}&sprintid=${sprintid}" /><a id="adduser" href="${AdduserUrl}" class="btn btn-success">Add member of team</a>
+                    <c:url var="AdduserUrl" value="/api/subtask/selectmember?id=${subtask.id}&taskid=${taskid}&sprintid=${sprintid}" />
+                    <a id="adduser" href="${AdduserUrl}" class="btn btn-success">Add member of team</a>
                  <div>&nbsp;</div>
                  <label for="subtask_name">Actual Hours: </label>
                       <table id="actualHours_table" class="table">

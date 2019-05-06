@@ -26,7 +26,7 @@ public class SubTask {
     private List<User> users;
 
     public static List<Integer> intiActualHoursList(int dayes){
-        List<Integer> temp=new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
         for (int i = 0; i <dayes ; i++) {
             temp.add(0);
         }

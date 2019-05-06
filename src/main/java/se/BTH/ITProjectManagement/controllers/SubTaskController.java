@@ -212,39 +212,3 @@ public class SubTaskController {
 
 }
 
-/*
-
-    @GetMapping("/subtasks")
-    Collection<SubTask> subtasks() {
-        return repository.findAll();
-    }
-
-    @GetMapping("/subtask/{id}")
-    ResponseEntity<?> getSubTask(@PathVariable String id) {
-        Optional<SubTask> subtask = repository.findById(id);
-        return subtask.map(response -> ResponseEntity.ok().body(response))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping(value = "/subtask", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<SubTask> createSubTask(@Valid @RequestBody SubTask subtask) throws URISyntaxException {
-        log.info("Request to create subtask: {}", subtask);
-        SubTask result = repository.save(subtask);
-        return ResponseEntity.created(new URI("/api/subtask/" + result.getId())).body(result);
-    }
-
-    @PutMapping("/Subtask")
-    ResponseEntity<SubTask> updateTask(@Valid @RequestBody SubTask subtask) {
-        log.info("Request to update subtask: {}", subtask);
-        SubTask result = repository.save(subtask);
-        return ResponseEntity.ok().body(result);
-    }
-
-    @DeleteMapping("/subtask/{id}")
-    public ResponseEntity<?> deleteSubTask(@PathVariable String id) {
-        log.info("Request to delete subtask: {}", id);
-        repository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
-}
-*/
