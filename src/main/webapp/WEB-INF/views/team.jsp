@@ -25,6 +25,7 @@
      </div>
      <div class="container">
            	<h2 id="article_header" class="text-warning" align="center">All Teams</h2>
+
 	    	<!-- Table to display the user list from the mongo database -->
 	    	<table id="teams_table" class="table">
 	        	<thead>
@@ -49,9 +50,7 @@
 	                    	<td>
                             	 <c:url var="editUrl" value="/api/team/edit?id=${team.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
                             </td>
-                           <!-- <td>
-	                        	<c:url var="detailUrl" value="/api/team/detail?id=${team.id}" /><a id="detail" href="${detailUrl}" class="btn btn-info">Team members</a>
-	                    	</td>-->
+
 	                	</tr>
 	            	</c:forEach>
 	        	</tbody>

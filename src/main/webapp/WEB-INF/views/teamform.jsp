@@ -26,55 +26,54 @@
                 </nav>
          </div>
 	    <div class="container">
-	        <div ><h3 id="form_header" class="text-warning" align="center"> Team</h3></div>
+	        <h3 id="form_header" class="text-warning" align="center"> Team</h3>
 	        <div>&nbsp;</div>
 
 			<!-- Team input form to add a new team or update the existing team-->
 	        <c:url var="saveUrl" value="/api/team/save" />
-	        <form:form id="team_form" modelAttribute="teamAttr"   method="POST" action="${saveUrl}">
-	        	<form:hidden path="id" />
+	        <form:form id="team_form" modelAttribute="teamAttr"  method="POST" action="${saveUrl}">
+	        	<form:hidden path="id"  />
+
 	            <label for="team_name">Enter Name: </label>
 	            <form:input id="team_name" cssClass="form-control" name="id" var="xx" path="name" />
 	            <label for="team_name">Team Activity: </label>
-                <form:input id="team_name" cssClass="form-control" path="Active" />
-                <label for="team_name" >Team members</label>
-                  <form:select id="team_name" cssClass="form-control" path="Active">
-                                        <form:option value="true" label="true"/>
-                                        <form:option value="false" label="false"/>
-                                        </form:select>
-	            <div>&nbsp;</div>
-	            <label for="team_name">Team members: </label>
-                                <div>&nbsp;</div>
+                <form:select id="team_name" cssClass="form-control" path="Active">
+                        <form:option value="true" label="true"/>
+                        <form:option value="false" label="false"/>
+                        </form:select>
+                <div>&nbsp;</div>
+                <label for="team_name">Team members: </label>
+                <div>&nbsp;</div>
 	            <table id="users_table" class="table">
             	        	<thead>
             	            	<tr align="center">
             	            		<th>Name</th>
-            	            		<th>Member in team</th>
+            	                    <th>Member in team<th>
             	            		<th colspan="2"></th>
-
             	            	</tr>
             	        	</thead>
             	        	<tbody>
-            	            	<c:forEach items="${teamAttr.users}" varStatus="us" var="user">
+            	            	<c:forEach items="${teamAttr.users}" varStatus="us" var="user"   >
             	                	<tr align="left">
-            	                    	 <td><form:input path="users[${us.index}].name" value="${user.name}"/></td>
-                                          <td><form:checkbox path="users[${us.index}].active"  value="${user.active}"/></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].id" value="${user.id}" /></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].password" value="${user.password}" /></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].username" value="${user.username}" /></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].roles" value="${user.roles}" /></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].email" value="${user.email}" /></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].phone" value="${user.phone}" /></td>
-                                          <td><form:input type="hidden" path="users[${us.index}].city" value="${user.city}" /></td>
+            	                	    <td><form:input path="users[${us.index}].name" value="${user.name}"/></td>
+                                        <td><form:checkbox path="users[${us.index}].active"  value="${user.active}"/></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].id" value="${user.id}" /></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].password" value="${user.password}" /></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].username" value="${user.username}" /></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].roles" value="${user.roles}" /></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].email" value="${user.email}" /></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].phone" value="${user.phone}" /></td>
+            	                    	<td><form:input type="hidden" path="users[${us.index}].city" value="${user.city}" /></td>
             	                	</tr>
             	            	</c:forEach>
             	        	</tbody>
             	 </table>
             	<button  id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-            	<c:url var="addUrl" value="/api/team/members?id=${teamAttr.id}" />
-            	<a id="add" href="${addUrl}" class="btn btn-info">Add member</a>
-                <c:url var="CancelUrl" value="/api/team/teams" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
+            	<c:url var="addUrl" value="/api/team/members?id=${teamAttr.id}" /><a id="add" href="${addUrl}" class="btn btn-info">Add member</a>
+            	<c:url var="CancelUrl" value="/api/team/teams" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
+
             	</form:form>
 	    </div>
+
 	</body>
 </html>

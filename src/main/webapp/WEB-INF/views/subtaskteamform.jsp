@@ -20,6 +20,7 @@
                                 <li><a href="/api/sprint/sprints"style="color:red;" th:href="@{api/sprint/sprints}">SPRINTS</a></li>
                                 <li><a href="/api/sprint/add"style="color:red;" th:href="@{/api/sprint/add}">Create Sprint</a></li>
                             </ul>
+
                         </div>
                     </div>
                 </nav>
@@ -56,13 +57,15 @@
             	                	    <td><c:out value="${user.email}"/></td>
             	                	    <td><c:out value="${user.phone}"/></td>
             	                	    <td>
-                                          <c:url var="addUrl" value="/api/subtask/addmember?userid=${user.id}&id=${id}&taskid=${taskid}&sprintid=${sprintid}" /><a id="add" href="${addUrl}" class="btn btn-success">Select</a>
+                                          <c:url var="addUrl" value="/api/subtask/addmember?userid=${user.id}&id=${id}&taskid=${taskid}&sprintid=${sprintid}" />
+                                          <a id="add" href="${addUrl}" class="btn btn-success">Select</a>
             	                	    </td>
             	                	</tr>
             	            	</c:forEach>
             	        	</tbody>
             	 </table>
-            	<c:url var="CancelUrl" value="/api/subtask/edit?&id=${id}&taskid=${taskid}&sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
+            	<c:url var="CancelUrl" value="/api/subtask/edit?&id=${id}&taskid=${taskid}&sprintid=${sprintid}" />
+            	<a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
             	</form:form>
 	    </div>
 

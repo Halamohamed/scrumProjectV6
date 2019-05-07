@@ -87,7 +87,7 @@ public class SprintController {
                     startSprint(sprint.getStartSprint()).demo(sprint.getDemo()).goal(sprint.getGoal()).plannedPeriod(sprint.getPlannedPeriod())
                     .retrospective(sprint.getRetrospective()).review(sprint.getReview()).team(sprint.getTeam()).tasks(sprint.getTasks()).build();
             }
-            //sprint1.calcDelivery();
+            sprint1.calcDelivery();
             repository.save(sprint1);
         }
 

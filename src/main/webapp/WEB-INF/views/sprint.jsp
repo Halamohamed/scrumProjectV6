@@ -44,10 +44,8 @@
             <th>Retrospective</th>
             <th>Demo</th>
             <th>Review</th>
-            <th>Team</th>
             <th>Daily meeting</th>
             <th colspan="2"></th>
-
         </tr>
         </thead>
         <tbody>
@@ -60,19 +58,12 @@
                 <td><c:out value="${sprint.retrospective}" /></td>
                 <td><c:out value="${sprint.demo}" /></td>
                 <td><c:out value="${sprint.review}" /></td>
-                 <td><c:out value="${sprint.team.name}" /></td>
                 <td><c:out value="${sprint.daily_meeting}" /></td>
                 <td>
-                    <c:url var="editUrl" value="/api/sprint/edit?sprintid=${sprint.id}" />
-                    <a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
+                    <c:url var="editUrl" value="/api/sprint/edit?sprintid=${sprint.id}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
                 </td>
                 <td>
-                     <c:url var="editUrl" value="/api/sprint/canvasjschart?sprintid=${sprint.id}" />
-                     <a id="chart" href="${editUrl}" class="btn btn-info">Chart</a>
-                                </td>
-                <td>
-                    <c:url var="deleteUrl" value="/api/sprint/delete?id=${sprint.id}" />
-                    <a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
+                    <c:url var="deleteUrl" value="/api/sprint/delete?id=${sprint.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
                 </td>
 
             </tr>

@@ -35,7 +35,6 @@ public class TaskController {
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     public String getTasks(@RequestParam(value="sprintid", required=true) String sprintid,Model model) {
         log.debug("Request to fetch all tasks for custom sprint from the mongo database");
-
         Sprint sprint=sprintRepository.findById(sprintid).get();
             List<Task> task_list = sprint.getTasks();
             model.addAttribute("tasks", task_list);
@@ -105,10 +104,5 @@ public class TaskController {
 
         return "redirect:/api/task/tasks?sprintid="+ sprintid;
     }
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public String getSubtasks(Model model) {
-        log.debug("Request to fetch all sub tasks from the db for task to add");
-        model.addAttribute("taskAttr",subTaskRepository.findAll());
-        return "subtask";
-    }
+
 }

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -63,7 +62,6 @@
             	 </table>
             	<c:url var="AddteamUrl" value="/api/sprint/teams?id=${sprintid}" />
             	<a id="addteam" href="${AddteamUrl}" class="btn btn-success">Select team</a>
-
             	<c:url var="CancelUrl" value="/api/sprint/edit?sprintid=${sprintid}" />
             	<a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
             	</form:form>

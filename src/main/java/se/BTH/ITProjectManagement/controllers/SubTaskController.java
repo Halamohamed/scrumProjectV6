@@ -42,13 +42,13 @@ public class SubTaskController {
     private TaskRepository taskRepository;
 
     // Displaying the initial subtasks list.
-    @RequestMapping(value = "/subtasks", method = RequestMethod.GET)
-    public String getSubTasks(Model model) {
-        log.debug("Request to fetch all subtasks from the mongo database");
-        List<SubTask> subtask_list = repository.findAll();
-        model.addAttribute("subtasks", subtask_list);
-        return "subtask";
-    }
+//    @RequestMapping(value = "/subtasks", method = RequestMethod.GET)
+//    public String getSubTasks(Model model) {
+//        log.debug("Request to fetch all subtasks from the mongo database");
+//        List<SubTask> subtask_list = repository.findAll();
+//        model.addAttribute("subtasks", subtask_list);
+//        return "subtask";
+//    }
 
     // Opening the add new subtask form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -67,9 +67,13 @@ public class SubTaskController {
                               @RequestParam(value = "sprintid", required = true) String sprintid ,
                               @RequestParam(value = "taskid", required = true) String taskid) {
         log.debug("Request to open the edit subtask form page");
-        model.addAttribute("subtaskAttr", repository.findById(id).get());
-        model.addAttribute("taskid", taskid);
-        model.addAttribute("sprintid", sprintid);
+        if(!repository.findById(id).equals("")) {
+            model.addAttribute("subtaskAttr", repository.findById(id).get());
+            model.addAttribute("taskid", taskid);
+            model.addAttribute("sprintid", sprintid);
+        }else {
+            repository.existsById(id);
+        }
         return "subtaskform";
     }
 
@@ -123,15 +127,7 @@ public class SubTaskController {
         sprintRepository.save(sprint);
         return "redirect:/api/task/edit?taskid=" + taskid + "&sprintid=" + sprintid;
     }
-    @RequestMapping(value = "/member", method = RequestMethod.GET) //must be put and add search
-    public String members(@RequestParam("id") String id, Model model) {
-        log.debug("Request to fetch all users from the mongo database");
-        SubTask subTask=repository.findById(id).get();
-        String user = userRepository.findById(id).get().getName();
-        model.addAttribute("members", user);
-        model.addAttribute("subtask", subTask);
-        return "teammember";
-    }
+
     // Opening the members of team to select member for assignment subtask form page.
     @RequestMapping(value = "/selectmember", method = RequestMethod.GET)
     public String selectmember(@RequestParam(value = "id", required = true) String id,
@@ -153,12 +149,9 @@ public class SubTaskController {
                             @RequestParam(value = "sprintid", required = true) String sprintid, Model model) {
         Sprint sprint = sprintRepository.findById(sprintid).get();
         Task task = taskRepository.findById(taskid).get();
-        if(task.equals("")) {
-            sprint.setTasks(new ArrayList<>());
-
-        }
         SubTask subTask = repository.findById(subtaskid).get();
-
+        if(subTask.equals(""))
+            subTask.setId(subtaskid);
         List<User>users=subTask.getUsers();
         if (users==null)
             users=new ArrayList<>();
@@ -204,16 +197,6 @@ public class SubTaskController {
         return "redirect:/api/subtask/edit?id=" + subtaskid + "&taskid=" + taskid + "&sprintid=" + sprintid;
     }
 
-    @RequestMapping(value = "/member/actualhours", method = RequestMethod.GET) //must be put and add search
-    public String actualHours(@RequestParam("id") String id, Model model) {
-        log.debug("Request to fetch all actual hours from the mongo database");
-        List<Integer> subTaskH=repository.findById(id).get().getActualHours();
-        String user = repository.findById(id).get().getName();
-        List<Integer> actualhour_list = repository.findByName(user).get().getActualHours();
-        model.addAttribute("members", actualhour_list);
-        model.addAttribute("subtask", subTaskH);
-        return "teammember";
-    }
 
 }
 

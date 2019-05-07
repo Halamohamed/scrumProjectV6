@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.Sprint;
+import se.BTH.ITProjectManagement.models.SubTask;
 import se.BTH.ITProjectManagement.models.Team;
 
 
@@ -56,6 +57,15 @@ public class TeamController {
         model.addAttribute("sprintid", id);
         return "sprintteamform";
     }
+    @RequestMapping(value = "/member", method = RequestMethod.GET) //must be put and add search
+    public String members(@RequestParam("id") String id , Model model) {
+        log.debug("Request to fetch all users from the mongo database");
+        Team team= repository.findById(id).get();
+        List<User> user_list= userRepository.findAll();
+        model.addAttribute("members", user_list);
+        model.addAttribute("team", team);
+        return "teammember";
+    }
 
     // add member to team and redirect to team page.
     @RequestMapping(value = "/addmember", method = RequestMethod.GET)
@@ -66,11 +76,12 @@ public class TeamController {
         User user = userRepository.findById(id).get();
         if(!team.isMemberExist(user)){
             team.getUsers().add(user);
-            team.setUsers(members);
+            team.setUsers(members);}
+            repository.save(team);
+            return "redirect:/api/team/edit?id=" + team.getId();
         }
-        repository.save(team);
-        return "redirect:/api/team/edit?id=" + team.getId();
-    }
+
+
 
 // Opening the add new team form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -86,31 +97,22 @@ public class TeamController {
     public String editTeam(@RequestParam(value = "id", required = true) String id, Model model) {
         log.debug("Request to open the edit team form page");
         Team team = repository.findById(id).get();
-
         model.addAttribute("teamAttr", team);
         return "teamform";
     }
 
-    // Deleting the specified user.
-    @RequestMapping(value = "/deletemember", method = RequestMethod.GET)
-    public String deletemember(@RequestParam(value = "id", required = true) String id, @ModelAttribute("teamAttr") Team team, Model model) {
-        User user = userRepository.findById(id).get();
-        user.setActive(false);
-        userRepository.save(user);
-        List<User> member_list = team.getUsers();
-       // member_list.removeIf(u -> u.isActive() == false);
-        team.setUsers(member_list);
-        return "redirect/edit?id="+team.getId();
-    }
-    @RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
-    public String members(@RequestParam("id") String id, Model model) {
-        log.debug("Request to fetch all users from the mongo database");
-        Team team=repository.findById(id).get();
-        List<User> user_list = userRepository.findAll();
-        model.addAttribute("members", user_list);
-        model.addAttribute("team", team);
-        return "teammember";
-    }
+//    // Deleting the specified user.
+//    @RequestMapping(value = "/deletemember", method = RequestMethod.GET)
+//    public String deletemember(@RequestParam(value = "id", required = true) String id, @ModelAttribute("teamAttr") Team team, Model model) {
+//        User user = userRepository.findById(id).get();
+//        user.setActive(false);
+//        userRepository.save(user);
+//        List<User> member_list = team.getUsers();
+//       // member_list.removeIf(u -> u.isActive() == false);
+//        team.setUsers(member_list);
+//        return "redirect/edit?id="+team.getId();
+//    }
+
 
     // Deleting the specified team.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -129,9 +131,9 @@ public class TeamController {
             Team team1 = Team.builder().name(team.getName()).active(true).users(users).build();
             repository.save(team1);
         } else {
-            List<User> member_list = team.getUsers();
-            member_list.removeIf(u -> !u.isActive());
-            team.setUsers(member_list);
+            List<User> members = team.getUsers();
+            members.removeIf(u -> !u.isActive());
+            team.setUsers(members);
             repository.save(team);
         }
         return "redirect:teams";

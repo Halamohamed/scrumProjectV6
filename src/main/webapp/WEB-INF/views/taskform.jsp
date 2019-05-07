@@ -6,26 +6,26 @@
 	<head>
 	    <title>Task form</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
 	<div class="container">
-                        <nav class="navbar navbar-default">
-                            <div class="container-fluid">
-                                <div class="navbar-header">
-                                    <ul class="nav navbar-nav">
-                                        <li><a class="navbar-brand" href="/" th:href="@{/}">Home</a></li>
-                                        <li><a href="/api/user/users"style="color:red;" th:href="@{/api/user/users}">USERS</a></li>
-                                        <li><a href="/api/team/teams" style="color:red;"th:href="@{/api/team/teams}">Teams</a></li>
-                                        <li><a href="/api/sprint/sprints"style="color:red;" th:href="@{api/sprint/sprints}">SPRINTS</a></li>
-                                        <li><a href="/api/sprint/add"style="color:red;" th:href="@{/api/sprint/add}">Create Sprint</a></li>
-                                    </ul>
-                                </div>
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <ul class="nav navbar-nav">
+                                    <li><a class="navbar-brand" href="/" th:href="@{/}">Home</a></li>
+                                    <li><a href="/api/user/users"style="color:red;" th:href="@{/api/user/users}">USERS</a></li>
+                                    <li><a href="/api/team/teams" style="color:red;"th:href="@{/api/team/teams}">Teams</a></li>
+                                    <li><a href="/api/sprint/sprints"style="color:red;" th:href="@{api/sprint/sprints}">SPRINTS</a></li>
+                                    <li><a href="/api/sprint/add"style="color:red;" th:href="@{/api/sprint/add}">Create Sprint</a></li>
+                                </ul>
                             </div>
-                        </nav>
-                 </div>
+                        </div>
+                    </nav>
+             </div>
 	    <div class="container">
-	        <div ><h3 id="form_header" class="text-warning" align="center">Task </h3></div>
+	        <h3 id="form_header" class="text-warning" align="center">Task</h3>
 	        <div>&nbsp;</div>
 
 			<!-- Task input form to add a new task or update the existing task-->
@@ -40,38 +40,33 @@
                 <form:input id="task_name" type="number" cssClass="form-control" path="storyPoints" />
 	            <div>&nbsp;</div>
 	             <label for="task_name">Sub Tasks : </label>
-	                <table id="subtasks_table" class="table">
-                                          <thead>
-                                           <tr align="center">
-                                           <th>Sub Task Name</th>
 
-                                            <th colspan="3"></th>
-                                              </tr>
-                                               </thead>
-                                               	<tbody>
-                                               	    <c:forEach items="${taskAttr.subTasks}" varStatus="st" var="subTask"   >
-                                               	        <tr align="left">
-                                               	            <td><c:out value="${subTask.name}" /></td>
-                                               	            <td>< type="hidden" value="${subTask.id}" /></td>
-                                               	           <td>
-                                                            <c:url var="editUrl" value="/api/subtask/edit?id=${subTask.id}&taskid=${taskAttr.id}&sprintid=${sprintid}" />
-                                                            <a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
-                                                           </td>
-                                                           <td>
-                                                            <c:url var="deleteUrl" value="/api/subtask/delete?id=${subTask.id}&taskid=${taskAttr.id}&sprintid=${sprintid}" />
-                                                            <a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
-                                                           </td></tr>
-                                               	    </c:forEach>
-                                               	</tbody>
-                                         </table>
+                	  <table id="subtasks_table" class="table">
+                       <thead>
+                        <tr align="center">
+                        <th>Sub Task Name</th>
+                         <th colspan="2"></th>
+                           </tr>
+                            </thead>
+                            	<tbody>
+                            	    <c:forEach items="${taskAttr.subTasks}" varStatus="st" var="subTask"   >
+                            	        <tr align="left">
+                            	            <td><c:out  value="${subTask.name}"/></td>
+                                            <td><type="hidden" value="${subTask.id}" /></td>
+
+                            	            <td>
+                                                <c:url var="editUrl" value="/api/subtask/edit?id=${subTask.id}&taskid=${taskAttr.id}&sprintid=${sprintid}" /><a id="update" href="${editUrl}" class="btn btn-warning">Update</a>
+                                            </td>
+                                            <td>
+                                                <c:url var="deleteUrl" value="/api/subtask/delete?id=${subTask.id}&taskid=${taskAttr.id}&sprintid=${sprintid}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
+                                            </td>
+                                         </tr>
+                            	    </c:forEach>
+                            	</tbody>
+                      </table>
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-	               <c:url var="addUrl" value="/api/task/subtask/add?taskid=${taskAttr.id}&sprintid=${sprintid}" />
-	               <a id="add" href="${addUrl}" class="btn btn-info">Add subTask</a>
-                   <c:url var="CancelUrl" value="/api/task/tasks?sprintid=${sprintid}" />
-                   <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
-   <td>
-              </td>
+	            <c:url var="addUrl" value="/api/subtask/add?taskid=${taskAttr.id}&sprintid=${sprintid}" /><a id="add" href="${addUrl}" class="btn btn-info">Add subTask</a>
+                <c:url var="CancelUrl" value="/api/task/tasks?sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
 	        </form:form>
-	    </div>
 	</body>
 </html>
