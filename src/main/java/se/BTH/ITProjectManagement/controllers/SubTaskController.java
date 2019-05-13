@@ -150,8 +150,6 @@ public class SubTaskController {
         Sprint sprint = sprintRepository.findById(sprintid).get();
         Task task = taskRepository.findById(taskid).get();
         SubTask subTask = repository.findById(subtaskid).get();
-        if(subTask.equals(""))
-            subTask.setId(subtaskid);
         List<User>users=subTask.getUsers();
         if (users==null)
             users=new ArrayList<>();

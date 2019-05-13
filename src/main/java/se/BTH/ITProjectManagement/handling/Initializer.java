@@ -6,14 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.*;
+import se.BTH.ITProjectManagement.services.SprintService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class Initializer implements CommandLineRunner {
@@ -24,15 +23,17 @@ public class Initializer implements CommandLineRunner {
     private final TaskRepository taskRepo;
     private final SubTaskRepository subTaskRepo;
     private final SprintRepository sprintRepo;
+    private final SprintService sprintService;
 
 
-    public Initializer(UserRepository repository, RoleRepository rolerepo, TeamRepository teamrepo, TaskRepository taskRepo, SubTaskRepository subTaskRepo,  SprintRepository sprintRepo) {
+    public Initializer(UserRepository repository, RoleRepository rolerepo, TeamRepository teamrepo, TaskRepository taskRepo, SubTaskRepository subTaskRepo, SprintRepository sprintRepo, SprintService sprintService) {
         this.userrepo = repository;
         this.rolerepo = rolerepo;
         this.teamrepo = teamrepo;
         this.taskRepo = taskRepo;
         this.subTaskRepo = subTaskRepo;
         this.sprintRepo = sprintRepo;
+        this.sprintService = sprintService;
     }
 
 
@@ -46,9 +47,29 @@ public class Initializer implements CommandLineRunner {
 //        sprintRepo.deleteAll();
 //        addPersons();
 //        addBacklog();
-      // System.out.println(sprintRepo.findById("5cbeb0a1995e1d25a8531169").get());
+//        statistics();
+
     }
 
+    private void statistics() {
+        Sprint sprint = sprintRepo.findById("5cd9340fa6b5631facc55183").get();
+        List<Double> aD = sprint.Actual_hours_today_sum();
+        List<Double> aR = sprint.Calculate_actual_remaining();
+        List<Double> pR = sprint.Calculate_planned_remaining();
+        List<Double> pD = new ArrayList<>();
+        for (int i = 0; i < sprint.getPlannedPeriod(); i++) {
+            pD.add(sprint.Calculate_Planned_hours_today());
+        }
+        System.out.println("estimated = " + sprint.Calculate_total_estimate());
+        aD.forEach(System.out::println);
+        System.out.println("--------------------------");
+        pD.forEach(System.out::println);
+        System.out.println("--------------------------");
+        aR.forEach(System.out::println);
+        System.out.println("--------------------------");
+
+        pR.forEach(System.out::println);
+    }
     private void addBacklog() {
         List<Sprint> sprints= new ArrayList<>();
         List<Task> tasks = new ArrayList<>();
@@ -67,6 +88,7 @@ public class Initializer implements CommandLineRunner {
         users.add(user);
         SubTask subtask = SubTask.builder().name("Schema Registration").status(TaskStatus.DONE).users(users)
                 .OEstimate(8).actualHours(actualHours).build();
+        subtask.getActualHours().forEach(System.out::println);
         subTasks.add(subtask);
 
         users = new ArrayList<>();

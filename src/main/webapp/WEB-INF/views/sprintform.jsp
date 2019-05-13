@@ -61,6 +61,8 @@
         <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
         <c:url var="sprintteamUrl" value="/api/team/sprintteam?sprintid=${sprintAttr.id}" /><a id="view" href="${sprintteamUrl}" class="btn btn-info">Sprint team</a>
         <c:url var="sprinttaskUrl" value="/api/task/tasks?sprintid=${sprintAttr.id}" /><a id="viewtask" href="${sprinttaskUrl}" class="btn btn-warning">Sprint tasks</a>
+        <c:url var="edithoursUrl" value="/api/sprint/actualHours?sprintid=${sprintAttr.id}" /><a id="editactuslhours" href="${edithoursUrl}" class="btn btn-success">Edit ActualHours</a>
+        <c:url var="printUrl" value="/api/sprint/print?sprintid=${sprintAttr.id}" /><a id="print" href="${printUrl}" class="btn btn-default">Print</a>
         <c:url var="CancelUrl" value="/api/sprint/sprints" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
 
 

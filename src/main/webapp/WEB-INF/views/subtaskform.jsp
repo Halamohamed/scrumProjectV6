@@ -77,22 +77,19 @@
                  <div>&nbsp;</div>
                  <label for="subtask_name">Actual Hours: </label>
                       <table id="actualHours_table" class="table">
-                            <thead>
-                                <tr align="center">
-                                <th>Day</th>
-                                 <th>actualHours</th>
-                                 <th colspan="2"></th>
-                                </tr>
-                              </thead>
-                            <tbody>
+                          <tbody>
                                <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
-                                  <tr align="left">
-                                     <td>Day ${st.index+1}</td>
-                                     <td><form:input type="number" path="actualHours[${st.index}]" cssClass="form-control" value="${actualHour}"/></td>
-                                    </tr>
+                                  <td style="width: 50px;"> Day ${st.index+1}</td>
                                </c:forEach>
-                            </tbody>
+                          </tbody>
                       </table>
+                       <table id="actualHours_table1" class="table">
+                         <tbody>
+                            <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
+                              <td><form:input style="width: 50px;" type="number" path="actualHours[${st.index}]"  value="${actualHour}" /></td>
+	             </c:forEach>
+                         </tbody>
+                       </table>
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
                 <c:url var="CancelUrl" value="/api/task/edit?taskid=${taskid}&sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
 

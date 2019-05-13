@@ -78,13 +78,13 @@ public class Sprint {
     public List<Double> Actual_hours_today_sum() {
         List<Double> Actual_hours_today = new ArrayList<>();
         Double total;
-        for (int i = 0; i < plannedPeriod - 1; i++) {
+        for (int i = 0; i < plannedPeriod ; i++) {
             total = 0.0;
             for (Task t : tasks) {
                 int j = i;
                 total += t.getSubTasks().stream().mapToInt(st -> st.getActualHours().get(j)).sum();
             }
-            Actual_hours_today.set(i, total);
+            Actual_hours_today.add(i, total);
         }
         return Actual_hours_today;
     }
@@ -98,11 +98,11 @@ public class Sprint {
         List<Double> Actual_hours_remaining = new ArrayList<>();
         List<Double> Actual_hours_today = Actual_hours_today_sum();
         double remain = 0;
-        for (int i = 0; i < plannedPeriod - 1; i++) {
+        for (int i = 0; i < plannedPeriod ; i++) {
             if (i == 0) remain = Calculate_total_estimate() - Actual_hours_today.get(i);
             else remain -= Actual_hours_today.get(i);
 
-            Actual_hours_remaining.set(i, remain);
+            Actual_hours_remaining.add(i, remain);
         }
         return Actual_hours_remaining;
     }
@@ -114,7 +114,7 @@ public class Sprint {
         double remain = totalEstimate;
         for (int i = 0; i < plannedPeriod - 1; i++) {
             remain -=plannedToday;
-                    planned_hours_remaining.set(i, remain);
+                    planned_hours_remaining.add(i, remain);
         }
         return planned_hours_remaining;
     }
