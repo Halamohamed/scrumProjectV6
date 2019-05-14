@@ -20,19 +20,22 @@
 
     <div>&nbsp;</div>
     <!-- Table to display the backlog from the mongo database -->
-    <table id="sprint_table" class="table">
+    <table id="backlog_table" class="table">
+    <c:url var="saveUrl" value="/api/sprint/backlog" />
+                  <form:form id="backlog_form" modelAttribute="backlogAttr" method="POST" action="${saveUrl}">
+                    <form:hidden path="id" />
+                     <h3 id="form_header" class="text-warning" align="center">Backlog for Sprint ${sprintAttr.name}</h3>
+                        <tbody>
+
         <thead>
         <tr align="center">
-
             <th>BACKLOG TASK & ID</th>
             <th>STORY POINTS</th>
             <th>ASSIGNED TO</th>
             <th>STATUS</th>
             <th>ORIGIN AL ESTIMATE</th>
               <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
-                <tr align="left">
                  <th>Day ${st.index+1}</th>
-                 </tr>
                  </c:forEach>
             <th>SPRINT REVIEW/th>
             <th colspan="2"></th>
@@ -45,9 +48,12 @@
            <td><c:out value="${sprint.name}" /></td>
              <c:forEach items="${tasks}" var="task">
                <td><c:out value="${task.name}" /></td>
-               <c:forEach items="${subtasks}" var="subtask">
-                <td><c:out value="${subtask.name}" /></td>
-               </c:forEach>
+                  <td width="200" height="100"> <font size="4"> ${st.index+1}.SubTask: <c:out value="${subTask.name}"/></td>
+                     <c:forEach items="${subTask.users}" varStatus="st" var="user">
+                  <td width="100" height="100"> <font size="4"> Assigned to :<c:out value="${user.name}"/></td>
+                     </c:forEach>
+                  <td width="50" height="100"> <font size="4"> Status :<c:out value="${subTask.status}"/></td>
+                  <td width="50" height="100"> <font size="4"> OEstimate : <c:out value="${subTask.OEstimate}"/> h</td>
              </c:forEach>
         </tr>
         <tr align="left">
@@ -81,6 +87,5 @@
         </tbody>
     </table>
 </div>
-
 </body>
 </html>

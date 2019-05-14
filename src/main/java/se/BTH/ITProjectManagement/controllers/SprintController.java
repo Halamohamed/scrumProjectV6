@@ -47,14 +47,14 @@ public class SprintController {
         return "printList";
     }
 
-   /* @RequestMapping(value = "/sprints", method = RequestMethod.GET)
-    public String getsprints(Model model) {
-        log.debug("Request to fetch all sprints from the mongo database");
-        List<Sprint> sprint_list = repository.findAll();
-        model.addAttribute("sprints", sprint_list);
+   @RequestMapping(value = "/backlog", method = RequestMethod.GET)
+    public String getbacklog(@RequestParam(value="sprintid") String id, Model model) {
+        log.debug("Request to fetch  backlog from the mongo database");
+        Sprint backlog = repository.findById(id).get();
+        model.addAttribute("backlogAttr", backlog);
 
         return "backlog";
-    }*/
+    }
 
     // Opening the add new sprint form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
