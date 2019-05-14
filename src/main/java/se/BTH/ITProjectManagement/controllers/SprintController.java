@@ -141,14 +141,25 @@ public class SprintController {
     public String canvasjschart(@RequestParam(value = "sprintid", required = true) String sprintid,ModelMap modelMap) {
         List<List<Map<Object, Object>>> canvasjsDataList = sprintService.getCanvasjsDataList(sprintid);
         modelMap.addAttribute("dataPointsList", canvasjsDataList);
+        modelMap.addAttribute("sprintname", repository.findById(sprintid).get().getName());
+        modelMap.addAttribute("teamname", repository.findById(sprintid).get().getTeam().getName());
         return "actualdonedaily";
     }
     @RequestMapping(value = "/canvasjschart1", method = RequestMethod.GET)
     public String canvasjschart1(@RequestParam(value = "sprintid", required = true) String sprintid,ModelMap modelMap) {
         List<List<Map<Object, Object>>> canvasjsDataList =sprintService.getCanvasjsDataList1(sprintid);
         modelMap.addAttribute("dataPointsList", canvasjsDataList);
+        modelMap.addAttribute("sprintname", repository.findById(sprintid).get().getName());
+        modelMap.addAttribute("teamname", repository.findById(sprintid).get().getTeam().getName());
         return "actualremaindaily";
     }
+    /*@RequestMapping(value ="/print" , method = RequestMethod.GET)
+    public String printsprint(@RequestParam(value = "sprintid", required = true)String sprintid, Model model){
+        log.debug("Request to open the print sprint form page");
+        Sprint sprint= repository.findById(sprintid).get();
+        model.addAttribute("sprintAttr" , sprint);
+        return "printList";
+    }*/
 
 
 }

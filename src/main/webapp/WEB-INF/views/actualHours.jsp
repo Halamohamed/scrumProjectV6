@@ -51,7 +51,7 @@
                               <table id="subtasks_table" class="table">
                                 <tbody>
                                    <c:forEach items="${task.subTasks}" varStatus="st" var="subTask">
-                                     <tr align="left">
+                                     <tr align="center">
                                        <label >SubTask Name: </label>
                                        <c:out  value="${subTask.name}"/></td>
                                          <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].id"/></td>
@@ -62,7 +62,7 @@
                                        <table id="actualHours_table" class="table">
                                           <tbody>
                                              <c:forEach items="${subTask.actualHours}" varStatus="ah" var="actualHour">
-                                               <td style="width: 60px;"> Day${ah.index+1}</td>
+                                               <td align="center" width= "30"> Day${ah.index+1}</td>
                                              </c:forEach>
                                           </tbody>
                                        </table>
@@ -70,7 +70,7 @@
                                           <tbody>
                                              <c:forEach items="${subTask.actualHours}" varStatus="ah" var="actualHour">
                                                  <td>
-                                                   <form:input style="width: 50px;" type="number" path="tasks[${spt.index}].subTasks[${st.index}].actualHours[${ah.index}]" value="${actualHour}" />
+                                                   <form:input align="center" style="width: 120%;" type="number" path="tasks[${spt.index}].subTasks[${st.index}].actualHours[${ah.index}]" value="${actualHour}" />
                                                  </td>
                                              </c:forEach>
                                           </tbody>

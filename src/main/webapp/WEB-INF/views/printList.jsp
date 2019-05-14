@@ -24,7 +24,7 @@
                  </div>
             </nav>
        </div>
-	  <div class="container">
+	  <div class="containerprint">
             <c:url var="saveUrl" value="/api/sprint/save" />
               <form:form id="sprint_form" modelAttribute="sprintAttr" method="POST" action="${saveUrl}">
                 <form:hidden path="id" />
@@ -35,29 +35,24 @@
                             <div>&nbsp;</div>
                               <table id="subtasks_table" class="table">
                                 <tbody>
-                                   <c:forEach items="${task.subTasks}" varStatus="st" var="subTask">
-                                     <tr align="left">
-                                      <td width="200"  height="50"><font size="4" color="red">Task: <c:out value="${task.name}"/></td>
-                                     </tr>
-                                      <tr align="left">
-                                      <td width="50" height="100"> <font size="5"> ${st.index+1}.SubTask: <c:out  value="${subTask.name}"/></td>
-                                       <td width="200" height="100"> <font size="4"> ${st.index+1}.SubTask: <c:out value="${subTask.name}"/></td>
-                                         <c:forEach items="${subTask.users}" varStatus="st" var="user">
-                                         <td width="100" height="100"> <font size="4"> Assigned to :<c:out value="${user.name}"/></td>
+                                  <c:forEach items="${task.subTasks}" varStatus="st" var="subTask">
+                                    <td width="200" height="200"><font size="3" >Task: <c:out value="${task.name}"/>
+                                       <div>&nbsp;</div>
+                                          ${st.index+1}.SubTask: <c:out value="${subTask.name}"/>
+                                         <c:forEach items="${subTask.users}" varStatus="us" var="user">
+                                         <div>&nbsp;</div>
+                                          Assigned to : <c:out value="${user.name}"/>
                                          </c:forEach>
-                                         <td width="50" height="100"> <font size="4"> Status :<c:out value="${subTask.status}"/></td>
-                                         <td width="50" height="100"> <font size="4"> OEstimate : <c:out value="${subTask.OEstimate}"/> </td>
-                                      </tr>
-                                   </c:forEach>
+                                         <div>&nbsp;</div>
+                                          Status : <c:out value="${subTask.status}"/>
+                                         <div>&nbsp;</div>
+                                          OEstimate : <c:out value="${subTask.OEstimate}"/>
+                                    </td>
+                                  </c:forEach>
                                 </tbody>
                                </table>
-                             </tr>
                          </c:forEach>
-                    </tbody>
-                 </table>
-	            <button id="saveBtn" type="submit" class="btn btn-primary">Print</button>
-	            <c:url var="CancelUrl" value="/api/sprint/edit?sprintid=${sprintAttr.id}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">back</a>
-               </form:form>
-	   </div>
-     </body>
+                      </form:form>
+                      </tbody>
+    </body>
 </html>

@@ -26,7 +26,7 @@
              </div>
 
 		<div class="container">
-			<h2 id="article_header" class="text-warning" align="center">Sprint tasks</h2>
+			<h2 id="article_header" class="text-warning" align="center">Tasks for Sprint ${sprintname} </h2>
 	    	<div>&nbsp;</div>
 
 	    	<!-- Div to add a new task to the mongo database -->

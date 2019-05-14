@@ -39,6 +39,7 @@ public class TaskController {
             List<Task> task_list = sprint.getTasks();
             model.addAttribute("tasks", task_list);
             model.addAttribute("sprintid", sprintid);
+        model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
 
         return "task";
     }
@@ -48,6 +49,7 @@ public class TaskController {
         log.debug("Request to open the new task form page");
         model.addAttribute("taskAttr", Task.builder().storyPoints(0).build());
         model.addAttribute("sprintid",sprintid);
+        model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
         return "taskform";
     }
 
@@ -58,6 +60,7 @@ public class TaskController {
         log.debug("Request to open the edit task for custom sprint form page");
         model.addAttribute("taskAttr", repository.findById(id).get());
         model.addAttribute("sprintid", sprintid);
+        model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
         return "taskform";
     }
 

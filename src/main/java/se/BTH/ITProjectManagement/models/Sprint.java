@@ -112,7 +112,7 @@ public class Sprint {
         double plannedToday = Calculate_Planned_hours_today();
         double totalEstimate = Calculate_total_estimate();
         double remain = totalEstimate;
-        for (int i = 0; i < plannedPeriod - 1; i++) {
+        for (int i = 0; i < plannedPeriod ; i++) {
             remain -=plannedToday;
                     planned_hours_remaining.add(i, remain);
         }

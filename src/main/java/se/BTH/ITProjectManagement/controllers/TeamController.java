@@ -57,7 +57,7 @@ public class TeamController {
         model.addAttribute("sprintid", id);
         return "sprintteamform";
     }
-    @RequestMapping(value = "/member", method = RequestMethod.GET) //must be put and add search
+    @RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
     public String members(@RequestParam("id") String id , Model model) {
         log.debug("Request to fetch all users from the mongo database");
         Team team= repository.findById(id).get();

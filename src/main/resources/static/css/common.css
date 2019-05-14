@@ -46,3 +46,10 @@ body {
 .has-error {
     color: red
 }
+#containerPrint {
+  max-width: 800px;
+  margin: 0 auto;
+  column-width: 14em;
+  column-gap: 2em;
+  column-rule: 1px solid #ccc;
+}

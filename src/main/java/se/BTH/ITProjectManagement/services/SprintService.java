@@ -19,7 +19,7 @@ public class SprintService {
 
         public  List<List<Map<Object, Object>>> getCanvasjsDataList(String sprintid) {
             Sprint sprint = repository.findById(sprintid).get();
-            Map<Object, Object> map ;
+            Map<Object, Object> map = null ;
             List<List<Map<Object, Object>>> list = new ArrayList<List<Map<Object, Object>>>();
             List<Map<Object, Object>> dataPoints1 = new ArrayList<>();
             List<Map<Object, Object>> dataPoints2 = new ArrayList<Map<Object, Object>>();

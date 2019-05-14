@@ -44,8 +44,7 @@
 
         <div class="jumbotron">
             <div class="row text-center">
-                <div class="">
-                 <h1><font color="red">Sprint charts</h1>
+              <h2><font color="red">${sprintname} Sprint charts</h2>
                  <a style="color:black;" href="/api/sprint/canvasjschart?sprintid=${sprintid}" color="red" target="_blank"><h4> Planned/Actual Todo Chart</h3></a>
                  <a style="color:black;" href="/api/sprint/canvasjschart1?sprintid=${sprintid}" color="red" target="_blank"><h4> Planned/Actual Remaining Chart</h3></a>
 

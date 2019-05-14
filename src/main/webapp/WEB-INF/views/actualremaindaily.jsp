@@ -21,8 +21,8 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		title: "Dayes"
 	},
 	axisY: {
-		title: "Time (in Hours)",
-        		prefix: "h",
+		title: "Story Points",
+        		prefix: "",
         		includeZero: false
         	},
         	toolTip: {
@@ -37,14 +37,14 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		type: "line",
 		name: "planned",
         		showInLegend: true,
-        		yValueFormatString: "h#,##0",
+        		yValueFormatString: "#,##0",
 		dataPoints: dps[0]
 		},
         	{
         		type: "line",
         		name: "actual",
         		showInLegend: true,
-        		yValueFormatString: "h#,##0",
+        		yValueFormatString: "#,##0",
         		dataPoints: dps[1]
 	}]
 });
