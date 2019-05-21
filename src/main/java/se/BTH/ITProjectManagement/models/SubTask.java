@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class SubTask {
     private String id;
     private String name;
     private TaskStatus status;
+    @Min(value = 0)
     private Integer OEstimate; //planned hours
     private List<Integer> actualHours;
     private List<User> users;

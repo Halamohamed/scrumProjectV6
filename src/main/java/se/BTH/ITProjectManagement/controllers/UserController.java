@@ -15,13 +15,11 @@ import se.BTH.ITProjectManagement.repositories.RoleRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
 import se.BTH.ITProjectManagement.security.SecurityService;
 import se.BTH.ITProjectManagement.security.UserService;
-import se.BTH.ITProjectManagement.security.UserValidator;
+import se.BTH.ITProjectManagement.validator.UserValidator;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
@@ -45,6 +43,7 @@ public class UserController {
 
     // Displaying the initial users list.
 
+    //@ResourceNotFoundException.Exceptions
     @RequestMapping(value = "/api/user/users", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public String getUsers(Model model, Principal principal) {

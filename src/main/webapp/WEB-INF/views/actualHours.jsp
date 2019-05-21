@@ -44,9 +44,9 @@
                            <tr align="left">
                             <label ><font color="red">Task Name: </font></label><td><c:out value="${task.name}"/></td>
                             <td><form:hidden path="tasks[${spt.index}].id"/></td>
-                                                       <td><form:hidden path="tasks[${spt.index}].name"/></td>
-                                                       <td><form:hidden path="tasks[${spt.index}].priority" /></td>
-                                                       <td><form:hidden path="tasks[${spt.index}].storyPoints" /></td>
+                                      <td><form:hidden path="tasks[${spt.index}].name"/></td>
+                                      <td><form:hidden path="tasks[${spt.index}].priority" /></td>
+                                      <td><form:hidden path="tasks[${spt.index}].storyPoints" /></td>
                             <div>&nbsp;</div>
                               <table id="subtasks_table" class="table">
                                 <tbody>
@@ -55,14 +55,14 @@
                                        <label >SubTask Name: </label>
                                        <c:out  value="${subTask.name}"/></td>
                                          <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].id"/></td>
-                                                                              <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].name" /></td>
-                                                                              <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].status" /></td>
-                                                                              <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].OEstimate" /></td>
-                                                                              <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].users"/></td>
+                                         <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].name" /></td>
+                                         <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].status" /></td>
+                                         <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].OEstimate" /></td>
+                                         <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].users"/></td>
                                        <table id="actualHours_table" class="table">
                                           <tbody>
                                              <c:forEach items="${subTask.actualHours}" varStatus="ah" var="actualHour">
-                                               <td align="center" width= "30"> Day${ah.index+1}</td>
+                                               <td style= "width: 50px"> Day${ah.index+1}</td>
                                              </c:forEach>
                                           </tbody>
                                        </table>
@@ -70,7 +70,7 @@
                                           <tbody>
                                              <c:forEach items="${subTask.actualHours}" varStatus="ah" var="actualHour">
                                                  <td>
-                                                   <form:input align="center" style="width: 120%;" type="number" path="tasks[${spt.index}].subTasks[${st.index}].actualHours[${ah.index}]" value="${actualHour}" />
+                                                   <form:input  style="width: 30px;" type="number" min="0" path="tasks[${spt.index}].subTasks[${st.index}].actualHours[${ah.index}]" value="${actualHour}" />
                                                  </td>
                                              </c:forEach>
                                           </tbody>

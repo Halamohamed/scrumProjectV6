@@ -89,7 +89,7 @@ public class Sprint {
         return Actual_hours_today;
     }
 
-    //Planned hours today equal (total eststimate) div plannedPeriod
+    //Planned hours today equal (total estimate) div plannedPeriod
     public Double Calculate_Planned_hours_today() {
         return Calculate_total_estimate() * 1.0 / plannedPeriod;
     }

@@ -18,14 +18,12 @@
                             <li><a href="/api/sprint/sprints"style="color:red;" th:href="@{api/sprint/sprints}">SPRINT</a></li>
                             <li><a href="/api/sprint/add" style="color:red;"th:href="@{/api/sprint/add}">Create Sprint</a></li>
                         </ul>
-
                     </div>
                 </div>
             </nav>
      </div>
      <div class="container">
            	<h2 id="article_header" class="text-warning" align="center">All Teams</h2>
-
 	    	<!-- Table to display the user list from the mongo database -->
 	    	<table id="teams_table" class="table">
 	        	<thead>
@@ -34,7 +32,6 @@
 	            		<th>Name</th>
 	            		<th>Active</th>
 	            		<th colspan="2"></th>
-
 	            	</tr>
 	        	</thead>
 	        	<tbody>
@@ -44,16 +41,15 @@
 	                    	<td><c:out value="${team.name}" /></td>
 	                    	<td><c:out value="${team.active}" /></td>
 	                        <td>
-	                        	<c:url var="addUrl" value="/api/sprint/addteam?sprintid=${sprintid}&teamid=${team.id}" /><a id="add" href="${addUrl}" class="btn btn-success">Add to sprint</a>
+	                        <c:url var="addUrl" value="/api/sprint/addteam?sprintid=${sprintid}&teamid=${team.id}" />
+	                        <a id="add" href="${addUrl}" class="btn btn-success">Add to sprint</a>
 	                    	</td>
-
 	                	</tr>
 	            	</c:forEach>
 	        	</tbody>
 	    	</table>
-	    		    <c:url var="CancelUrl" value="/api/team/sprintteam?sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
-
+	    		    <c:url var="CancelUrl" value="/api/team/sprintteam?sprintid=${sprintid}" />
+	    		    <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Back</a>
 	 </div>
-
 	</body>
 </html>

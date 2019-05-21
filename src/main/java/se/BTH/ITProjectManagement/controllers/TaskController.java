@@ -1,6 +1,7 @@
 package se.BTH.ITProjectManagement.controllers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import java.util.*;
 @RequestMapping("/api/task")
 public class TaskController {
 
-    private static org.apache.log4j.Logger log = Logger.getLogger(TaskController.class);
+    private static final Logger log =  LoggerFactory.getLogger(TaskController.class);
 
     @Autowired
     private TaskRepository repository;
@@ -34,7 +35,7 @@ public class TaskController {
     // Displaying the initial tasks list.
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     public String getTasks(@RequestParam(value="sprintid", required=true) String sprintid,Model model) {
-        log.debug("Request to fetch all tasks for custom sprint from the mongo database");
+        log.info("Request to fetch all tasks for custom sprint from the mongo database");
         Sprint sprint=sprintRepository.findById(sprintid).get();
             List<Task> task_list = sprint.getTasks();
             model.addAttribute("tasks", task_list);
@@ -46,7 +47,7 @@ public class TaskController {
     // Opening the add new task form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addTask(@RequestParam(value = "sprintid",required = true)String sprintid, Model model) {
-        log.debug("Request to open the new task form page");
+        log.info("Request to open the new task form page");
         model.addAttribute("taskAttr", Task.builder().storyPoints(0).build());
         model.addAttribute("sprintid",sprintid);
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
@@ -57,7 +58,7 @@ public class TaskController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editTask(@RequestParam(value="taskid", required=true) String id,
                            @RequestParam(value = "sprintid",required = true)String sprintid, Model model) {
-        log.debug("Request to open the edit task for custom sprint form page");
+        log.info("Request to open the edit task for custom sprint form page");
         model.addAttribute("taskAttr", repository.findById(id).get());
         model.addAttribute("sprintid", sprintid);
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());

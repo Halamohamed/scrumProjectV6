@@ -32,22 +32,22 @@ public class BacklogController {
             this.repository = repository;
         }
 
-        @RequestMapping(value = "/sprints", method = RequestMethod.GET)
-        public String getsprints(Model model) {
-            log.debug("Request to fetch all sprints from the mongo database");
+        /*@RequestMapping(value = "/backlog", method = RequestMethod.GET)
+        public String getbacklog(Model model) {
+            log.debug("Request to fetch backlog for the sprint from the mongo database");
             List<Sprint> sprint_list = repository.findAll();
             model.addAttribute("sprints", sprint_list);
 
             return "sprint";
-        }
-   /* @RequestMapping(value = "/sprints", method = RequestMethod.GET)
-    public String getsprints(Model model) {
+        }*/
+    @RequestMapping(value = "/backlogs", method = RequestMethod.GET)
+    public String getbacklog(Model model) {
         log.debug("Request to fetch all sprints from the mongo database");
         List<Sprint> sprint_list = repository.findAll();
         model.addAttribute("sprints", sprint_list);
 
         return "backlog";
-    }*/
+    }
 
         // Opening the add new sprint form page.
         @RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -63,7 +63,7 @@ public class BacklogController {
         @RequestMapping(value = "/edit", method = RequestMethod.GET)
         public String editSprint(@RequestParam(value="sprintid") String id, Model model) {
             log.debug("Request to open the edit Sprint form page");
-            model.addAttribute("sprintAttr", repository.findById(id).get());
+            model.addAttribute("backlogAttr", repository.findById(id).get());
             return "sprintform";
         }
 
@@ -71,12 +71,12 @@ public class BacklogController {
         @RequestMapping(value = "/delete", method = RequestMethod.GET)
         public String delete(@RequestParam(value="id") String id, Model model) {
             repository.deleteById(id);
-            return "redirect:sprints";
+            return "redirect:backlogs";
         }
 
         // Adding a new sprint or updating an existing sprint.
         @RequestMapping(value = "/save", method = RequestMethod.POST)
-        public String save(@ModelAttribute("sprintAttr") Sprint sprint) {                  // needs test for edit or create
+        public String save(@ModelAttribute("backlogAttr") Sprint sprint) {                  // needs test for edit or create
             Sprint sprint1;
             if(!sprint.getId().equals("")) {
                 sprint.calcDelivery();
@@ -96,7 +96,7 @@ public class BacklogController {
                 repository.save(sprint1);
             }
 
-            return "redirect:sprints";
+            return "redirect:backlogs";
         }
 
 

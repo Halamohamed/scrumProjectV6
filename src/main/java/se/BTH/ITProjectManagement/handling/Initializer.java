@@ -3,6 +3,7 @@ package se.BTH.ITProjectManagement.handling;
 import static org.apache.log4j.BasicConfigurator.configure;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.*;
@@ -48,6 +49,7 @@ public class Initializer implements CommandLineRunner {
 //        addPersons();
 //        addBacklog();
 //        statistics();
+//        addAdminToDB();
 
     }
 
@@ -81,7 +83,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add( 0);
         actualHours.add( 4);
         actualHours.add( 1);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         User user = userrepo.findByUsername("Arti");
@@ -97,7 +99,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 4);
         actualHours.add(2, 6);
         actualHours.add(3, 6);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Hossein");
@@ -114,7 +116,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 4);
         actualHours.add(2, 6);
         actualHours.add(1, 6);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Hossein");
@@ -134,7 +136,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 1);
         actualHours.add(2, 0);
         actualHours.add(3, 2);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Emil");
@@ -149,7 +151,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 7);
         actualHours.add(2, 8);
         actualHours.add(3, 1);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Emil");
@@ -164,7 +166,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 2);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Emil");
@@ -179,7 +181,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 0);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Forhan");
@@ -193,7 +195,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 1);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Forhan");
@@ -207,7 +209,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 12);
         actualHours.add(3, 11);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Simon");
@@ -229,7 +231,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 0);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Arti");
@@ -244,7 +246,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 0);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Forhan");
@@ -259,7 +261,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 2);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Emil");
@@ -282,7 +284,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 0);
         actualHours.add(3, 1);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Emil");
@@ -303,7 +305,7 @@ public class Initializer implements CommandLineRunner {
         actualHours.add(1, 0);
         actualHours.add(2, 6);
         actualHours.add(3, 6);
-        for (int i= 4; i<14; i++){
+        for (int i = 4; i < 14; i++){
             actualHours.add(0);
         }
         user = userrepo.findByUsername("Arti");
@@ -393,7 +395,19 @@ public class Initializer implements CommandLineRunner {
         team = Team.builder().name("Team Administrators").active(true).users(users).build();
         teamrepo.save(team);
       //teamrepo.findByName("Team Administrators").get().getUsers().forEach(System.out::println);
-        //  teamrepo.findAll().forEach(System.out::println);
+      //teamrepo.findAll().forEach(System.out::println);
+    }
+    private void addAdminToDB() {
+
+        List<Role> roles =  rolerepo.findAll();
+        String pw1 = "Administrator";
+        String hash1 = BCrypt.hashpw(pw1, BCrypt.gensalt(11));
+        boolean verifyHash1 = BCrypt.checkpw(pw1, hash1);
+        User admin = User.builder().name("Admmin").password(hash1).username("Administrator").roles(roles).active(true).build();
+        userrepo.save(admin);
+        System.out.println("\n" + "--->It is ready user name and password to log in \n" + admin.getUsername() + "\n" + pw1	+ " \n" + "--->" + admin.getRoles());
+
+
     }
 
 }

@@ -1,6 +1,4 @@
-<!-- chart.jsp-->
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,7 +7,6 @@
 <title>Todo charts</title>
 <script type="text/javascript">
 window.onload = function() {
-
 var dps = [[], []];
 var chart = new CanvasJS.Chart("chartContainer", {
 	exportEnabled: true,
@@ -65,9 +62,7 @@ var label;
 		});
 	</c:forEach>
 </c:forEach>
-
 chart.render();
-
 function toggleDataSeries(e) {
 	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
 		e.dataSeries.visible = false;
@@ -81,6 +76,8 @@ function toggleDataSeries(e) {
 </script>
 </head>
 <body>
+   <h1 id="form_header" class="text-warning" align="center" style="font-weight:bold">Sprint: ${sprintname}  </h1>
+   <h1 id="form_header" class="text-warning" align="center" style="font-weight:bold"> Team: ${teamname}  </h1>
 	<div id="chartContainer" style="height: 600px; width: 100%;"></div>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>

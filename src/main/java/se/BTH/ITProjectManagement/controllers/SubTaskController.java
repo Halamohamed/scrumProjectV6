@@ -8,12 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.SprintRepository;
 import se.BTH.ITProjectManagement.repositories.SubTaskRepository;
 import se.BTH.ITProjectManagement.repositories.TaskRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
+import se.BTH.ITProjectManagement.validator.SubTaskValidator;
 
 
 import javax.validation.Valid;
@@ -33,13 +35,18 @@ public class SubTaskController {
 
     @Autowired
     private SubTaskRepository repository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private SprintRepository sprintRepository;
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private SubTaskValidator subTaskValidator;
 
     // Displaying the initial subtasks list.
 //    @RequestMapping(value = "/subtasks", method = RequestMethod.GET)
@@ -107,7 +114,16 @@ public class SubTaskController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("subtaskAttr") SubTask subtask,
                        @RequestParam(value = "taskid", required = true) String taskid,
-                       @RequestParam(value = "sprintid", required = true) String sprintid) {
+                       @RequestParam(value = "sprintid", required = true) String sprintid, BindingResult bindingResult) {
+        subTaskValidator.validate(subtask, bindingResult);
+
+        if (bindingResult.hasErrors()&&subtask.getId().equals("")) {
+            return "redirect:/api/subtask/add?taskid=" + taskid + "&sprintid=" + sprintid;
+        }
+        else if(bindingResult.hasErrors()&& !subtask.getId().equals(""))
+        {
+            return "redirect:/api/subtask/edit?id="+subtask.getId()+"&taskid=" + taskid + "&sprintid=" + sprintid;
+        }
         Sprint sprint = sprintRepository.findById(sprintid).get();
         int taskIndex = sprint.findTaskIndex(taskid);
         Task task = sprint.getTasks().get(taskIndex);

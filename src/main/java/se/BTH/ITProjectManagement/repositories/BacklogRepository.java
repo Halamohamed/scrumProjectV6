@@ -1,4 +1,7 @@
 package se.BTH.ITProjectManagement.repositories;
 
-public interface BacklogRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import se.BTH.ITProjectManagement.models.Sprint;
+
+public interface BacklogRepository extends MongoRepository<Sprint,String> {
 }

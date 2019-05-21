@@ -65,9 +65,6 @@
                  <td>
                     <c:url var="viewUrl" value="/api/sprint/sprintcharts?sprintid=${sprint.id}" /><a id="viewChart" href="${viewUrl}" class="btn btn-success">Charts</a>
                  </td>
-                  <td>
-                  <c:url var="viewUrl" value="/api/sprint/backlog?sprintid=${sprint.id}" /><a id="view" href="${viewUrl}" class="btn btn-success">backlog</a>
-                  </td>
                 <td>
                     <c:url var="deleteUrl" value="/api/sprint/delete?id=${sprint.id}" /><a id="delete" href="${deleteUrl}" class="btn btn-danger">Delete</a>
                 </td>

@@ -32,12 +32,15 @@
 	        <c:url var="saveUrl" value="/api/task/save?sprintid=${sprintid}" />
 	        <form:form id="task_form" modelAttribute="taskAttr" method="POST" action="${saveUrl}">
 	        	<form:hidden path="id" />
+
 	        	<label for="task_name">Enter Priority: </label>
-                <form:input id="task_name" type="number" cssClass="form-control" path="priority" />
+                <form:input id="task_name" type="number" min="0" cssClass="form-control" path="priority" />
+
 	            <label for="task_name">Enter Name: </label>
 	            <form:input id="task_name" cssClass="form-control" path="name" />
+
 	            <label for="task_name">Enter StoryPoints: </label>
-                <form:input id="task_name" type="number" cssClass="form-control" path="storyPoints" />
+                <form:input id="task_name" type="number" min="0" cssClass="form-control" path="storyPoints" />
 	            <div>&nbsp;</div>
 	             <label for="task_name">Sub Tasks : </label>
 

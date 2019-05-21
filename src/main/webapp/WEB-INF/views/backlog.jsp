@@ -10,81 +10,60 @@
 </head>
 <body>
 <div class="container">
-            <h2> "${sprint.name}"</h2>
-     </div>
-<div class="container">
-    <h2 id="article_header" class="text-warning" align="center"> Backlog </h2>
-    <div>&nbsp;</div>
-
-    <!-- Div to add a new backlog to the mongo database -->
-
-    <div>&nbsp;</div>
-    <!-- Table to display the backlog from the mongo database -->
-    <table id="backlog_table" class="table">
-    <c:url var="saveUrl" value="/api/sprint/backlog" />
-                  <form:form id="backlog_form" modelAttribute="backlogAttr" method="POST" action="${saveUrl}">
-                    <form:hidden path="id" />
-                     <h3 id="form_header" class="text-warning" align="center">Backlog for Sprint ${sprintAttr.name}</h3>
-                        <tbody>
-
-        <thead>
-        <tr align="center">
-            <th>BACKLOG TASK & ID</th>
-            <th>STORY POINTS</th>
-            <th>ASSIGNED TO</th>
-            <th>STATUS</th>
-            <th>ORIGIN AL ESTIMATE</th>
-              <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
-                 <th>Day ${st.index+1}</th>
+<c:url var="saveUrl" value="/api/sprint/backlog" />
+       <form:form id="backlog_form" modelAttribute="backlogAttr" method="POST" action="${saveUrl}">
+         <form:hidden path="id" />
+    <!-- Div to add a vew backlog from the mongo database -->
+    <h3 id="form_header" class="text-warning" align="left">Backlog for Sprint ${backlogAttr.name}</h3>
+<form:hidden path="name" />
+          <tbody>
+          <thead>
+          <c:forEach items="${backlogAttr.tasks}" varStatus="spt" var="task">
+          <tr align="left">
+          <label ><font color="red">Task Name: </font></label><td><c:out value="${task.name}"/></td>
+            <td><form:hidden path="tasks[${spt.index}].id"/></td>
+            <td><form:hidden path="tasks[${spt.index}].name"/></td>
+            <td><form:hidden path="tasks[${spt.index}].priority" /></td>
+             <label >Story Points: </label><td><c:out value="${task.storyPoints}"/></td>
+            <div>&nbsp;</div>
+            <table id="subtasks_table" class="table">
+              <tbody>
+               <c:forEach items="${task.subTasks}" varStatus="st" var="subTask">
+                 <tr align="left">
+                 <td><label >SubTask Name:  </label><c:out  value="${subTask.name}"/></td>
+                 <td><form:hidden path="tasks[${spt.index}].subTasks[${st.index}].id"/></td>
+                 <td><label> Status:  </label><c:out value="${subTask.status}"/></td>
+                 <td><label> OEstimate:  </label><c:out value="${subTask.OEstimate}"/></td>
+                 <c:forEach items="${subTask.users}" varStatus="us" var="user">
+                 <td><label> ASSIGNED To:</label><c:out  value="${user.name}"/>
+                 <div>&nbsp;</div></td>
+                 </tr>
                  </c:forEach>
-            <th>SPRINT REVIEW/th>
-            <th colspan="2"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- sprint tasks -->
-        <tr align="left">
-        <c:forEach items="${sprints}" var="sprint">
-           <td><c:out value="${sprint.name}" /></td>
-             <c:forEach items="${tasks}" var="task">
-               <td><c:out value="${task.name}" /></td>
-                  <td width="200" height="100"> <font size="4"> ${st.index+1}.SubTask: <c:out value="${subTask.name}"/></td>
-                     <c:forEach items="${subTask.users}" varStatus="st" var="user">
-                  <td width="100" height="100"> <font size="4"> Assigned to :<c:out value="${user.name}"/></td>
-                     </c:forEach>
-                  <td width="50" height="100"> <font size="4"> Status :<c:out value="${subTask.status}"/></td>
-                  <td width="50" height="100"> <font size="4"> OEstimate : <c:out value="${subTask.OEstimate}"/> h</td>
-             </c:forEach>
-        </tr>
-        <tr align="left">
-          <c:forEach items="${subtasks}" var="subtask">
-             <td><c:out value="${subtask.storyPoints}" /></td>
-          </c:forEach>
-          </tr>
-          <c:forEach items="${subtaskAttr.users}" varStatus="st" var="user"   >
-            <tr align="left">
-              <td><form:input path="users[${st.index}].name" cssClass="form-control" value="${user.name}"/></td>
-              <td><form:input type="hidden" path="users[${st.index}].id" value="${user.id}" /></td>
-              </tr>
-              <tr align="left">
-              <td><form:input path="users[${st.index}].taskStatus" value="${user.taskStatus}" /></td>
-            </tr>
-             <tr align="left">
-               <td><form:input path="users[${st.index}].OEstimate" value="${user.OEstimate}" /></td>
-             </tr>
-          </c:forEach>
-          <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
-             <tr align="left">
-              <td><form:input type="number" path="actualHours[${st.index}]" cssClass="form-control" value="${actualHour}"/></td>
-             </tr>
-          </c:forEach>
-           <c:forEach items="${sprints}" var="sprint">
-           <tr>
-              <td><c:out value="${sprint.review}" /></td>
-           </tr>
-        </c:forEach>
-        </c:forEach>
-        </tbody>
+                 </tbody>
+            <table id="actualHours_table" class="table">
+               <tbody><tr>
+                 <c:forEach items="${subTask.actualHours}" varStatus="ah" var="actualHour">
+                   <td style="width: 50px;"> Day${ah.index+1}</td>
+                 </c:forEach></tr>
+               </tbody>
+               <table id="actualHours_table" class="table">
+            <tbody><tr>
+                  <c:forEach items="${subTask.actualHours}" varStatus="ah" var="actualHour">
+                    <td>
+                      <form:input style="width: 30px;" type="number" min="0" path="tasks[${spt.index}].subTasks[${st.index}].actualHours[${ah.index}]" value="${actualHour}" />
+                    </td>
+                  </c:forEach></tr>
+               </tbody>
+            </table>
+                 </tr>
+                 </c:forEach>
+                 </tbody>
+                 </table>
+                 </tr>
+                  </c:forEach>
+                </tbody>
+            </table>
+            </tbody>
     </table>
 </div>
 </body>

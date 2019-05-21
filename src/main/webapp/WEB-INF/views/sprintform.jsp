@@ -36,16 +36,22 @@
         <form:hidden path="id" />
         <label for="sprint_name">Enter Name: </label>
         <form:input id="sprint_name" cssClass="form-control" path="name" />
+
         <label for="sprint_name">Enter Goal: </label>
         <form:input id="sprint_name" cssClass="form-control" path="goal" />
+
         <label for="sprint_name">Enter start day: </label>
         <form:input id="sprint_name" type="date" cssClass="form-control"  path="startSprint" />
+
         <label for="sprint_name">Enter planned Period: </label>
-        <form:input id="sprint_name" type="number" cssClass="form-control"  path="plannedPeriod" />
+        <form:input id="sprint_name" type="number" min="0" cssClass="form-control"  path="plannedPeriod" />
+
         <label for="sprint_name">Enter retrospective: </label>
         <form:input id="sprint_name" type="date" cssClass="form-control" path="retrospective" />
+
         <label for="sprint_name">Enter Demo: </label>
         <form:input id="sprint_name" type="date" cssClass="form-control" path="demo" />
+
         <label for="sprint_name">Enter Review: </label>
         <form:select id="sprint_name" cssClass="form-control" path="review" >
                 <form:option value="MONDAY" label="MONDAY"/>
@@ -54,6 +60,7 @@
                 <form:option value="THURSDAY" label="THURSDAY"/>
                 <form:option value="FRIDAY" label="FRIDAY"/>
                 </form:select>
+
         <label for="sprint_name">Enter Daily meeting: </label>
         <form:input id="sprint_name"  cssClass="form-control" path="daily_meeting" />
         <form:hidden path="tasks" />
@@ -64,9 +71,6 @@
         <c:url var="edithoursUrl" value="/api/sprint/actualHours?sprintid=${sprintAttr.id}" /><a id="editactuslhours" href="${edithoursUrl}" class="btn btn-success">Edit ActualHours</a>
         <c:url var="printUrl" value="/api/sprint/print?sprintid=${sprintAttr.id}" /><a id="print" href="${printUrl}" class="btn btn-default">Print</a>
         <c:url var="CancelUrl" value="/api/sprint/sprints" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
-
-
-
     </form:form>
 </div>
 

@@ -23,18 +23,19 @@
                             </div>
                         </div>
                     </nav>
-             </div>
-	    <div class="container">
+    </div>
+	<div class="container">
 	     <h9 id="form_header" class="text-warning" align="left">Sprint ${sprint.name} > Task ${taskname} > </h3>
 	        <h3 id="form_header" class="text-warning" align="center">Sub Task</h3>
 	        <div>&nbsp;</div>
-
 			<!-- Sub Task input form to add a new subtask or update the existing subtask-->
 	        <c:url var="saveUrl" value="/api/subtask/save?taskid=${taskid}&sprintid=${sprintid}" />
 	        <form:form id="subtask_form" modelAttribute="subtaskAttr" method="POST" action="${saveUrl}">
 	        	<form:hidden path="id" />
+
 	            <label for="subtask_name">Enter Name: </label>
 	            <form:input id="subtask_name" cssClass="form-control" path="name" />
+
 	           	<label for="subtask_name">Enter status: </label>
                 <form:select id="subtask_name" cssClass="form-control" path="status">
                         <form:option value="PLANNED" label="PLANNED"/>
@@ -43,9 +44,18 @@
                         <form:option value="DISCARDED" label="DISCARDED"/>
                         <form:option value="DONE" label="DONE"/>
                         </form:select>
-	            <label for="subtask_name">Enter OEstimate: </label>
-                <form:input id="subtask_name" type="number" cssClass="form-control" path="OEstimate" />
-	            <div>&nbsp;</div>
+                <label for="subtask_name">Enter OEstimate: </label>
+                <spring:bind path="OEstimate">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                    <c:if test = "${status.error ? 'has-error' : ''}">
+                       <span style="color:red;font-weight:bold">OEstimate must be positive</span>
+                    </c:if>
+                    <span>${message}</span>
+                     <form:input id="subtask_name" type="number"  min="0" path="OEstimate" cssClass="form-control" placeholder="OEstimate"></form:input>
+                     <form:errors path="OEstimate"></form:errors>
+                    </div>
+                </spring:bind>
+                <div>&nbsp;</div>
 	             <label for="subtask_name">Assigned to: </label>
                 	  <table id="users_table" class="table">
                            <thead>
@@ -86,14 +96,14 @@
                       </table>
                        <table id="actualHours_table1" class="table">
                          <tbody>
-                            <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour"   >
-                              <td><form:input style="width: 50px;" type="number" path="actualHours[${st.index}]"  value="${actualHour}" /></td>
-	             </c:forEach>
+                            <c:forEach items="${subtaskAttr.actualHours}" varStatus="st" var="actualHour" >
+                              <td><form:input style="width:30px;" type="number" min="0" path="actualHours[${st.index}]" value="${actualHour}" /></td>
+	                        </c:forEach>
                          </tbody>
                        </table>
 	            <button id="saveBtn" type="submit" class="btn btn-primary">Save</button>
-                <c:url var="CancelUrl" value="/api/task/edit?taskid=${taskid}&sprintid=${sprintid}" /><a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
-
+                <c:url var="CancelUrl" value="/api/task/edit?taskid=${taskid}&sprintid=${sprintid}" />
+                <a id="cancel" href="${CancelUrl}" class="btn btn-danger">Cancel</a>
 	        </form:form>
 	    </div>
 	</body>
