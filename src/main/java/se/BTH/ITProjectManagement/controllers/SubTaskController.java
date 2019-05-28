@@ -112,17 +112,15 @@ public class SubTaskController {
 
     // Adding a new subtask or updating an existing subtask.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("subtaskAttr") SubTask subtask,
+    public String save(@ModelAttribute("subtaskAttr")@Valid SubTask subtask,Model model,
                        @RequestParam(value = "taskid", required = true) String taskid,
                        @RequestParam(value = "sprintid", required = true) String sprintid, BindingResult bindingResult) {
-        subTaskValidator.validate(subtask, bindingResult);
+        //subTaskValidator.validate(subtask, bindingResult);
 
-        if (bindingResult.hasErrors()&&subtask.getId().equals("")) {
-            return "redirect:/api/subtask/add?taskid=" + taskid + "&sprintid=" + sprintid;
-        }
-        else if(bindingResult.hasErrors()&& !subtask.getId().equals(""))
-        {
-            return "redirect:/api/subtask/edit?id="+subtask.getId()+"&taskid=" + taskid + "&sprintid=" + sprintid;
+        if (bindingResult.hasErrors()) {
+           model.addAttribute("taskid", taskid);
+           model.addAttribute("sprintid", sprintid);
+            return "subtaskform" ;
         }
         Sprint sprint = sprintRepository.findById(sprintid).get();
         int taskIndex = sprint.findTaskIndex(taskid);
