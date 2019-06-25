@@ -48,10 +48,18 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public String getUsers(Model model, Principal principal) {
         log.debug("Request to fetch all users from the mongo database"+principal.getName());
-        //if(principal.getName())
         List<User> user_list = repository.findAll();
         model.addAttribute("users", user_list);
         return "user";
+    }
+    //@ResourceNotFoundException.Exceptions
+    @RequestMapping(value = "/api/user/userlist", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
+    public String userlist(Model model, Principal principal) {
+        log.debug("Request to fetch all users from the mongo database"+principal.getName());
+        List<User> user_list = repository.findAll();
+        model.addAttribute("users", user_list);
+        return "userlist";
     }
 
     // Opening the add new user form page.
@@ -71,7 +79,8 @@ public class UserController {
     public String editUser(Principal user, Model model) {
         log.debug("Request to open the edit user form page");
         model.addAttribute("userAttr", repository.findByUsername(user.getName()));
-        return "userform";
+            return "userform";
+
     }
     @RequestMapping(value = "/api/user/profile", method = RequestMethod.GET)
     public String profile(User user, Model model) {
@@ -102,7 +111,7 @@ public class UserController {
     @RequestMapping(value = "/api/user/save", method = RequestMethod.POST)
     public String save(@ModelAttribute("userAttr") User user) {                  // needs test for edit or create
             repository.save(user);
-        return "redirect:/";
+            return "redirect:/";
     }
 
     @GetMapping("/registration")
@@ -110,14 +119,12 @@ public class UserController {
         List<Role> roles= new ArrayList<>();
         roles.add(Role.builder().name(RoleName.ROLE_USER).build());
         model.addAttribute("userForm", User.builder().roles(roles).active(true).build());
-
         return "registration";
     }
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -126,7 +133,6 @@ public class UserController {
         userService.save(User.builder().name(userForm.getName()).active(true).password(userForm.getPassword())
                 .username(userForm.getUsername()).city(userForm.getCity()).phone(userForm.getPhone()).build());
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-
         return "hello";
     }
 

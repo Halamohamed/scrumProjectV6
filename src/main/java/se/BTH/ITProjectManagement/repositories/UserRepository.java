@@ -2,6 +2,7 @@ package se.BTH.ITProjectManagement.repositories;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
+import se.BTH.ITProjectManagement.models.RoleName;
 import se.BTH.ITProjectManagement.models.Team;
 import se.BTH.ITProjectManagement.models.User;
 
@@ -18,6 +19,7 @@ public interface UserRepository extends MongoRepository<User,String> {
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     List<User> findAll();
+    User findByRoles (@Param("roleName")RoleName roleName);
 
 
     List<User> findByCity(@Param("city") String city);

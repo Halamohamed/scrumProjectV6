@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService {
         User user=userRepository.findByUsername(username);
         return user;
     }
+
+    @Override
+    public User findByRoles(RoleName role) {
+        User user = userRepository.findByRoles(RoleName.ROLE_USER);
+        return user;
+    }
 }

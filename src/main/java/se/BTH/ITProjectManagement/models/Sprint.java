@@ -119,7 +119,7 @@ public class Sprint {
         return planned_hours_remaining;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -132,6 +132,6 @@ public class Sprint {
         }
 
         return jsonString;
-    }
+    }*/
 
 }

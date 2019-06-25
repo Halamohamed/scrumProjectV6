@@ -49,7 +49,7 @@ public class SprintController {
 
    @RequestMapping(value = "/backlog", method = RequestMethod.GET)
     public String getbacklog(@RequestParam(value="sprintid") String id, Model model) {
-        log.info("Request to fetch the sprint from the mongo database");
+        log.info("Request to fetch the sprint from the page");
         Sprint backlog = repository.findById(id).get();
         model.addAttribute("backlogAttr", backlog);
         model.addAttribute("sprintid", id);

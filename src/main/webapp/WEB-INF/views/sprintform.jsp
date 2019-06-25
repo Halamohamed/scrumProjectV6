@@ -21,6 +21,7 @@
                                 <li><a href="/api/team/teams"style="color:red;" th:href="@{/api/team/teams}">Teams</a></li>
                                 <li><a href="/api/team/add" style="color:red;"th:href="@{/api/team/add}">Create TEAM</a></li>
                                 <li><a href="/api/sprint/sprints" style="color:red;"th:href="@{api/sprint/sprints}">SPRINTS</a></li>
+                                <li><a href="text-center" style="color:red;" th:href="${contextPath}/registration">Create an account</a></h4>
                             </ul>
 
                         </div>

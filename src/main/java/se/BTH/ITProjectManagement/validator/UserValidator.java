@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import se.BTH.ITProjectManagement.models.RoleName;
 import se.BTH.ITProjectManagement.models.User;
 import se.BTH.ITProjectManagement.security.UserService;
 
@@ -22,6 +23,7 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
+        o = userService.findByRoles(RoleName.ROLE_ADMIN);
         User user = (User) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");

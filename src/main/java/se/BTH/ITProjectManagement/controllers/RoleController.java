@@ -6,16 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.Role;
 
+import se.BTH.ITProjectManagement.models.User;
 import se.BTH.ITProjectManagement.repositories.RoleRepository;
 
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 @RestController
 @RequestMapping("/api")

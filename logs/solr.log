@@ -158,3 +158,39 @@ INFO  - 2019-06-18 10:48:40.036; se.BTH.ITProjectManagement.controllers.SprintCo
 INFO  - 2019-06-18 10:51:19.596; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
 INFO  - 2019-06-18 10:51:22.908; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the new sprint form page
 INFO  - 2019-06-18 10:51:41.285; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 09:04:30.041; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 09:04:33.546; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 09:04:44.325; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all teams from the db for custom team and select team
+INFO  - 2019-06-19 09:04:57.660; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 09:05:10.708; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 09:05:13.627; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit actualHours form page
+INFO  - 2019-06-19 09:05:25.980; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 09:05:29.402; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the print sprint form page
+INFO  - 2019-06-19 09:16:29.289; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the print sprint form page
+INFO  - 2019-06-19 10:13:53.513; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 10:13:59.895; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the new sprint form page
+INFO  - 2019-06-19 10:14:05.738; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 12:00:09.088; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the new sprint form page
+INFO  - 2019-06-19 14:12:28.522; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 14:12:32.654; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the new sprint form page
+INFO  - 2019-06-19 14:12:37.351; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 14:14:24.650; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 14:14:31.567; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-19 14:14:37.846; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 14:14:47.535; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all teams from the db for custom team and select team
+INFO  - 2019-06-19 14:14:53.135; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 14:14:59.740; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-19 14:15:03.526; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-24 09:06:30.629; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-24 09:06:35.119; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-24 09:06:39.621; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit actualHours form page
+INFO  - 2019-06-24 09:07:02.348; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-25 09:02:14.601; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-25 09:02:29.401; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-25 09:39:37.266; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-25 10:29:39.781; se.BTH.ITProjectManagement.controllers.SprintController; Request to fetch all sprints from the mongo database
+INFO  - 2019-06-25 10:29:43.010; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-25 10:29:50.627; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-25 10:29:53.784; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit actualHours form page
+INFO  - 2019-06-25 10:29:59.380; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the edit Sprint form page
+INFO  - 2019-06-25 10:30:02.098; se.BTH.ITProjectManagement.controllers.SprintController; Request to open the print sprint form page

@@ -14,7 +14,6 @@ public class TestController {
     private final Logger log = LoggerFactory.getLogger(TestController.class);
     @GetMapping(value={"send"})
     public String sendAccount(Model model, @RequestParam(value="value", required=false, defaultValue="personal") String value) {
-
         model.addAttribute("acount", value );
         return "acount";
     }
@@ -23,7 +22,6 @@ public class TestController {
     public String getParam(@RequestParam(value = "acount", required = true) String value, Model model) {
 
         model.addAttribute("acount", value);
-
         return "acount1";
     }
 }

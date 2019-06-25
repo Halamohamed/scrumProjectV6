@@ -16,6 +16,7 @@
                                 <li><a href="/api/team/add" style="color:red;"th:href="@{/api/team/add}">Create Team</a></li>
                                  <li><a href="/api/sprint/sprints"style="color:red;" th:href="@{/api/sprint/sprints}">SPRINT</a></li>
                                  <li><a href="/api/sprint/add" style="color:red;"th:href="@{/api/sprint/add}">Create Sprint</a></li>
+
                             </ul>
 
                         </div>
