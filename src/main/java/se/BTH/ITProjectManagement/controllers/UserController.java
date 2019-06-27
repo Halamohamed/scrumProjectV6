@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import se.BTH.ITProjectManagement.models.Role;
 import se.BTH.ITProjectManagement.models.RoleName;
+import se.BTH.ITProjectManagement.models.TimeData;
 import se.BTH.ITProjectManagement.models.User;
 import se.BTH.ITProjectManagement.repositories.RoleRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
@@ -18,6 +19,7 @@ import se.BTH.ITProjectManagement.security.UserService;
 import se.BTH.ITProjectManagement.validator.UserValidator;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,12 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
+    private static Principal currentuser;
+
+
+    public TimeData data;
+    //String timeData;
+
     // Displaying the initial users list.
 
     //@ResourceNotFoundException.Exceptions
@@ -50,17 +58,21 @@ public class UserController {
         log.debug("Request to fetch all users from the mongo database"+principal.getName());
         List<User> user_list = repository.findAll();
         model.addAttribute("users", user_list);
+       // String  timeData = " username "+ currentuser.getName() + " get users " +  " at time "+ LocalDateTime.now();
+      //  data.saveTimeData(timeData);
         return "user";
     }
-    //@ResourceNotFoundException.Exceptions
+    /*//@ResourceNotFoundException.Exceptions
     @RequestMapping(value = "/api/user/userlist", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ADMIN')")
     public String userlist(Model model, Principal principal) {
         log.debug("Request to fetch all users from the mongo database"+principal.getName());
         List<User> user_list = repository.findAll();
         model.addAttribute("users", user_list);
+        String timeData = " username "+ principal.getName() + " users " + getUsers(model,principal) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "userlist";
-    }
+    }*/
 
     // Opening the add new user form page.
     @RequestMapping(value = "/api/user/add", method = RequestMethod.GET)
@@ -71,6 +83,8 @@ public class UserController {
         User user=User.builder().roles(roles).active(true).build();
       //  repository.save(user);
         model.addAttribute("userAttr", user);
+        // timeData = " username "+ currentuser.getName() + " added user " + addUser(model) + " time "+ LocalDateTime.now();
+        //data.saveTimeData(timeData);
         return "userform";
     }
 
@@ -79,51 +93,63 @@ public class UserController {
     public String editUser(Principal user, Model model) {
         log.debug("Request to open the edit user form page");
         model.addAttribute("userAttr", repository.findByUsername(user.getName()));
+         //timeData = " username "+ currentuser.getName() + " edited user " + editUser(user,model) + " time "+ LocalDateTime.now();
+        //data.saveTimeData(timeData);
             return "userform";
 
     }
     @RequestMapping(value = "/api/user/profile", method = RequestMethod.GET)
-    public String profile(User user, Model model) {
+    public String profile(User user, Model model ) {
         log.debug("Request to open the edit user form page");
         model.addAttribute("userAttr",user);
+         //timeData = " username "+ currentuser.getName() + " edit profile " + profile(user,model) + " time "+ LocalDateTime.now();
+        //data.saveTimeData(timeData);
         return "profile";
     }
     // Deleting the specified user.
     @RequestMapping(value = "/api/user/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value="id", required=true) String id, Model model) {
+    public String delete(@RequestParam(value="id") String id, Model model ) {
         User user=repository.findById(id).get();
         user.changeActive();
         repository.save(user);
+        // timeData = " username "+ currentuser.getName() + " deleted user " + delete(id,model) + " time "+ LocalDateTime.now();
+       // data.saveTimeData(timeData);
         return "redirect:users";
     }
 
     @RequestMapping(value = "/api/user/admin", method = RequestMethod.GET)
-    public String admin(@RequestParam(value="id", required=true) String id, Model model) {
+    public String admin(@RequestParam(value="id", required=true) String id, Model model ) {
         User user=repository.findById(id).get();
         List<Role> roles= user.getRoles();
         roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN));
         user.setRoles(roles);
         repository.save(user);
+        // String timeData = " username "+ currentuser.getName() + " get admin " + admin(id,model) + " time "+ LocalDateTime.now();
+       // data.saveTimeData(timeData);
         return "redirect:users";
     }
 
     // Adding a new user or updating an existing user.
     @RequestMapping(value = "/api/user/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("userAttr") User user) {                  // needs test for edit or create
+    public String save(@ModelAttribute("userAttr") User user ) {                  // needs test for edit or create
             repository.save(user);
+      //   String timeData = " username "+ currentuser.getName() + " saved user " + save(user) + " time "+ LocalDateTime.now();
+        //data.saveTimeData(timeData);
             return "redirect:/";
     }
 
     @GetMapping("/registration")
-    public String registration(Model model) {
+    public String registration(Model model ) {
         List<Role> roles= new ArrayList<>();
         roles.add(Role.builder().name(RoleName.ROLE_USER).build());
         model.addAttribute("userForm", User.builder().roles(roles).active(true).build());
+        // timeData = " username "+ currentuser.getName() + " register " + registration(model) + " time "+ LocalDateTime.now();
+       // data.saveTimeData(timeData);
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult ) {
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
@@ -133,6 +159,8 @@ public class UserController {
         userService.save(User.builder().name(userForm.getName()).active(true).password(userForm.getPassword())
                 .username(userForm.getUsername()).city(userForm.getCity()).phone(userForm.getPhone()).build());
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+         //timeData = " username "+ currentuser.getName() + " edit register " + registration(userForm, bindingResult) + " time "+ LocalDateTime.now();
+        //data.saveTimeData(timeData);
         return "hello";
     }
 
@@ -144,6 +172,12 @@ public class UserController {
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
 
+        //data.saveTimeData(timeData);
+
+           // String timeData = " username " + currentuser.getName() + " login time " + LocalDateTime.now();
+               data.saveTimeData( " login time " + LocalDateTime.now());
+
+
         return "/login";
     }
     @GetMapping(value={"/","/api/", "/api/hello"})
@@ -151,4 +185,6 @@ public class UserController {
         model.addAttribute("name", name);
         return "hello";
     }
+
+
 }

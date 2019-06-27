@@ -5,16 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import se.BTH.ITProjectManagement.models.Sprint;
-import se.BTH.ITProjectManagement.models.SubTask;
-import se.BTH.ITProjectManagement.models.Team;
+import se.BTH.ITProjectManagement.models.*;
 
 
-import se.BTH.ITProjectManagement.models.User;
 import se.BTH.ITProjectManagement.repositories.SprintRepository;
 import se.BTH.ITProjectManagement.repositories.TeamRepository;
 import se.BTH.ITProjectManagement.repositories.UserRepository;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class TeamController {
 
     private static org.apache.log4j.Logger log = Logger.getLogger(TeamController.class);
 
+    private static Principal currentuser;
     @Autowired
     private TeamRepository repository;
     @Autowired
@@ -32,12 +32,17 @@ public class TeamController {
     @Autowired
     private SprintRepository sprintRepository;
 
+
+    private TimeData data;
+
     // Displaying the initial teams list.
     @RequestMapping(value = "/teams", method = RequestMethod.GET)
     public String getTeams(Model model) {
         log.debug("Request to fetch all teams from the mongo database");
         List<Team> team_list = repository.findAll();
         model.addAttribute("teams", team_list);
+
+        data.saveTimeData(" username "+ currentuser.getName() + " get teams " + " time "+ LocalDateTime.now());
         return "team";
     }
 
@@ -55,6 +60,8 @@ public class TeamController {
         } else team = Team.builder().active(true).users(new ArrayList<>()).build();
         model.addAttribute("teamAttr", team);
         model.addAttribute("sprintid", id);
+        String timeData = " username "+ currentuser.getName() + " get team for sprint "+ id + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "sprintteamform";
     }
     @RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
@@ -64,6 +71,8 @@ public class TeamController {
         List<User> user_list= userRepository.findAll();
         model.addAttribute("members", user_list);
         model.addAttribute("team", team);
+        String timeData = " username "+ currentuser.getName() + " get members for the team " +id + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "teammember";
     }
 
@@ -76,8 +85,11 @@ public class TeamController {
         User user = userRepository.findById(id).get();
         if(!team.isMemberExist(user)){
             team.getUsers().add(user);
-            team.setUsers(members);}
+            team.setUsers(members);
+        }
             repository.save(team);
+        String timeData = " username "+ currentuser.getName() + " add member to the team " + teamid + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
             return "redirect:/api/team/edit?id=" + team.getId();
         }
 
@@ -89,6 +101,8 @@ public class TeamController {
         log.debug("Request to open the new team form page");
         Team team = Team.builder().active(true).build();
         model.addAttribute("teamAttr", team);
+        String timeData = " username "+ currentuser.getName() + " added new team " + team + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "teamform";
     }
 
@@ -98,6 +112,8 @@ public class TeamController {
         log.debug("Request to open the edit team form page");
         Team team = repository.findById(id).get();
         model.addAttribute("teamAttr", team);
+        String timeData = " username "+ currentuser.getName() + " edit team " + id + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "teamform";
     }
 
@@ -120,6 +136,8 @@ public class TeamController {
         Team team = repository.findById(id).get();
             team.changeActive();
             repository.save(team);
+        String timeData = " username "+ currentuser.getName() + " deleted the team " + id + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "redirect:teams";
     }
 
@@ -136,6 +154,8 @@ public class TeamController {
             team.setUsers(members);
             repository.save(team);
         }
+        String timeData = " username "+ currentuser.getName() + " saved team " + team + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "redirect:teams";
     }
 

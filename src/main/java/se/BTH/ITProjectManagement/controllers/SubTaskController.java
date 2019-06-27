@@ -21,6 +21,8 @@ import se.BTH.ITProjectManagement.validator.SubTaskValidator;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +35,9 @@ public class SubTaskController {
 
     private static org.apache.log4j.Logger log = Logger.getLogger(SubTaskController.class);
 
+    private Principal currentuser;
+
+    private TimeData data;
     @Autowired
     private SubTaskRepository repository;
 
@@ -47,6 +52,7 @@ public class SubTaskController {
 
     @Autowired
     private SubTaskValidator subTaskValidator;
+
 
     // Displaying the initial subtasks list.
 //    @RequestMapping(value = "/subtasks", method = RequestMethod.GET)
@@ -67,6 +73,8 @@ public class SubTaskController {
         model.addAttribute("sprintid", sprintid);
         model.addAttribute("taskname", taskRepository.findById(taskid).get().getName());
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
+        String timeData = " username "+ currentuser.getName() + " add sub task " + addSubTask(taskid,sprintid,model) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "subtaskform";
     }
 
@@ -85,6 +93,8 @@ public class SubTaskController {
         }else {
             repository.existsById(id);
         }
+        String timeData = " username "+ currentuser.getName() + " edit sub task " + editSubTask(id,model,sprintid,taskid) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "subtaskform";
     }
 
@@ -107,6 +117,8 @@ public class SubTaskController {
         tasks.add(taskindex, task);
         sprint.setTasks(tasks);
         sprintRepository.save(sprint);
+        String timeData = " username "+ currentuser.getName() + " delete sub task " + delete(id,taskid,sprintid,model) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "redirect:/api/task/edit?taskid=" + taskid + "&sprintid=" + sprintid;
     }
 
@@ -143,6 +155,8 @@ public class SubTaskController {
         sprint.getTasks().remove(taskIndex);
         sprint.getTasks().add(taskIndex, task);
         sprintRepository.save(sprint);
+        String timeData = " username "+ currentuser.getName() + " save sub task " + save(subtask,model,taskid,sprintid,bindingResult) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "redirect:/api/task/edit?taskid=" + taskid + "&sprintid=" + sprintid;
     }
 
@@ -157,6 +171,8 @@ public class SubTaskController {
         model.addAttribute("id", id);
         model.addAttribute("taskid", taskid);
         model.addAttribute("sprintid", sprintid);
+        String timeData = " username "+ currentuser.getName() + " select member " + selectmember(id,taskid,sprintid,model) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "subtaskteamform";
     }
 
@@ -183,7 +199,8 @@ public class SubTaskController {
             sprint.getTasks().remove(taskindex);
             sprint.getTasks().add(taskindex, task);
             sprintRepository.save(sprint);}
-
+        String timeData = " username "+ currentuser.getName() + " added member " + addmember(userid,subtaskid,taskid,sprintid,model) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
 
         return "redirect:/api/subtask/edit?id=" + subtaskid + "&taskid=" + taskid + "&sprintid=" + sprintid;
     }
@@ -210,6 +227,8 @@ public class SubTaskController {
         sprint.getTasks().remove(taskindex);
         sprint.getTasks().add(taskindex, task);
         sprintRepository.save(sprint);
+        String timeData = " username "+ currentuser.getName() + " delete member " + deletemember(userid,subtaskid,taskid,sprintid,model) + " time "+ LocalDateTime.now();
+        data.saveTimeData(timeData);
         return "redirect:/api/subtask/edit?id=" + subtaskid + "&taskid=" + taskid + "&sprintid=" + sprintid;
     }
 

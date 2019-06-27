@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -34,6 +36,10 @@ public class User  {
     private String username;
     @NotBlank
     private String password;
+    @DateTimeFormat(pattern = "yyyy-MM-dd-H-m")
+    private LocalDateTime loginTime;
+    private LocalDateTime logoutTime;
+    private String activity;
     @NotBlank
     private  String passwordConfirm;
     public boolean changeActive(){

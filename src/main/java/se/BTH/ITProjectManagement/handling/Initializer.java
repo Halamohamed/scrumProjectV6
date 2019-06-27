@@ -9,6 +9,7 @@ import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.*;
 import se.BTH.ITProjectManagement.services.SprintService;
 
+import java.io.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,6 +26,7 @@ public class Initializer implements CommandLineRunner {
     private final SubTaskRepository subTaskRepo;
     private final SprintRepository sprintRepo;
     private final SprintService sprintService;
+    private TimeData data;
 
 
     public Initializer(UserRepository repository, RoleRepository rolerepo, TeamRepository teamrepo, TaskRepository taskRepo, SubTaskRepository subTaskRepo, SprintRepository sprintRepo, SprintService sprintService) {
@@ -39,7 +41,7 @@ public class Initializer implements CommandLineRunner {
 
 
     @Override
-    public void run(String... strings) {
+    public void run(String... strings)  {
 //        teamrepo.deleteAll();
 //        rolerepo.deleteAll();
 //        userrepo.deleteAll();
@@ -50,6 +52,38 @@ public class Initializer implements CommandLineRunner {
 //        addBacklog();
 //        statistics();
 //        addAdminToDB();
+     //  data.LoadTimeData();
+       /* File file= new File("dataFile.txt");
+
+
+            try {
+                if(!file.exists()) {
+                file.createNewFile();
+                }
+                PrintWriter pw = new PrintWriter(file);
+                pw.println("this is history of login");
+                pw.close();
+                System.out.println("Done");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+
+       /* try {
+            String line = null;
+
+            FileReader fileReader =
+                    new FileReader("dataFile.txt");
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } */
+
+
 
     }
 
@@ -62,7 +96,7 @@ public class Initializer implements CommandLineRunner {
         for (int i = 0; i < sprint.getPlannedPeriod(); i++) {
             pD.add(sprint.Calculate_Planned_hours_today());
         }
-        System.out.println("estimated = " + sprint.Calculate_total_estimate());
+        /*System.out.println("estimated = " + sprint.Calculate_total_estimate());
         aD.forEach(System.out::println);
         System.out.println("--------------------------");
         pD.forEach(System.out::println);
@@ -70,7 +104,7 @@ public class Initializer implements CommandLineRunner {
         aR.forEach(System.out::println);
         System.out.println("--------------------------");
 
-        pR.forEach(System.out::println);
+        pR.forEach(System.out::println);*/
     }
     private void addBacklog() {
         List<Sprint> sprints= new ArrayList<>();
@@ -399,15 +433,17 @@ public class Initializer implements CommandLineRunner {
     }
     private void addAdminToDB() {
 
-        List<Role> roles =  rolerepo.findAll();
+        List<Role> roles = rolerepo.findAll();
         String pw1 = "Administrator";
         String hash1 = BCrypt.hashpw(pw1, BCrypt.gensalt(11));
         boolean verifyHash1 = BCrypt.checkpw(pw1, hash1);
-        User admin = User.builder().name("Admmin").password(hash1).username("Administrator").roles(roles).active(true).build();
+        User admin = User.builder().name("Admin").password(hash1).username("Administrator").roles(roles).active(true).build();
         userrepo.save(admin);
-        System.out.println("\n" + "--->It is ready user name and password to log in \n" + admin.getUsername() + "\n" + pw1	+ " \n" + "--->" + admin.getRoles());
+        System.out.println("\n" + "--->It is ready user name and password to log in \n" + admin.getUsername() + "\n" + pw1 + " \n" + "--->" + admin.getRoles());
+    }
+
+
 
 
     }
 
-}
