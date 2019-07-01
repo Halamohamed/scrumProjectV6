@@ -1,13 +1,12 @@
 package se.BTH.ITProjectManagement.handling;
 
-import static org.apache.log4j.BasicConfigurator.configure;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.*;
 import se.BTH.ITProjectManagement.services.SprintService;
+
 
 import java.io.*;
 import java.time.DayOfWeek;
@@ -26,7 +25,7 @@ public class Initializer implements CommandLineRunner {
     private final SubTaskRepository subTaskRepo;
     private final SprintRepository sprintRepo;
     private final SprintService sprintService;
-    private TimeData data;
+    public static List<String> timeDatalist= new ArrayList<>();
 
 
     public Initializer(UserRepository repository, RoleRepository rolerepo, TeamRepository teamrepo, TaskRepository taskRepo, SubTaskRepository subTaskRepo, SprintRepository sprintRepo, SprintService sprintService) {
@@ -52,39 +51,45 @@ public class Initializer implements CommandLineRunner {
 //        addBacklog();
 //        statistics();
 //        addAdminToDB();
-     //  data.LoadTimeData();
-       /* File file= new File("dataFile.txt");
+    // LoadTimeData();
 
 
-            try {
-                if(!file.exists()) {
-                file.createNewFile();
-                }
-                PrintWriter pw = new PrintWriter(file);
-                pw.println("this is history of login");
-                pw.close();
-                System.out.println("Done");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
+    }
 
-       /* try {
-            String line = null;
 
-            FileReader fileReader =
-                    new FileReader("dataFile.txt");
-            BufferedReader bufferedReader =
-                    new BufferedReader(fileReader);
-            while((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
+    public static void saveTimeData(String timeDat) {
+        ObjectOutputStream obj;
+        timeDatalist.add(timeDat);
+
+        try {
+            obj = new ObjectOutputStream(new FileOutputStream("timeData.txt",true));
+
+            timeDat= timeDat+ "\n"+"---------------------------------------------"+"\n";
+            obj.writeObject(timeDat);
+            obj.flush();
+            obj.close();
+           // System.out.println("Users data saved!");
+        } catch (IOException e1) {
+
+            e1.printStackTrace();
+        }
+        System.out.println(timeDat);
+    }
+    public static void LoadTimeData() {
+
+        ObjectInputStream obj;
+        try {
+            obj = new ObjectInputStream(new FileInputStream("timeData.txt"));
+           timeDatalist = (List<String>) obj.readObject();
+
+            obj.close();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } */
+        }catch (IOException e1) {
 
-
-
+            e1.printStackTrace();
+        }
+        System.out.println(timeDatalist.size() +" user list loaded.");
     }
 
     private void statistics() {

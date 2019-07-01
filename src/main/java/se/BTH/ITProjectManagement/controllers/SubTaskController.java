@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import se.BTH.ITProjectManagement.handling.Initializer;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.SprintRepository;
 import se.BTH.ITProjectManagement.repositories.SubTaskRepository;
@@ -35,9 +36,7 @@ public class SubTaskController {
 
     private static org.apache.log4j.Logger log = Logger.getLogger(SubTaskController.class);
 
-    private Principal currentuser;
-
-    private TimeData data;
+    private String timeData;
     @Autowired
     private SubTaskRepository repository;
 
@@ -65,7 +64,7 @@ public class SubTaskController {
 
     // Opening the add new subtask form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addSubTask(@RequestParam(value = "taskid", required = true) String taskid,
+    public String addSubTask(@RequestParam(value = "taskid", required = true) String taskid,Principal currentuser,
                              @RequestParam(value = "sprintid", required = true) String sprintid,Model model) {
         log.debug("Request to open the new subtask form page");
         model.addAttribute("subtaskAttr", SubTask.builder().OEstimate(0).users(new ArrayList<>()).build());
@@ -73,8 +72,8 @@ public class SubTaskController {
         model.addAttribute("sprintid", sprintid);
         model.addAttribute("taskname", taskRepository.findById(taskid).get().getName());
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
-        String timeData = " username "+ currentuser.getName() + " add sub task " + addSubTask(taskid,sprintid,model) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " added sub task to task " + taskid + " at time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "subtaskform";
     }
 
@@ -82,7 +81,7 @@ public class SubTaskController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editSubTask(@RequestParam(value = "id", required = true) String id, Model model,
                               @RequestParam(value = "sprintid", required = true) String sprintid ,
-                              @RequestParam(value = "taskid", required = true) String taskid) {
+                              @RequestParam(value = "taskid", required = true) String taskid,Principal currentuser) {
         log.debug("Request to open the edit subtask form page");
         if(!repository.findById(id).equals("")) {
             model.addAttribute("subtaskAttr", repository.findById(id).get());
@@ -93,14 +92,14 @@ public class SubTaskController {
         }else {
             repository.existsById(id);
         }
-        String timeData = " username "+ currentuser.getName() + " edit sub task " + editSubTask(id,model,sprintid,taskid) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " edit sub task " + id + " at time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "subtaskform";
     }
 
     // Deleting the specified subtask.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value = "id", required = true) String id,
+    public String delete(@RequestParam(value = "id", required = true) String id,Principal currentuser,
                          @RequestParam(value = "taskid", required = true) String taskid,
                          @RequestParam(value = "sprintid", required = true) String sprintid ,Model model) {
         Sprint sprint = sprintRepository.findById(sprintid).get();
@@ -117,14 +116,14 @@ public class SubTaskController {
         tasks.add(taskindex, task);
         sprint.setTasks(tasks);
         sprintRepository.save(sprint);
-        String timeData = " username "+ currentuser.getName() + " delete sub task " + delete(id,taskid,sprintid,model) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " delete sub task " + id+" from task "+ taskid + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "redirect:/api/task/edit?taskid=" + taskid + "&sprintid=" + sprintid;
     }
 
     // Adding a new subtask or updating an existing subtask.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("subtaskAttr")@Valid SubTask subtask,Model model,
+    public String save(@ModelAttribute("subtaskAttr")@Valid SubTask subtask,Model model,Principal currentuser,
                        @RequestParam(value = "taskid", required = true) String taskid,
                        @RequestParam(value = "sprintid", required = true) String sprintid, BindingResult bindingResult) {
         //subTaskValidator.validate(subtask, bindingResult);
@@ -155,14 +154,14 @@ public class SubTaskController {
         sprint.getTasks().remove(taskIndex);
         sprint.getTasks().add(taskIndex, task);
         sprintRepository.save(sprint);
-        String timeData = " username "+ currentuser.getName() + " save sub task " + save(subtask,model,taskid,sprintid,bindingResult) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " save sub task " + subtask + " at time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "redirect:/api/task/edit?taskid=" + taskid + "&sprintid=" + sprintid;
     }
 
     // Opening the members of team to select member for assignment subtask form page.
     @RequestMapping(value = "/selectmember", method = RequestMethod.GET)
-    public String selectmember(@RequestParam(value = "id", required = true) String id,
+    public String selectmember(@RequestParam(value = "id", required = true) String id,Principal currentuser,
                                @RequestParam(value = "taskid", required = true) String taskid,
                                @RequestParam(value = "sprintid", required = true) String sprintid, Model model) {
         log.debug("Request to open the members of team for add to customed subtask form page");
@@ -171,14 +170,15 @@ public class SubTaskController {
         model.addAttribute("id", id);
         model.addAttribute("taskid", taskid);
         model.addAttribute("sprintid", sprintid);
-        String timeData = " username "+ currentuser.getName() + " select member " + selectmember(id,taskid,sprintid,model) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " select member " + id+" to task "+ taskid + " at time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "subtaskteamform";
     }
 
     // Deleting the specified member from assignment of subtask.
     @RequestMapping(value = "/addmember", method = RequestMethod.GET)
-    public String addmember(@RequestParam(value = "userid", required = true) String userid, @RequestParam(value = "id", required = true) String subtaskid,
+    public String addmember(@RequestParam(value = "userid", required = true) String userid,Principal currentuser,
+                            @RequestParam(value = "id", required = true) String subtaskid,
                             @RequestParam(value = "taskid", required = true) String taskid,
                             @RequestParam(value = "sprintid", required = true) String sprintid, Model model) {
         Sprint sprint = sprintRepository.findById(sprintid).get();
@@ -199,15 +199,16 @@ public class SubTaskController {
             sprint.getTasks().remove(taskindex);
             sprint.getTasks().add(taskindex, task);
             sprintRepository.save(sprint);}
-        String timeData = " username "+ currentuser.getName() + " added member " + addmember(userid,subtaskid,taskid,sprintid,model) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " added member " + userid+" to sub task "+subtaskid + " at time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
 
         return "redirect:/api/subtask/edit?id=" + subtaskid + "&taskid=" + taskid + "&sprintid=" + sprintid;
     }
 
     // Deleting the specified member from assignment of subtask.
     @RequestMapping(value = "/deletemember", method = RequestMethod.GET)
-    public String deletemember(@RequestParam(value = "userid", required = true) String userid, @RequestParam(value = "id", required = true) String subtaskid,
+    public String deletemember(@RequestParam(value = "userid", required = true) String userid,Principal currentuser,
+                               @RequestParam(value = "id", required = true) String subtaskid,
                                @RequestParam(value = "taskid", required = true) String taskid,
                                @RequestParam(value = "sprintid", required = true) String sprintid, Model model) {
         // repository.deleteById(id);
@@ -227,8 +228,8 @@ public class SubTaskController {
         sprint.getTasks().remove(taskindex);
         sprint.getTasks().add(taskindex, task);
         sprintRepository.save(sprint);
-        String timeData = " username "+ currentuser.getName() + " delete member " + deletemember(userid,subtaskid,taskid,sprintid,model) + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " delete member " + userid +" from sub task"+ subtaskid + " at time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "redirect:/api/subtask/edit?id=" + subtaskid + "&taskid=" + taskid + "&sprintid=" + sprintid;
     }
 

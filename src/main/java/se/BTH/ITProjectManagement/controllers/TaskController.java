@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import se.BTH.ITProjectManagement.handling.Initializer;
 import se.BTH.ITProjectManagement.models.*;
 import se.BTH.ITProjectManagement.repositories.SprintRepository;
 import se.BTH.ITProjectManagement.repositories.SubTaskRepository;
@@ -34,7 +35,6 @@ public class TaskController {
     @Autowired
     private SubTaskRepository subTaskRepository;
 
-    private TimeData data;
 
     // Displaying the initial tasks list.
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
@@ -46,8 +46,8 @@ public class TaskController {
             model.addAttribute("sprintid", sprintid);
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
 
-         String timeData = " username " +currentuser.getName() + " get tasks " + getTasks(sprintid,model,currentuser)+" time " + LocalDateTime.now();
-        data.saveTimeData(timeData);
+         String timeData = " username " +currentuser.getName() + " get sprint tasks "+sprintid+" at time " + LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "task";
     }
     // Opening the add new task form page.
@@ -58,8 +58,8 @@ public class TaskController {
         model.addAttribute("sprintid",sprintid);
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
 
-        String timeData = " username " +currentuser.getName() + " added task " + addTask(sprintid,model,currentuser)+" time " + LocalDateTime.now();
-        data.saveTimeData(timeData);
+        String timeData = " username " +currentuser.getName() + " added task to sprint "+sprintid +" at time " + LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
 
         return "taskform";
     }
@@ -72,8 +72,8 @@ public class TaskController {
         model.addAttribute("taskAttr", repository.findById(id).get());
         model.addAttribute("sprintid", sprintid);
         model.addAttribute("sprintname", sprintRepository.findById(sprintid).get().getName());
-        String timeData =" username " +currentuser.getName() + " edited task " + editTask(id,sprintid,model,currentuser)+" time " + LocalDateTime.now();
-        data.saveTimeData(timeData);
+        String timeData =" username " +currentuser.getName() + " edited task "+ id+" at time " + LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
 
         return "taskform";
     }
@@ -92,8 +92,8 @@ public class TaskController {
             subTaskRepository.delete(temp);
         }
         repository.deleteById(id);
-        String timeData =" username " +currentuser.getName() + " deleted task " + delete(id,sprintid,model,currentuser)+" time " + LocalDateTime.now();
-        data.saveTimeData(timeData);
+        String timeData =" username " +currentuser.getName() + " deleted task "+id +" from sprint "+sprintid+" at time " + LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
 
         return "redirect:/api/task/tasks?sprintid=" + sprintid;
     }
@@ -123,8 +123,8 @@ public class TaskController {
             sprint.setTasks(tasks);
             sprintRepository.save(sprint);
         }
-        String timeData =" username " +currentuser.getName() + " saved task " + save(task,sprintid,currentuser)+" time " + LocalDateTime.now();
-        data.saveTimeData(timeData);
+        String timeData =" username " +currentuser.getName() + " saved task "+ task +" at time " + LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
 
 
         return "redirect:/api/task/tasks?sprintid="+ sprintid;

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import se.BTH.ITProjectManagement.handling.Initializer;
 import se.BTH.ITProjectManagement.models.*;
 
 
@@ -23,7 +24,6 @@ public class TeamController {
 
     private static org.apache.log4j.Logger log = Logger.getLogger(TeamController.class);
 
-    private static Principal currentuser;
     @Autowired
     private TeamRepository repository;
     @Autowired
@@ -32,23 +32,23 @@ public class TeamController {
     @Autowired
     private SprintRepository sprintRepository;
 
+    private String timeData;
 
-    private TimeData data;
 
     // Displaying the initial teams list.
     @RequestMapping(value = "/teams", method = RequestMethod.GET)
-    public String getTeams(Model model) {
+    public String getTeams(Model model,Principal currentuser) {
         log.debug("Request to fetch all teams from the mongo database");
         List<Team> team_list = repository.findAll();
         model.addAttribute("teams", team_list);
 
-        data.saveTimeData(" username "+ currentuser.getName() + " get teams " + " time "+ LocalDateTime.now());
+        Initializer.saveTimeData(" username "+ currentuser.getName() + " get teams at time "+ LocalDateTime.now());
         return "team";
     }
 
     // Opening the edit team form page.
     @RequestMapping(value = "/sprintteam", method = RequestMethod.GET)
-    public String sprintteam(@RequestParam(value = "sprintid", required = true) String id, Model model) {
+    public String sprintteam(@RequestParam(value = "sprintid", required = true) String id, Model model,Principal currentuser) {
         log.debug("Request to open the edit team form page");
         Team team;
         Sprint sprint = sprintRepository.findById(id).get();
@@ -60,25 +60,25 @@ public class TeamController {
         } else team = Team.builder().active(true).users(new ArrayList<>()).build();
         model.addAttribute("teamAttr", team);
         model.addAttribute("sprintid", id);
-        String timeData = " username "+ currentuser.getName() + " get team for sprint "+ id + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " get team for sprint "+ id + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "sprintteamform";
     }
     @RequestMapping(value = "/members", method = RequestMethod.GET) //must be put and add search
-    public String members(@RequestParam("id") String id , Model model) {
+    public String members(@RequestParam("id") String id , Model model,Principal currentuser) {
         log.debug("Request to fetch all users from the mongo database");
         Team team= repository.findById(id).get();
         List<User> user_list= userRepository.findAll();
         model.addAttribute("members", user_list);
         model.addAttribute("team", team);
-        String timeData = " username "+ currentuser.getName() + " get members for the team " +id + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " get members for the team " +id + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "teammember";
     }
 
     // add member to team and redirect to team page.
     @RequestMapping(value = "/addmember", method = RequestMethod.GET)
-    public String addmember(@RequestParam(value = "id", required = true) String id,
+    public String addmember(@RequestParam(value = "id", required = true) String id,Principal currentuser,
                             @RequestParam(value = "teamid", required = true) String teamid,Model model) {
         Team team=repository.findById(teamid).get();
         List<User> members=team.getUsers();
@@ -88,8 +88,8 @@ public class TeamController {
             team.setUsers(members);
         }
             repository.save(team);
-        String timeData = " username "+ currentuser.getName() + " add member to the team " + teamid + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " add member to the team " + teamid + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
             return "redirect:/api/team/edit?id=" + team.getId();
         }
 
@@ -97,23 +97,23 @@ public class TeamController {
 
 // Opening the add new team form page.
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addTeam(Model model) {
+    public String addTeam(Model model,Principal currentuser) {
         log.debug("Request to open the new team form page");
         Team team = Team.builder().active(true).build();
         model.addAttribute("teamAttr", team);
-        String timeData = " username "+ currentuser.getName() + " added new team " + team + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " added new team " + team + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "teamform";
     }
 
     // Opening the edit team form page.
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editTeam(@RequestParam(value = "id", required = true) String id, Model model) {
+    public String editTeam(@RequestParam(value = "id", required = true) String id, Model model,Principal currentuser) {
         log.debug("Request to open the edit team form page");
         Team team = repository.findById(id).get();
         model.addAttribute("teamAttr", team);
-        String timeData = " username "+ currentuser.getName() + " edit team " + id + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " edit team " + id + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "teamform";
     }
 
@@ -132,18 +132,18 @@ public class TeamController {
 
     // Deleting the specified team.
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value = "id", required = true) String id, Model model) {
+    public String delete(@RequestParam(value = "id", required = true) String id, Model model,Principal currentuser) {
         Team team = repository.findById(id).get();
             team.changeActive();
             repository.save(team);
-        String timeData = " username "+ currentuser.getName() + " deleted the team " + id + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " deleted the team " + id + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "redirect:teams";
     }
 
     // Adding a new team or updating an existing team.
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@ModelAttribute("teamAttr") Team team) {                  // ,@RequestBody List<User> member_list
+    public String save(@ModelAttribute("teamAttr") Team team,Principal currentuser) {                  // ,@RequestBody List<User> member_list
        List<User> users= new ArrayList<>();
         if (team.getId().equals("")) {
             Team team1 = Team.builder().name(team.getName()).active(true).users(users).build();
@@ -154,8 +154,8 @@ public class TeamController {
             team.setUsers(members);
             repository.save(team);
         }
-        String timeData = " username "+ currentuser.getName() + " saved team " + team + " time "+ LocalDateTime.now();
-        data.saveTimeData(timeData);
+         timeData = " username "+ currentuser.getName() + " saved team " + team + " time "+ LocalDateTime.now();
+        Initializer.saveTimeData(timeData);
         return "redirect:teams";
     }
 
