@@ -13,7 +13,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class Initializer implements CommandLineRunner {
@@ -56,7 +58,6 @@ public class Initializer implements CommandLineRunner {
 
     }
 
-
     public static void saveTimeData(String timeDat) {
         ObjectOutputStream obj;
         timeDatalist.add(timeDat);
@@ -64,8 +65,8 @@ public class Initializer implements CommandLineRunner {
         try {
             obj = new ObjectOutputStream(new FileOutputStream("timeData.txt",true));
 
-            timeDat= timeDat+ "\n"+"---------------------------------------------"+"\n";
-            obj.writeObject(timeDat);
+            timeDat= timeDat+ "\n"+"-----------------------------"+"\n";
+            obj.writeUTF(timeDat);
             obj.flush();
             obj.close();
            // System.out.println("Users data saved!");
@@ -77,15 +78,16 @@ public class Initializer implements CommandLineRunner {
     }
     public static void LoadTimeData() {
 
-        ObjectInputStream obj;
-        try {
-            obj = new ObjectInputStream(new FileInputStream("timeData.txt"));
-           timeDatalist = (List<String>) obj.readObject();
 
+        try {
+            ObjectInputStream obj = new ObjectInputStream(new FileInputStream("timeData.txt"));
+            Scanner str = new Scanner(System.in);
+            while (str.hasNextLine()) {
+                timeDatalist = Collections.singletonList(obj.readUTF());
+            }
             obj.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }catch (IOException e1) {
+
+        } catch (IOException e1) {
 
             e1.printStackTrace();
         }
