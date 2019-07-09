@@ -59,14 +59,14 @@ public class Initializer implements CommandLineRunner {
     }
 
     public static void saveTimeData(String timeDat) {
-        ObjectOutputStream obj;
+        PrintWriter obj;
         timeDatalist.add(timeDat);
 
         try {
-            obj = new ObjectOutputStream(new FileOutputStream("timeData.txt",true));
+            obj = new PrintWriter(new FileOutputStream("timeData.txt",true));
 
-            timeDat= timeDat+ "\n"+"-----------------------------"+"\n";
-            obj.writeUTF(timeDat);
+            timeDat=  "*/ " + timeDat;
+            obj.println(timeDat);
             obj.flush();
             obj.close();
            // System.out.println("Users data saved!");
@@ -74,24 +74,24 @@ public class Initializer implements CommandLineRunner {
 
             e1.printStackTrace();
         }
-        System.out.println(timeDat);
+        //System.out.println(timeDat);
     }
     public static void LoadTimeData() {
 
 
         try {
-            ObjectInputStream obj = new ObjectInputStream(new FileInputStream("timeData.txt"));
-            Scanner str = new Scanner(System.in);
+            Scanner str = new Scanner(new File("timeData.txt"));
             while (str.hasNextLine()) {
-                timeDatalist = Collections.singletonList(obj.readUTF());
+                String text  = str.nextLine();
+                //System.out.println(text);
             }
-            obj.close();
+            str.close();
 
         } catch (IOException e1) {
 
             e1.printStackTrace();
         }
-        System.out.println(timeDatalist.size() +" user list loaded.");
+       // System.out.println(timeDatalist.size() +" user list loaded.");
     }
 
     private void statistics() {
